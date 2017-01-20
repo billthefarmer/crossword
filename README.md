@@ -1,1 +1,3 @@
-# crossword
+# Crossword
+
+Android crossword solver

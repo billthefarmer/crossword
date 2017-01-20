@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp">
+
+  <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      android:gravity="center">
+
+    <TextView
+        android:id="@+id/chars"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/chars"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:entries="@array/numbers" />
+
+    <Button
+        android:id="@+id/search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:text="@string/search" />
+
+  </LinearLayout>
+
+  <LinearLayout
+      android:id="@+id/letters"
+      android:orientation="horizontal"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      android:gravity="center">
+
+    <EditText
+        android:id="@+id/char0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:selectAllOnFocus="true"
+        android:capitalize="characters"
+        android:maxLength="1"
+        android:hint="@string/hint"
+        android:imeOptions="actionNext"
+        android:inputType="textCapCharacters" />
+
+    <EditText
+        android:id="@+id/char1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:selectAllOnFocus="true"
+        android:capitalize="characters"
+        android:maxLength="1"
+        android:hint="@string/hint"
+        android:imeOptions="actionNext"
+        android:inputType="textCapCharacters" />
+
+    <EditText
+        android:id="@+id/char2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:selectAllOnFocus="true"
+        android:capitalize="characters"
+        android:maxLength="1"
+        android:hint="@string/hint"
+        android:imeOptions="actionNext"
+        android:inputType="textCapCharacters" />
+
+    <EditText
+        android:id="@+id/char3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:selectAllOnFocus="true"
+        android:capitalize="characters"
+        android:maxLength="1"
+        android:hint="@string/hint"
+        android:imeOptions="actionNext"
+        android:inputType="textCapCharacters" />
+
+    <EditText
+        android:id="@+id/char4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:selectAllOnFocus="true"
+        android:capitalize="characters"
+        android:maxLength="1"
+        android:hint="@string/hint"
+        android:imeOptions="actionNext"
+        android:inputType="textCapCharacters" />
+
+    <EditText
+        android:id="@+id/char5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:selectAllOnFocus="true"
+        android:capitalize="characters"
+        android:maxLength="1"
+        android:hint="@string/hint"
+        android:imeOptions="actionNext"
+        android:inputType="textCapCharacters" />
+
+    <EditText
+        android:id="@+id/char6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:selectAllOnFocus="true"
+        android:capitalize="characters"
+        android:maxLength="1"
+        android:hint="@string/hint"
+        android:imeOptions="actionNext"
+        android:inputType="textCapCharacters" />
+
+    <EditText
+        android:id="@+id/char7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:selectAllOnFocus="true"
+        android:capitalize="characters"
+        android:maxLength="1"
+        android:hint="@string/hint"
+        android:imeOptions="actionNext"
+        android:inputType="textCapCharacters" />
+
+    <EditText
+        android:id="@+id/char8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:selectAllOnFocus="true"
+        android:capitalize="characters"
+        android:maxLength="1"
+        android:hint="@string/hint"
+        android:imeOptions="actionNext"
+        android:inputType="textCapCharacters" />
+
+    <EditText
+        android:id="@+id/char9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:selectAllOnFocus="true"
+        android:capitalize="characters"
+        android:maxLength="1"
+        android:hint="@string/hint"
+        android:imeOptions="actionNext"
+        android:inputType="textCapCharacters" />
+
+    <EditText
+        android:id="@+id/char10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:selectAllOnFocus="true"
+        android:capitalize="characters"
+        android:maxLength="1"
+        android:hint="@string/hint"
+        android:imeOptions="actionNext"
+        android:inputType="textCapCharacters" />
+
+    <EditText
+        android:id="@+id/char11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:selectAllOnFocus="true"
+        android:capitalize="characters"
+        android:maxLength="1"
+        android:hint="@string/hint"
+        android:imeOptions="actionNext"
+        android:inputType="textCapCharacters" />
+
+    <EditText
+        android:id="@+id/char12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:selectAllOnFocus="true"
+        android:capitalize="characters"
+        android:maxLength="1"
+        android:hint="@string/hint"
+        android:imeOptions="actionNext"
+        android:inputType="textCapCharacters" />
+
+    <EditText
+        android:id="@+id/char13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:selectAllOnFocus="true"
+        android:capitalize="characters"
+        android:maxLength="1"
+        android:hint="@string/hint"
+        android:imeOptions="actionNext"
+        android:inputType="textCapCharacters" />
+
+    <EditText
+        android:id="@+id/char14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:selectAllOnFocus="true"
+        android:capitalize="characters"
+        android:maxLength="1"
+        android:hint="@string/hint"
+        android:imeOptions="actionNext"
+        android:inputType="textCapCharacters" />
+
+  </LinearLayout>
+
+  <ListView
+      android:id="@+id/list"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center" />
+
+</LinearLayout>
+

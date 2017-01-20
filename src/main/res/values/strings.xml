@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="app_name">Crossword</string>
+
+  <string name="intro">
+    Enter the number of characters, and then enter
+    the letters you have in the following slots
+  </string>
+
+  <string name="chars">Characters:</string>
+  <string name="hint">"?"</string>
+  <string name="search">Search</string>
+
+</resources>
