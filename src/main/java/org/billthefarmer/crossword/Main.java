@@ -26,10 +26,11 @@ package org.billthefarmer.crossword;
 import android.app.Activity;
 import android.os.Bundle;
 import android.content.res.Resources;
+import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 import android.view.KeyEvent;
 import android.view.View;
-import android.util.Log;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -47,7 +48,10 @@ import java.util.List;
 // Main
 public class Main extends Activity
     implements AdapterView.OnItemSelectedListener,
-               View.OnClickListener, Data.OnPostExecuteListener
+               AdapterView.OnItemClickListener,
+               TextView.OnEditorActionListener,
+               Data.OnPostExecuteListener,
+               View.OnClickListener
 {
     public static final String TAG = "Crossword";
     public static final String RESULT_LIST = "result_list";
@@ -58,7 +62,7 @@ public class Main extends Activity
     private Data data;
 
     private Spinner spinner;
-    private Button button;
+    private Button clear;
     private LinearLayout letters;
     private ListView results;
     private ArrayAdapter<String> adapter;
@@ -80,7 +84,7 @@ public class Main extends Activity
         spinner = (Spinner)findViewById(R.id.spinner);
         letters = (LinearLayout)findViewById(R.id.letters);
         results = (ListView)findViewById(R.id.list);
-        button = (Button)findViewById(R.id.search);
+        clear = (Button)findViewById(R.id.clear);
 
         if (spinner != null)
         {
@@ -88,8 +92,8 @@ public class Main extends Activity
             spinner.setOnItemSelectedListener(this);
         }
 
-        if (button != null)
-            button.setOnClickListener(this);
+        if (clear != null)
+            clear.setOnClickListener(this);
 
         if (letters != null)
         {
@@ -104,8 +108,13 @@ public class Main extends Activity
                     letter.setVisibility(View.GONE);
                     letter.setText("");
                 }
+
+                letter.setOnEditorActionListener(this);
             }
         }
+
+        if (results != null)
+            results.setOnItemClickListener(this);
 
         if (savedInstanceState != null)
             resultList = savedInstanceState.getStringArrayList(RESULT_LIST);
@@ -196,14 +205,39 @@ public class Main extends Activity
         }
     }
 
-    private void fillLetters(String item)
-    {
-        // for (char c: item)
-        //     ;
-    }
-
     // onNothingSelected
     public void onNothingSelected(AdapterView<?> parent) {}
+
+    // onItemClick
+    public void onItemClick(AdapterView<?> parent, View view,
+                            int position, long id)
+    {
+        String item = (String)parent.getItemAtPosition(position);
+
+        for (int i = 0; i < length; i++)
+        {
+            TextView text = (TextView)letters.getChildAt(i);
+            text.setText(item.substring(i, i+1).toUpperCase());
+        }
+    }
+
+    // onEditorAction
+    public boolean onEditorAction(TextView view, int actionId, KeyEvent event)
+    {
+        switch (actionId)
+        {
+        case EditorInfo.IME_ACTION_NEXT:
+            String letter = view.getText().toString();
+            if (!letter.equals(""))
+            {
+                doSearch();
+                doClear();
+            }
+            break;
+        }
+
+        return false;
+    }
 
     // On click
     @Override
@@ -215,9 +249,9 @@ public class Main extends Activity
         // Check id
         switch (id)
         {
-            // Button
-        case R.id.search:
-            doSearch(view);
+            // Clear
+        case R.id.clear:
+            doClear();
             break;
 
         default:
@@ -226,7 +260,7 @@ public class Main extends Activity
     }
 
     // doSearch
-    private void doSearch(View view)
+    private void doSearch()
     {
         // Build a match string
         StringBuilder buffer = new StringBuilder();
@@ -245,11 +279,16 @@ public class Main extends Activity
 
         // Start search task
         if (data != null)
-        {
             data.startSearchTask(match, wordList, resultList);
+    }
 
-            // Disable button
-            view.setEnabled(false);
+    // doClear
+    private void doClear()
+    {
+        for (int i = 0; i < length; i++)
+        {
+            TextView text = (TextView)letters.getChildAt(i);
+            text.setText("");
         }
     }
 
@@ -261,8 +300,5 @@ public class Main extends Activity
         // Show results
         if (resultList != null)
             adapter.notifyDataSetChanged();
-
-        // Enable button
-        button.setEnabled(true);
     }
 }

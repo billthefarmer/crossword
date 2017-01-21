@@ -10,6 +10,7 @@
 
   <string name="chars">Characters:</string>
   <string name="hint">"?"</string>
+  <string name="clear">Clear</string>
   <string name="search">Search</string>
 
 </resources>
