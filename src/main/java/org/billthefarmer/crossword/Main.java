@@ -95,14 +95,14 @@ public class Main extends Activity
         {
             for (int i = 0; i < letters.getChildCount(); i++)
             {
-                TextView v = (TextView)letters.getChildAt(i);
+                TextView letter = (TextView)letters.getChildAt(i);
                 if (i < LETTERS)
-                    v.setVisibility(View.VISIBLE);
+                    letter.setVisibility(View.VISIBLE);
 
                 else
                 {
-                    v.setVisibility(View.GONE);
-                    v.setText("");
+                    letter.setVisibility(View.GONE);
+                    letter.setText("");
                 }
             }
         }
@@ -118,7 +118,10 @@ public class Main extends Activity
                                      android.R.layout.simple_list_item_1,
                                      resultList);
         if (results != null)
+        {
             results.setAdapter(adapter);
+            results.setOnItemSelectedListener(this);
+        }
 
         Resources resources = getResources();
         InputStream stream = resources.openRawResource(R.raw.corncob_lowercase);
@@ -171,6 +174,8 @@ public class Main extends Activity
         // An item was selected. You can retrieve the selected item
         // using parent.getItemAtPosition(pos)
         String item = (String)parent.getItemAtPosition(pos);
+
+        // Get length
         length = Integer.parseInt(item);
 
         // Remove the unused slots
@@ -191,6 +196,12 @@ public class Main extends Activity
         }
     }
 
+    private void fillLetters(String item)
+    {
+        // for (char c: item)
+        //     ;
+    }
+
     // onNothingSelected
     public void onNothingSelected(AdapterView<?> parent) {}
 
@@ -206,18 +217,23 @@ public class Main extends Activity
         {
             // Button
         case R.id.search:
+            doSearch(view);
             break;
 
         default:
             return;
         }
+    }
 
+    // doSearch
+    private void doSearch(View view)
+    {
         // Build a match string
         StringBuilder buffer = new StringBuilder();
         for (int i = 0; i < length; i++)
         {
-            TextView v = (TextView)letters.getChildAt(i);
-            String letter = v.getText().toString();
+            TextView text = (TextView)letters.getChildAt(i);
+            String letter = text.getText().toString();
             if (letter.equals(""))
                 buffer.append(".");
 
