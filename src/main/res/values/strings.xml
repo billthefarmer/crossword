@@ -2,12 +2,6 @@
 <resources>
 
   <string name="app_name">Crossword</string>
-
-  <string name="intro">
-    Enter the number of characters, and then enter
-    the letters you have in the following slots
-  </string>
-
   <string name="letters">Letters:</string>
   <string name="hint">"."</string>
   <string name="clear">Clear</string>

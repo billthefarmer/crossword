@@ -42,6 +42,7 @@ import android.widget.TextView;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Locale;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -231,7 +232,8 @@ public class Main extends Activity
         for (int i = 0; i < length; i++)
         {
             TextView text = (TextView)letters.getChildAt(i);
-            text.setText(item.substring(i, i+1).toUpperCase());
+            text.setText(item.substring(i, i+1)
+                         .toUpperCase(Locale.getDefault()));
         }
     }
 
@@ -290,7 +292,7 @@ public class Main extends Activity
 
             else
             {
-                buffer.append(letter.toLowerCase());
+                buffer.append(letter.toLowerCase(Locale.getDefault()));
                 empty = false;
             }
         }
