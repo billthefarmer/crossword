@@ -27,20 +27,20 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:entries="@array/numbers" />
-<!--
-    <Button
-        android:id="@+id/search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:text="@string/search" />
--->
+
     <Button
         android:id="@+id/clear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:text="@string/clear" />
+
+    <Button
+        android:id="@+id/search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:text="@string/search" />
 
   </LinearLayout>
 

@@ -33,7 +33,8 @@ public class Data
 {
     private static Data instance;
 
-    private List<String> list;
+    private List<String> resultList;
+    private List<String> wordList;
 
     private OnPostExecuteListener listener;
 
@@ -51,15 +52,27 @@ public class Data
     }
 
     // Set list
-    public void setList(List<String> list)
+    public void setWordList(List<String> list)
     {
-        this.list = list;
+        wordList = list;
     }
 
     // Get list
-    public List<String> getList()
+    public List<String> getWordList()
     {
-        return list;
+        return wordList;
+    }
+
+    // Set list
+    public void setResultList(List<String> list)
+    {
+        resultList = list;
+    }
+
+    // Get list
+    public List<String> getResultList()
+    {
+        return resultList;
     }
 
     // Start search task

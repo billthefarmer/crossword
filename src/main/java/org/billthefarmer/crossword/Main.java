@@ -62,6 +62,7 @@ public class Main extends Activity
 
     private Spinner spinner;
     private Button clear;
+    private Button search;
     private LinearLayout letters;
     private ListView results;
     private ArrayAdapter<String> adapter;
@@ -78,13 +79,17 @@ public class Main extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        // Get data instance
         data = Data.getInstance(this);
 
+        // Find views
         spinner = (Spinner)findViewById(R.id.spinner);
         letters = (LinearLayout)findViewById(R.id.letters);
         results = (ListView)findViewById(R.id.list);
         clear = (Button)findViewById(R.id.clear);
+        search = (Button)findViewById(R.id.search);
 
+        // Set up listeners
         if (spinner != null)
         {
             spinner.setSelection(LETTERS - 1);
@@ -94,6 +99,10 @@ public class Main extends Activity
         if (clear != null)
             clear.setOnClickListener(this);
 
+        if (search != null)
+            search.setOnClickListener(this);
+
+        // Set up letter slots
         if (letters != null)
         {
             for (int i = 0; i < letters.getChildCount(); i++)
@@ -115,8 +124,9 @@ public class Main extends Activity
         if (results != null)
             results.setOnItemClickListener(this);
 
+        // Restore result list
         if (data != null)
-            resultList = data.getList();
+            resultList = data.getResultList();
 
         if (resultList == null)
             resultList = new ArrayList<String>();
@@ -130,6 +140,13 @@ public class Main extends Activity
             results.setAdapter(adapter);
             results.setOnItemSelectedListener(this);
         }
+
+        // Restore word list
+        if (data != null)
+            wordList = data.getWordList();
+
+        if (wordList != null)
+            return;
 
         Resources resources = getResources();
         InputStream stream = resources.openRawResource(R.raw.corncob_lowercase);
@@ -154,6 +171,7 @@ public class Main extends Activity
     {
         super.onResume();
 
+        // Reconnect listener
         data = Data.getInstance(this);
     }
 
@@ -163,9 +181,13 @@ public class Main extends Activity
     {
         super.onPause();
 
+        // Disconnect listener
         data = Data.getInstance(null);
         if (data != null)
-            data.setList(resultList);
+        {
+            data.setResultList(resultList);
+            data.setWordList(wordList);
+        }
     }
 
     // onItemSelected
@@ -243,6 +265,11 @@ public class Main extends Activity
             doClear();
             break;
 
+            // Search
+        case R.id.search:
+            doSearch();
+            break;
+
         default:
             return;
         }
@@ -253,6 +280,7 @@ public class Main extends Activity
     {
         // Build a match string
         StringBuilder buffer = new StringBuilder();
+        boolean empty = true;
         for (int i = 0; i < length; i++)
         {
             TextView text = (TextView)letters.getChildAt(i);
@@ -261,14 +289,23 @@ public class Main extends Activity
                 buffer.append(".");
 
             else
+            {
                 buffer.append(letter.toLowerCase());
+                empty = false;
+            }
         }
+
+        if (empty)
+            return;
 
         String match = buffer.toString();
 
         // Start search task
         if (data != null)
+        {
             data.startSearchTask(match, wordList, resultList);
+            search.setEnabled(false);
+        }
     }
 
     // doClear
@@ -289,5 +326,7 @@ public class Main extends Activity
         // Show results
         if (resultList != null)
             adapter.notifyDataSetChanged();
+
+        search.setEnabled(true);
     }
 }
