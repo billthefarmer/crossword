@@ -18,7 +18,7 @@
         android:id="@+id/chars"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/chars"
+        android:text="@string/letters"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Spinner

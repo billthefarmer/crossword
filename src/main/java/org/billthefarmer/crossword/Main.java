@@ -54,7 +54,6 @@ public class Main extends Activity
                View.OnClickListener
 {
     public static final String TAG = "Crossword";
-    public static final String RESULT_LIST = "result_list";
 
     public static final int LETTERS = 7;
     public static final int RESULTS = 100;
@@ -116,8 +115,8 @@ public class Main extends Activity
         if (results != null)
             results.setOnItemClickListener(this);
 
-        if (savedInstanceState != null)
-            resultList = savedInstanceState.getStringArrayList(RESULT_LIST);
+        if (data != null)
+            resultList = data.getList();
 
         if (resultList == null)
             resultList = new ArrayList<String>();
@@ -165,15 +164,8 @@ public class Main extends Activity
         super.onPause();
 
         data = Data.getInstance(null);
-    }
-
-    // onSaveInstanceState
-    @Override
-    protected void onSaveInstanceState(Bundle outState)
-    {
-        super.onSaveInstanceState(outState);
-        outState.putStringArrayList(RESULT_LIST,
-                                    (ArrayList<String>)resultList);
+        if (data != null)
+            data.setList(resultList);
     }
 
     // onItemSelected
@@ -229,10 +221,7 @@ public class Main extends Activity
         case EditorInfo.IME_ACTION_NEXT:
             String letter = view.getText().toString();
             if (!letter.equals(""))
-            {
                 doSearch();
-                doClear();
-            }
             break;
         }
 
