@@ -2,9 +2,15 @@
 <resources>
 
   <string name="app_name">Crossword</string>
+
   <string name="letters">Letters:</string>
   <string name="hint">"."</string>
   <string name="clear">Clear</string>
   <string name="search">Search</string>
+
+  <string name="about">About</string>
+  <string name="version">Crossword version %s</string>
+  <string name="copyright">Copyright \u00A9 2017 Bill Farmer</string>
+  <string name="licence">Licence: GNU GPLv3</string>
 
 </resources>

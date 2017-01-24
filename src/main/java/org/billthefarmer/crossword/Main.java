@@ -25,10 +25,14 @@ package org.billthefarmer.crossword;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
@@ -189,6 +193,46 @@ public class Main extends Activity
             data.setResultList(resultList);
             data.setWordList(wordList);
         }
+    }
+
+    // On create options menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        // Inflate the menu; this adds items to the action bar if it
+        // is present.
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+
+        return true;
+    }
+
+    // On options item selected
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        // Get id
+
+        int id = item.getItemId();
+        switch (id)
+        {
+            // About
+        case R.id.action_about:
+            return onAboutClick();
+
+        default:
+            return false;
+        }
+    }
+
+    // On about click
+    private boolean onAboutClick()
+    {
+        // Start about activity
+        Intent intent = new Intent(this, AboutActivity.class);
+        startActivity(intent);
+
+        return true;
     }
 
     // onItemSelected
