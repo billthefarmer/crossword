@@ -29,6 +29,10 @@
       </intent-filter>
     </activity>
     <activity
+        android:name="HelpActivity"
+        android:label="@string/help">
+    </activity>
+    <activity
         android:name="AboutActivity"
         android:label="@string/about"
 	android:theme="@android:style/Theme.Holo.Dialog">

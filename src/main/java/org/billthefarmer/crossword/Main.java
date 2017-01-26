@@ -212,10 +212,13 @@ public class Main extends Activity
     public boolean onOptionsItemSelected(MenuItem item)
     {
         // Get id
-
         int id = item.getItemId();
         switch (id)
         {
+            // Help
+        case R.id.action_help:
+            return onHelpClick();
+
             // About
         case R.id.action_about:
             return onAboutClick();
@@ -223,6 +226,16 @@ public class Main extends Activity
         default:
             return false;
         }
+    }
+
+    // On help click
+    private boolean onHelpClick()
+    {
+        // Start help activity
+        Intent intent = new Intent(this, HelpActivity.class);
+        startActivity(intent);
+
+        return true;
     }
 
     // On about click
