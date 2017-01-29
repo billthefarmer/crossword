@@ -46,165 +46,242 @@
 
   </LinearLayout>
 
-  <LinearLayout
-      android:id="@+id/letters"
-      android:orientation="horizontal"
+  <HorizontalScrollView
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
-      android:layout_marginTop="8dp"
+      android:layout_gravity="center"
       android:gravity="center">
 
-    <EditText
-        android:id="@+id/char0"
+    <LinearLayout
+        android:id="@+id/letters"
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:selectAllOnFocus="true"
-        android:maxLength="1"
-        android:hint="@string/hint"
-        android:imeOptions="actionNext"
-        android:inputType="textCapCharacters" />
+        android:layout_marginTop="8dp">
 
-    <EditText
-        android:id="@+id/char1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:selectAllOnFocus="true"
-        android:maxLength="1"
-        android:hint="@string/hint"
-        android:imeOptions="actionNext"
-        android:inputType="textCapCharacters" />
+      <EditText
+          android:id="@+id/letter1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/hint"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
 
-    <EditText
-        android:id="@+id/char2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:selectAllOnFocus="true"
-        android:maxLength="1"
-        android:hint="@string/hint"
-        android:imeOptions="actionNext"
-        android:inputType="textCapCharacters" />
+      <EditText
+          android:id="@+id/letter2"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/hint"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
 
-    <EditText
-        android:id="@+id/char3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:selectAllOnFocus="true"
-        android:maxLength="1"
-        android:hint="@string/hint"
-        android:imeOptions="actionNext"
-        android:inputType="textCapCharacters" />
+      <EditText
+          android:id="@+id/letter3"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/hint"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
 
-    <EditText
-        android:id="@+id/char4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:selectAllOnFocus="true"
-        android:maxLength="1"
-        android:hint="@string/hint"
-        android:imeOptions="actionNext"
-        android:inputType="textCapCharacters" />
+      <EditText
+          android:id="@+id/letter4"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/hint"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
 
-    <EditText
-        android:id="@+id/char5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:selectAllOnFocus="true"
-        android:maxLength="1"
-        android:hint="@string/hint"
-        android:imeOptions="actionNext"
-        android:inputType="textCapCharacters" />
+      <EditText
+          android:id="@+id/letter5"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/hint"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
 
-    <EditText
-        android:id="@+id/char6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:selectAllOnFocus="true"
-        android:maxLength="1"
-        android:hint="@string/hint"
-        android:imeOptions="actionNext"
-        android:inputType="textCapCharacters" />
+      <EditText
+          android:id="@+id/letter6"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/hint"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
 
-    <EditText
-        android:id="@+id/char7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:selectAllOnFocus="true"
-        android:maxLength="1"
-        android:hint="@string/hint"
-        android:imeOptions="actionNext"
-        android:inputType="textCapCharacters" />
+      <EditText
+          android:id="@+id/letter7"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/hint"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
 
-    <EditText
-        android:id="@+id/char8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:selectAllOnFocus="true"
-        android:maxLength="1"
-        android:hint="@string/hint"
-        android:imeOptions="actionNext"
-        android:inputType="textCapCharacters" />
+      <EditText
+          android:id="@+id/letter8"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/hint"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
 
-    <EditText
-        android:id="@+id/char9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:selectAllOnFocus="true"
-        android:maxLength="1"
-        android:hint="@string/hint"
-        android:imeOptions="actionNext"
-        android:inputType="textCapCharacters" />
+      <EditText
+          android:id="@+id/letter9"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/hint"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
 
-    <EditText
-        android:id="@+id/char10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:selectAllOnFocus="true"
-        android:maxLength="1"
-        android:hint="@string/hint"
-        android:imeOptions="actionNext"
-        android:inputType="textCapCharacters" />
+      <EditText
+          android:id="@+id/letter10"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/hint"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
 
-    <EditText
-        android:id="@+id/char11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:selectAllOnFocus="true"
-        android:maxLength="1"
-        android:hint="@string/hint"
-        android:imeOptions="actionNext"
-        android:inputType="textCapCharacters" />
+      <EditText
+          android:id="@+id/letter11"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/hint"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
 
-    <EditText
-        android:id="@+id/char12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:selectAllOnFocus="true"
-        android:maxLength="1"
-        android:hint="@string/hint"
-        android:imeOptions="actionNext"
-        android:inputType="textCapCharacters" />
+      <EditText
+          android:id="@+id/letter12"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/hint"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
 
-    <EditText
-        android:id="@+id/char13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:selectAllOnFocus="true"
-        android:maxLength="1"
-        android:hint="@string/hint"
-        android:imeOptions="actionNext"
-        android:inputType="textCapCharacters" />
+      <EditText
+          android:id="@+id/letter13"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/hint"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
 
-    <EditText
-        android:id="@+id/char14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:selectAllOnFocus="true"
-        android:maxLength="1"
-        android:hint="@string/hint"
-        android:imeOptions="actionNext"
-        android:inputType="textCapCharacters" />
+      <EditText
+          android:id="@+id/letter14"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/hint"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
 
-  </LinearLayout>
+      <EditText
+          android:id="@+id/letter15"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/hint"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
+
+      <EditText
+          android:id="@+id/letter16"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/hint"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
+
+      <EditText
+          android:id="@+id/letter17"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/hint"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
+
+      <EditText
+          android:id="@+id/letter18"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/hint"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
+
+      <EditText
+          android:id="@+id/letter19"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/hint"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
+
+      <EditText
+          android:id="@+id/letter20"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/hint"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
+
+      <EditText
+          android:id="@+id/letter21"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/hint"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
+
+      <EditText
+          android:id="@+id/letter22"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/hint"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
+
+    </LinearLayout>
+
+  </HorizontalScrollView>
 
   <ListView
       android:id="@+id/list"

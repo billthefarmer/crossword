@@ -16,7 +16,7 @@ android {
     buildToolsVersion '24.0.2'
 
     lintOptions {
-	disable 'IconDensities'
+	disable 'IconDensities', 'SetJavaScriptEnabled'
 	// abortOnError false
     }
 }

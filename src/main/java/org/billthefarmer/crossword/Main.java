@@ -59,9 +59,12 @@ public class Main extends Activity
                View.OnClickListener
 {
     public static final String TAG = "Crossword";
+    public static final String URL = "url";
+    public static final String FORMAT =
+        "https://duckduckgo.com/?q=%s&ia=definition";
 
     public static final int LETTERS = 7;
-    public static final int RESULTS = 100;
+    public static final int RESULTS = 256;
 
     private Data data;
 
@@ -292,6 +295,11 @@ public class Main extends Activity
             text.setText(item.substring(i, i+1)
                          .toUpperCase(Locale.getDefault()));
         }
+
+        String url = String.format(Locale.getDefault(), FORMAT, item);
+        Intent intent = new Intent(this, LookupActivity.class);
+        intent.putExtra(URL, url);
+        startActivity(intent);
     }
 
     // onEditorAction
