@@ -2,7 +2,9 @@
 
 Android crossword solver
 
-![Crossword](https://github.com/billthefarmer/billthefarmer.github.io/raw/master/images/Crossword.png)
+![Crossword](https://github.com/billthefarmer/billthefarmer.github.io/raw/master/images/crossword/Crossword.png) ![Definition](https://github.com/billthefarmer/billthefarmer.github.io/raw/master/images/crossword/Definition.png)
+
+![Help](https://github.com/billthefarmer/billthefarmer.github.io/raw/master/images/crossword/Help.png) ![About](https://github.com/billthefarmer/billthefarmer.github.io/raw/master/images/crossword/About.png)
 
 * Words up to 22 letters
 * 58,000 word dictionary
