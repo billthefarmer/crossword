@@ -24,9 +24,11 @@
 package org.billthefarmer.crossword;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 import android.view.KeyEvent;
@@ -56,7 +58,8 @@ public class Main extends Activity
                AdapterView.OnItemClickListener,
                TextView.OnEditorActionListener,
                Data.OnPostExecuteListener,
-               View.OnClickListener
+               View.OnClickListener,
+               TextWatcher
 {
     public static final String TAG = "Crossword";
     public static final String URL = "url";
@@ -126,6 +129,7 @@ public class Main extends Activity
                 }
 
                 letter.setOnEditorActionListener(this);
+                letter.addTextChangedListener(this);
             }
         }
 
@@ -317,6 +321,31 @@ public class Main extends Activity
         return false;
     }
 
+    // onTextChanged
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count)
+    {
+        TextView view = (TextView)getCurrentFocus();
+
+        if (view != null && view.length() > 0)
+        {
+            View next = view.focusSearch(View.FOCUS_RIGHT);
+            if (next != null)
+                next.requestFocus();
+
+            doSearch();
+        }
+
+    }
+
+    // afterTextChanged
+    @Override
+    public void afterTextChanged(Editable s) {}
+
+    // beforeTextChanged
+    @Override
+    public void beforeTextChanged(CharSequence s, int start,
+                                  int count, int after) {}
     // On click
     @Override
     public void onClick(View view)
