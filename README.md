@@ -13,13 +13,14 @@ phone so they will. The longest word in the dictionary is
 counterrevolutionaries, which is 22 letters. Even if 22 slots won't
 fit on the screen, the app should still find this word.
 
-Fill in the letters you have in the slots. Use the keyboard **Next**
-button or the **Search** button to search.
+Fill in the letters you have in the slots. As each letter is entered
+the next slot will be selected and the app will search for words. You
+can also use the the keyboard **Next** button or the **Search** button
+to search.
 
-A list of matching words will appear below. If you use the keyboard
-**Next** button, a search will be done each time you enter a new
-letter. If you touch a word in the list, the slots will be filled in
-with that word, and a web search will be made for the definition on
+A list of matching words will appear below. If you touch a word in the
+list, the slots will be filled in with that word, and a web search
+will be made for the definition on
 [DuckDuckGo](https://duckduckgo.com).
 
 There are two icons in the toolbar, **Help**, which will show the help

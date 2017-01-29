@@ -312,8 +312,7 @@ public class Main extends Activity
         switch (actionId)
         {
         case EditorInfo.IME_ACTION_NEXT:
-            String letter = view.getText().toString();
-            if (!letter.equals(""))
+            if (view.length() > 0)
                 doSearch();
             break;
         }
