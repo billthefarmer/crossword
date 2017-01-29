@@ -4,8 +4,9 @@ Android crossword solver
 
 ![Crossword](https://github.com/billthefarmer/billthefarmer.github.io/raw/master/images/Crossword.png)
 
+* Words up to 22 letters
 * 58,000 word dictionary
-* Up to 22 letters
+* Web search word definitions
 
 Set the number of letters in the word you are looking for using the
 dropdown. If the number of slots won't fit on the screen, rotate the

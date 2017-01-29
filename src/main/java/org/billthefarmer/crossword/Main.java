@@ -296,8 +296,10 @@ public class Main extends Activity
         for (int i = 0; i < length; i++)
         {
             TextView text = (TextView)letters.getChildAt(i);
+            text.removeTextChangedListener(this);
             text.setText(item.substring(i, i+1)
                          .toUpperCase(Locale.getDefault()));
+            text.addTextChangedListener(this);
         }
 
         String url = String.format(Locale.getDefault(), FORMAT, item);
@@ -334,7 +336,6 @@ public class Main extends Activity
 
             doSearch();
         }
-
     }
 
     // afterTextChanged
