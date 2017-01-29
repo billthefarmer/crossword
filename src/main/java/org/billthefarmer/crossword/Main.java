@@ -325,11 +325,11 @@ public class Main extends Activity
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count)
     {
-        TextView view = (TextView)getCurrentFocus();
+        TextView text = (TextView)getCurrentFocus();
 
-        if (view != null && view.length() > 0)
+        if (text != null && text.length() > 0)
         {
-            View next = view.focusSearch(View.FOCUS_RIGHT);
+            View next = text.focusSearch(View.FOCUS_RIGHT);
             if (next != null)
                 next.requestFocus();
 
@@ -410,7 +410,9 @@ public class Main extends Activity
         for (int i = 0; i < length; i++)
         {
             TextView text = (TextView)letters.getChildAt(i);
+            text.removeTextChangedListener(this);
             text.setText("");
+            text.addTextChangedListener(this);
         }
     }
 
