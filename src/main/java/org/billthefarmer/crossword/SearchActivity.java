@@ -49,6 +49,7 @@ public class SearchActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
 
+        // Find web view
         webview = (WebView)findViewById(R.id.webview);
 
         // Enable back navigation on action bar
@@ -56,10 +57,13 @@ public class SearchActivity extends Activity
         if (actionBar != null)
             actionBar.setDisplayHomeAsUpEnabled(true);
 
+        // Get the word from the intent and create url
         Intent intent = getIntent();
         String word = intent.getStringExtra(Main.WORD);
         String url = String.format(Locale.getDefault(), FORMAT, word);
 
+        // Do web search, DuckDuckGo doesn't work unless JavaScript is
+        // enabled
         if (webview != null && url != null)
         {
             WebSettings settings = webview.getSettings();

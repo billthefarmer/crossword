@@ -126,6 +126,7 @@ public class Main extends Activity
                     letter.setText("");
                 }
 
+                // Add listeners
                 letter.setOnEditorActionListener(this);
                 letter.addTextChangedListener(this);
             }
@@ -141,6 +142,7 @@ public class Main extends Activity
         if (resultList == null)
             resultList = new ArrayList<String>();
 
+        // Create adapter
         adapter =
             new ArrayAdapter<String>(this,
                                      android.R.layout.simple_list_item_1,
@@ -155,14 +157,17 @@ public class Main extends Activity
         if (data != null)
             wordList = data.getWordList();
 
+        // Check word list
         if (wordList != null)
             return;
 
+        // Read words from resources
         Resources resources = getResources();
         InputStream stream = resources.openRawResource(R.raw.corncob_lowercase);
         InputStreamReader reader = new InputStreamReader(stream);
         BufferedReader buffer = new BufferedReader(reader);
 
+        // Create word list
         wordList = new ArrayList<String>();
         String word;
 
@@ -193,6 +198,8 @@ public class Main extends Activity
 
         // Disconnect listener
         data = Data.getInstance(null);
+
+        // Save result and word list
         if (data != null)
         {
             data.setResultList(resultList);
@@ -273,6 +280,8 @@ public class Main extends Activity
                 if (i < length)
                     text.setVisibility(View.VISIBLE);
 
+                // Temporarily remove the text change listener to stop
+                // unexpected consequences
                 else
                 {
                     text.setVisibility(View.GONE);
@@ -294,6 +303,8 @@ public class Main extends Activity
         String word = (String)parent.getItemAtPosition(position);
         String s = word.toUpperCase(Locale.getDefault());
 
+        // Fill the letters in the slots and temporarily remove the
+        // text change listener to stop unexpected consequences
         for (int i = 0; i < length; i++)
         {
             TextView text = (TextView)letters.getChildAt(i);
@@ -302,6 +313,7 @@ public class Main extends Activity
             text.addTextChangedListener(this);
         }
 
+        // Start the web search
         Intent intent = new Intent(this, SearchActivity.class);
         intent.putExtra(WORD, word);
         startActivity(intent);
@@ -310,8 +322,10 @@ public class Main extends Activity
     // onEditorAction
     public boolean onEditorAction(TextView view, int actionId, KeyEvent event)
     {
+        // Get id
         switch (actionId)
         {
+            // Do a dictionary search if there is a letter in the slot
         case EditorInfo.IME_ACTION_NEXT:
             if (view.length() > 0)
                 doSearch();
@@ -327,6 +341,8 @@ public class Main extends Activity
     {
         TextView text = (TextView)getCurrentFocus();
 
+        // Can't be sure if we got the right slot, but move focus to
+        // the next one if there is a letter in the slot
         if (text != null && text.length() > 0)
         {
             View next = text.focusSearch(View.FOCUS_RIGHT);
@@ -379,20 +395,25 @@ public class Main extends Activity
         for (int i = 0; i < length; i++)
         {
             TextView text = (TextView)letters.getChildAt(i);
-            String letter = text.getText().toString();
-            if (letter.equals(""))
-                buffer.append(".");
 
-            else
+            // If there is a letter in the slot
+            if (text.length() > 0)
             {
+                String letter = text.getText().toString();
                 buffer.append(letter.toLowerCase(Locale.getDefault()));
                 empty = false;
             }
+
+            // Wildcard
+            else
+                buffer.append(".");
         }
 
+        // Don't search if no letters
         if (empty)
             return;
 
+        // Match string
         String match = buffer.toString();
 
         // Start search task
@@ -406,6 +427,8 @@ public class Main extends Activity
     // doClear
     private void doClear()
     {
+        // Temporarily remove the text change listener to stop
+        // unexpected consequences
         for (int i = 0; i < length; i++)
         {
             TextView text = (TextView)letters.getChildAt(i);
