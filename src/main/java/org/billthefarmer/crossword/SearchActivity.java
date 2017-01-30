@@ -32,9 +32,14 @@ import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-// Lookup
-public class LookupActivity extends Activity
+import java.util.Locale;
+
+// SearchActivity
+public class SearchActivity extends Activity
 {
+    public static final String FORMAT =
+        "https://duckduckgo.com/?q=%s&ia=definition";
+
     private WebView webview;
 
     // Called when the activity is first created
@@ -42,7 +47,7 @@ public class LookupActivity extends Activity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.lookup);
+        setContentView(R.layout.search);
 
         webview = (WebView)findViewById(R.id.webview);
 
@@ -52,7 +57,8 @@ public class LookupActivity extends Activity
             actionBar.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        String url = intent.getStringExtra(Main.URL);
+        String word = intent.getStringExtra(Main.WORD);
+        String url = String.format(Locale.getDefault(), FORMAT, word);
 
         if (webview != null && url != null)
         {

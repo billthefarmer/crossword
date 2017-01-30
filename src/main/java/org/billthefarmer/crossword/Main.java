@@ -36,12 +36,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -62,9 +62,7 @@ public class Main extends Activity
                TextWatcher
 {
     public static final String TAG = "Crossword";
-    public static final String URL = "url";
-    public static final String FORMAT =
-        "https://duckduckgo.com/?q=%s&ia=definition";
+    public static final String WORD = "word";
 
     public static final int LETTERS = 7;
     public static final int RESULTS = 256;
@@ -74,7 +72,7 @@ public class Main extends Activity
     private Spinner spinner;
     private Button clear;
     private Button search;
-    private LinearLayout letters;
+    private ViewGroup letters;
     private ListView results;
     private ArrayAdapter<String> adapter;
 
@@ -95,7 +93,7 @@ public class Main extends Activity
 
         // Find views
         spinner = (Spinner)findViewById(R.id.spinner);
-        letters = (LinearLayout)findViewById(R.id.letters);
+        letters = (ViewGroup)findViewById(R.id.letters);
         results = (ListView)findViewById(R.id.list);
         clear = (Button)findViewById(R.id.clear);
         search = (Button)findViewById(R.id.search);
@@ -271,14 +269,16 @@ public class Main extends Activity
         {
             for (int i = 0; i < letters.getChildCount(); i++)
             {
-                TextView v = (TextView)letters.getChildAt(i);
+                TextView text = (TextView)letters.getChildAt(i);
                 if (i < length)
-                    v.setVisibility(View.VISIBLE);
+                    text.setVisibility(View.VISIBLE);
 
                 else
                 {
-                    v.setVisibility(View.GONE);
-                    v.setText("");
+                    text.setVisibility(View.GONE);
+                    text.removeTextChangedListener(this);
+                    text.setText("");
+                    text.addTextChangedListener(this);
                 }
             }
         }
@@ -291,20 +291,19 @@ public class Main extends Activity
     public void onItemClick(AdapterView<?> parent, View view,
                             int position, long id)
     {
-        String item = (String)parent.getItemAtPosition(position);
+        String word = (String)parent.getItemAtPosition(position);
+        String s = word.toUpperCase(Locale.getDefault());
 
         for (int i = 0; i < length; i++)
         {
             TextView text = (TextView)letters.getChildAt(i);
             text.removeTextChangedListener(this);
-            text.setText(item.substring(i, i+1)
-                         .toUpperCase(Locale.getDefault()));
+            text.setText(s.substring(i, i+1));
             text.addTextChangedListener(this);
         }
 
-        String url = String.format(Locale.getDefault(), FORMAT, item);
-        Intent intent = new Intent(this, LookupActivity.class);
-        intent.putExtra(URL, url);
+        Intent intent = new Intent(this, SearchActivity.class);
+        intent.putExtra(WORD, word);
         startActivity(intent);
     }
 
