@@ -55,11 +55,11 @@ import java.util.List;
 // Main
 public class Main extends Activity
     implements AdapterView.OnItemSelectedListener,
-    AdapterView.OnItemClickListener,
-    TextView.OnEditorActionListener,
-    Data.OnPostExecuteListener,
-    View.OnClickListener,
-    TextWatcher
+               AdapterView.OnItemClickListener,
+               TextView.OnEditorActionListener,
+               Data.OnPostExecuteListener,
+               View.OnClickListener,
+               TextWatcher
 {
     public static final String TAG = "Crossword";
     public static final String WORD = "word";
