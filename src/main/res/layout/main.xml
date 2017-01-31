@@ -65,7 +65,7 @@
           android:layout_height="wrap_content"
           android:selectAllOnFocus="true"
           android:maxLength="1"
-          android:hint="@string/hint"
+          android:hint="@string/num_1"
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters" />
 
@@ -75,7 +75,7 @@
           android:layout_height="wrap_content"
           android:selectAllOnFocus="true"
           android:maxLength="1"
-          android:hint="@string/hint"
+          android:hint="@string/num_2"
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters" />
 
@@ -85,7 +85,7 @@
           android:layout_height="wrap_content"
           android:selectAllOnFocus="true"
           android:maxLength="1"
-          android:hint="@string/hint"
+          android:hint="@string/num_3"
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters" />
 
@@ -95,7 +95,7 @@
           android:layout_height="wrap_content"
           android:selectAllOnFocus="true"
           android:maxLength="1"
-          android:hint="@string/hint"
+          android:hint="@string/num_4"
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters" />
 
@@ -105,7 +105,7 @@
           android:layout_height="wrap_content"
           android:selectAllOnFocus="true"
           android:maxLength="1"
-          android:hint="@string/hint"
+          android:hint="@string/num_5"
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters" />
 
@@ -115,7 +115,7 @@
           android:layout_height="wrap_content"
           android:selectAllOnFocus="true"
           android:maxLength="1"
-          android:hint="@string/hint"
+          android:hint="@string/num_6"
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters" />
 
@@ -125,7 +125,7 @@
           android:layout_height="wrap_content"
           android:selectAllOnFocus="true"
           android:maxLength="1"
-          android:hint="@string/hint"
+          android:hint="@string/num_7"
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters" />
 
@@ -135,7 +135,7 @@
           android:layout_height="wrap_content"
           android:selectAllOnFocus="true"
           android:maxLength="1"
-          android:hint="@string/hint"
+          android:hint="@string/num_8"
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters" />
 
@@ -145,7 +145,7 @@
           android:layout_height="wrap_content"
           android:selectAllOnFocus="true"
           android:maxLength="1"
-          android:hint="@string/hint"
+          android:hint="@string/num_9"
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters" />
 
@@ -155,7 +155,7 @@
           android:layout_height="wrap_content"
           android:selectAllOnFocus="true"
           android:maxLength="1"
-          android:hint="@string/hint"
+          android:hint="@string/num_0"
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters" />
 
@@ -165,7 +165,7 @@
           android:layout_height="wrap_content"
           android:selectAllOnFocus="true"
           android:maxLength="1"
-          android:hint="@string/hint"
+          android:hint="@string/num_1"
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters" />
 
@@ -175,7 +175,7 @@
           android:layout_height="wrap_content"
           android:selectAllOnFocus="true"
           android:maxLength="1"
-          android:hint="@string/hint"
+          android:hint="@string/num_2"
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters" />
 
@@ -185,7 +185,7 @@
           android:layout_height="wrap_content"
           android:selectAllOnFocus="true"
           android:maxLength="1"
-          android:hint="@string/hint"
+          android:hint="@string/num_3"
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters" />
 
@@ -195,7 +195,7 @@
           android:layout_height="wrap_content"
           android:selectAllOnFocus="true"
           android:maxLength="1"
-          android:hint="@string/hint"
+          android:hint="@string/num_4"
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters" />
 
@@ -205,7 +205,7 @@
           android:layout_height="wrap_content"
           android:selectAllOnFocus="true"
           android:maxLength="1"
-          android:hint="@string/hint"
+          android:hint="@string/num_5"
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters" />
 
@@ -215,7 +215,7 @@
           android:layout_height="wrap_content"
           android:selectAllOnFocus="true"
           android:maxLength="1"
-          android:hint="@string/hint"
+          android:hint="@string/num_6"
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters" />
 
@@ -225,7 +225,7 @@
           android:layout_height="wrap_content"
           android:selectAllOnFocus="true"
           android:maxLength="1"
-          android:hint="@string/hint"
+          android:hint="@string/num_7"
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters" />
 
@@ -235,7 +235,7 @@
           android:layout_height="wrap_content"
           android:selectAllOnFocus="true"
           android:maxLength="1"
-          android:hint="@string/hint"
+          android:hint="@string/num_8"
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters" />
 
@@ -245,7 +245,7 @@
           android:layout_height="wrap_content"
           android:selectAllOnFocus="true"
           android:maxLength="1"
-          android:hint="@string/hint"
+          android:hint="@string/num_9"
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters" />
 
@@ -255,7 +255,7 @@
           android:layout_height="wrap_content"
           android:selectAllOnFocus="true"
           android:maxLength="1"
-          android:hint="@string/hint"
+          android:hint="@string/num_0"
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters" />
 
@@ -265,7 +265,7 @@
           android:layout_height="wrap_content"
           android:selectAllOnFocus="true"
           android:maxLength="1"
-          android:hint="@string/hint"
+          android:hint="@string/num_1"
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters" />
 
@@ -275,7 +275,7 @@
           android:layout_height="wrap_content"
           android:selectAllOnFocus="true"
           android:maxLength="1"
-          android:hint="@string/hint"
+          android:hint="@string/num_2"
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters" />
 

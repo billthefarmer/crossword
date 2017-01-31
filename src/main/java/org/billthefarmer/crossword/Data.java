@@ -76,12 +76,10 @@ public class Data
     }
 
     // Start search task
-    protected void startSearchTask(String match, List<String> wordList,
-                                   List<String> resultList)
+    protected void startSearchTask(String match, List<String> wordList)
     {
         SearchTask searchTask = new SearchTask();
         searchTask.wordList = wordList;
-        searchTask.resultList = resultList;
 
         searchTask.execute(match);
     }
@@ -91,17 +89,18 @@ public class Data
         extends AsyncTask<String, Void, List<String>>
     {
         protected List<String> wordList;
-        protected List<String> resultList;
+        private List<String> resultList;
 
         // The system calls this to perform work in a worker thread
         // and delivers it the parameters given to AsyncTask.execute()
         @Override
         protected List<String> doInBackground(String... matches)
         {
-            resultList.clear();
+            resultList = new ArrayList<String>();
+
             String match = matches[0];
             int length = match.length();
-            for (String word: wordList)
+            for (String word : wordList)
             {
                 if (word.length() != length)
                     continue;

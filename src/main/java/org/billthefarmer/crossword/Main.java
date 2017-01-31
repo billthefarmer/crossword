@@ -55,11 +55,11 @@ import java.util.List;
 // Main
 public class Main extends Activity
     implements AdapterView.OnItemSelectedListener,
-               AdapterView.OnItemClickListener,
-               TextView.OnEditorActionListener,
-               Data.OnPostExecuteListener,
-               View.OnClickListener,
-               TextWatcher
+    AdapterView.OnItemClickListener,
+    TextView.OnEditorActionListener,
+    Data.OnPostExecuteListener,
+    View.OnClickListener,
+    TextWatcher
 {
     public static final String TAG = "Crossword";
     public static final String WORD = "word";
@@ -227,11 +227,11 @@ public class Main extends Activity
         int id = item.getItemId();
         switch (id)
         {
-            // Help
+        // Help
         case R.id.action_help:
             return onHelpClick();
 
-            // About
+        // About
         case R.id.action_about:
             return onAboutClick();
 
@@ -309,7 +309,7 @@ public class Main extends Activity
         {
             TextView text = (TextView)letters.getChildAt(i);
             text.removeTextChangedListener(this);
-            text.setText(s.substring(i, i+1));
+            text.setText(s.substring(i, i + 1));
             text.addTextChangedListener(this);
         }
 
@@ -325,7 +325,7 @@ public class Main extends Activity
         // Get id
         switch (actionId)
         {
-            // Do a dictionary search if there is a letter in the slot
+        // Do a dictionary search if there is a letter in the slot
         case EditorInfo.IME_ACTION_NEXT:
             if (view.length() > 0)
                 doSearch();
@@ -371,12 +371,12 @@ public class Main extends Activity
         // Check id
         switch (id)
         {
-            // Clear
+        // Clear
         case R.id.clear:
             doClear();
             break;
 
-            // Search
+        // Search
         case R.id.search:
             doSearch();
             break;
@@ -419,7 +419,7 @@ public class Main extends Activity
         // Start search task
         if (data != null)
         {
-            data.startSearchTask(match, wordList, resultList);
+            data.startSearchTask(match, wordList);
             search.setEnabled(false);
         }
     }
@@ -443,9 +443,17 @@ public class Main extends Activity
     @Override
     public void onPostExecute(List<String> resultList)
     {
-        // Show results
         if (resultList != null)
+        {
+            this.resultList.clear();
+
+            // Add results to list
+            for (String result : resultList)
+                this.resultList.add(result);
+
+            // Show results
             adapter.notifyDataSetChanged();
+        }
 
         search.setEnabled(true);
     }
