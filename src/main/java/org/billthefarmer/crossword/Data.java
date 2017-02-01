@@ -23,8 +23,13 @@
 
 package org.billthefarmer.crossword;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,6 +78,47 @@ public class Data
     public List<String> getResultList()
     {
         return resultList;
+    }
+
+    // Start load task
+    protected void startLoadTask(Context context, int id,
+                                 List<String> wordList)
+    {
+        // Read words from resources
+        Resources resources = context.getResources();
+        InputStream stream = resources.openRawResource(id);
+        InputStreamReader reader = new InputStreamReader(stream);
+        BufferedReader buffer = new BufferedReader(reader);
+
+        LoadTask loadTask = new LoadTask();
+        loadTask.wordList = wordList;
+
+        loadTask.execute(buffer);
+    }
+
+    // LoadTask class
+    protected class LoadTask
+        extends AsyncTask<BufferedReader, Void, Void>
+    {
+        protected List<String> wordList;
+
+        // The system calls this to perform work in a worker thread
+        // and delivers it the parameters given to AsyncTask.execute()
+        @Override
+        protected Void doInBackground(BufferedReader... buffer)
+        {
+            String word;
+
+            try
+            {
+                while ((word = buffer[0].readLine()) != null)
+                    wordList.add(word);
+            }
+
+            catch (Exception e) {}
+
+            return null;
+        }
     }
 
     // Start search task

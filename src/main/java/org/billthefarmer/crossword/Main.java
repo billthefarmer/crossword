@@ -161,23 +161,12 @@ public class Main extends Activity
         if (wordList != null)
             return;
 
-        // Read words from resources
-        Resources resources = getResources();
-        InputStream stream = resources.openRawResource(R.raw.words_en);
-        InputStreamReader reader = new InputStreamReader(stream);
-        BufferedReader buffer = new BufferedReader(reader);
-
         // Create word list
         wordList = new ArrayList<String>();
-        String word;
 
-        try
-        {
-            while ((word = buffer.readLine()) != null)
-                wordList.add(word);
-        }
-
-        catch (Exception e) {}
+        // Load words from resources
+        if (data != null)
+            data.startLoadTask(this, R.raw.words_en, wordList);
     }
 
     // onResume
