@@ -90,9 +90,9 @@ public class Data
         InputStreamReader reader = new InputStreamReader(stream);
         BufferedReader buffer = new BufferedReader(reader);
 
+        // Start the task
         LoadTask loadTask = new LoadTask();
         loadTask.wordList = wordList;
-
         loadTask.execute(buffer);
     }
 
@@ -109,6 +109,7 @@ public class Data
         {
             String word;
 
+            // Read words
             try
             {
                 while ((word = buffer[0].readLine()) != null)
@@ -126,7 +127,6 @@ public class Data
     {
         SearchTask searchTask = new SearchTask();
         searchTask.wordList = wordList;
-
         searchTask.execute(match);
     }
 

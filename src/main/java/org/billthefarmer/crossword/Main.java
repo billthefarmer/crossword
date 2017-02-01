@@ -45,11 +45,8 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Locale;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.List;
 
 // Main
