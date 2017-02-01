@@ -163,7 +163,7 @@ public class Main extends Activity
 
         // Read words from resources
         Resources resources = getResources();
-        InputStream stream = resources.openRawResource(R.raw.corncob_lowercase);
+        InputStream stream = resources.openRawResource(R.raw.words_en);
         InputStreamReader reader = new InputStreamReader(stream);
         BufferedReader buffer = new BufferedReader(reader);
 

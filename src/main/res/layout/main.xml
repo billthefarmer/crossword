@@ -279,6 +279,66 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters" />
 
+      <EditText
+          android:id="@+id/letter23"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/num_3"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
+
+      <EditText
+          android:id="@+id/letter24"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/num_4"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
+
+      <EditText
+          android:id="@+id/letter25"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/num_5"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
+
+      <EditText
+          android:id="@+id/letter26"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/num_6"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
+
+      <EditText
+          android:id="@+id/letter27"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/num_7"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
+
+      <EditText
+          android:id="@+id/letter28"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:selectAllOnFocus="true"
+          android:maxLength="1"
+          android:hint="@string/num_8"
+          android:imeOptions="actionNext"
+          android:inputType="textCapCharacters" />
+
     </LinearLayout>
 
   </HorizontalScrollView>
