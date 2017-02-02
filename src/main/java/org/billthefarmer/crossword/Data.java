@@ -96,7 +96,7 @@ public class Data
         loadTask.execute(buffer);
     }
 
-    // LoadTask class
+    // LoadTask
     protected class LoadTask
         extends AsyncTask<BufferedReader, Void, Void>
     {
@@ -122,6 +122,92 @@ public class Data
         }
     }
 
+    // AnagramTask
+    protected class AnagramTask
+        extends AsyncTask<String, Void, List<String>>
+    {
+        protected List<String> wordList;
+        protected List<String> anagramList;
+
+        // The system calls this to perform work in a worker thread
+        // and delivers it the parameters given to AsyncTask.execute()
+        @Override
+        protected List<String> doInBackground(String... phrases)
+        {
+            return null;
+        }
+
+        // findWords
+        private Element[] findWords(String phrase, String[] words)
+        {
+            ArrayList elements = new ArrayList<Element>();
+
+            for (int i = 0; i < words.length; i++)
+            {
+                char[] p;
+
+                if ((p = findString(words[i], phrase)) != null)
+                    elements.add(new Element(words[i], new String(p)));
+            }
+
+            return (Element[]) elements.toArray(new Element[elements.size()]);
+        }
+
+        // findAnagrams
+        private void findAnagrams(Element elements[])
+        {
+            int index = 0;
+            for (Element element: elements)
+                anagram(elements, ++index, element);
+        }
+
+        // anagram
+        private void anagram(Element elements[], int index, Element element)
+        {
+            if (element.phrase.trim().length() == 0)
+            {
+                // showAnagram(element);
+                return;
+            }
+
+            for (int j = index; j < elements.length; j++)
+            {
+                char[] p;
+
+                if ((p = findString(elements[j].word, element.phrase)) != null)
+                    anagram(elements, j + 1, new
+                            Element(elements[j].word, new String(p), element));
+            }
+        }
+
+        private char findString(String w, String p)[]
+        {
+            char word[] = w.toCharArray();
+            char phrase[] = p.toCharArray();
+
+            for (char cw: word)
+            {
+                boolean found = false;
+                int index = 0;
+                for (char cp: phrase)
+                {
+                    if (cp == cw)
+                    {
+                        found = true;
+                        phrase[index] = ' ';
+                        break;
+                    }
+                    index++;
+                }
+
+                if (!found)
+                    return null;
+            }
+
+            return phrase;
+        }
+    }
+
     // Start search task
     protected void startSearchTask(String match, List<String> wordList)
     {
@@ -130,7 +216,7 @@ public class Data
         searchTask.execute(match);
     }
 
-    // SearchTask class
+    // SearchTask
     protected class SearchTask
         extends AsyncTask<String, Void, List<String>>
     {
