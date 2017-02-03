@@ -128,56 +128,79 @@ public class Data
     {
         protected List<String> wordList;
         protected List<String> anagramList;
+        private List<Element> elementList;
 
         // The system calls this to perform work in a worker thread
         // and delivers it the parameters given to AsyncTask.execute()
         @Override
         protected List<String> doInBackground(String... phrases)
         {
-            return null;
+            anagramList = new ArrayList<String>();
+
+            elementList = findWords(phrases[0], wordList);
+            findAnagrams(elementList);
+            return anagramList;
+        }
+
+        // The system calls this to perform work in the UI thread and
+        // delivers the result from doInBackground()
+        @Override
+        protected void onPostExecute(List<String> result)
+        {
+            if (listener != null)
+                listener.onPostExecute(result);
         }
 
         // findWords
-        private Element[] findWords(String phrase, String[] words)
+        private List<Element> findWords(String phrase, List<String> wordList)
         {
-            ArrayList elements = new ArrayList<Element>();
+            ArrayList elementList = new ArrayList<Element>();
 
-            for (int i = 0; i < words.length; i++)
+            for (String word: wordList)
             {
-                char[] p;
+                char p[];
 
-                if ((p = findString(words[i], phrase)) != null)
-                    elements.add(new Element(words[i], new String(p)));
+                if ((p = findString(word, phrase)) != null)
+                    elementList.add(new Element(word, new String(p)));
             }
 
-            return (Element[]) elements.toArray(new Element[elements.size()]);
+            return elementList;
         }
 
         // findAnagrams
-        private void findAnagrams(Element elements[])
+        private void findAnagrams(List<Element> elementList)
         {
+            int length = elementList.size();
             int index = 0;
-            for (Element element: elements)
-                anagram(elements, ++index, element);
+            List<String> wordList = new ArrayList<String>();
+            for (Element element: elementList)
+                anagram(wordList, elementList.subList(++index, length),
+                        element);
         }
 
         // anagram
-        private void anagram(Element elements[], int index, Element element)
+        private void anagram(List<String> wordList, List<Element> elementList,
+                             Element element)
         {
             if (element.phrase.trim().length() == 0)
             {
-                // showAnagram(element);
+                addAnagram(wordList);
                 return;
             }
 
-            for (int j = index; j < elements.length; j++)
+            int index = 0;
+            wordList.add(element.word);
+            int length = elementList.size();
+            for (Element e: elementList)
             {
-                char[] p;
+                char p[];
+                index++;
 
-                if ((p = findString(elements[j].word, element.phrase)) != null)
-                    anagram(elements, j + 1, new
-                            Element(elements[j].word, new String(p), element));
+                if ((p = findString(e.word, element.phrase)) != null)
+                    anagram(wordList, elementList.subList(index, length),
+                            new Element(e.word, new String(p)));
             }
+            wordList.remove(element.word);
         }
 
         private char findString(String w, String p)[]
@@ -208,7 +231,7 @@ public class Data
         }
 
         // showAnagram
-        private void showAnagram(Element element)
+        private void addAnagram(List<String> list)
         {
             // Queue<String> words = new ArrayDeque<String>();
 

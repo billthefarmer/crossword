@@ -29,6 +29,7 @@ import android.os.Bundle;
 import android.os.Bundle;
 import android.content.Intent;
 import android.util.Log;
+import android.view.MenuItem;
 
 import java.util.Locale;
 
@@ -41,5 +42,30 @@ public class AnagramActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.anagram);
+
+        // Enable back navigation on action bar
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    // On options item selected
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        // Get id
+        int id = item.getItemId();
+        switch (id)
+        {
+        // Home
+        case android.R.id.home:
+            finish();
+            break;
+
+        default:
+            return false;
+        }
+
+        return true;
     }
 }

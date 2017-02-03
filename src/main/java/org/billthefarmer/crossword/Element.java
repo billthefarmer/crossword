@@ -53,20 +53,12 @@ public class Element
 
     protected String word;
     protected String phrase;
-    protected Element last;
 
     // Element
     public Element(String word, String phrase)
     {
-        this(word, phrase, null);
-    }
-
-    // Element
-    public Element(String word, String phrase, Element last)
-    {
         this.word = word;
         this.phrase = phrase;
-        this.last = last;
     }
 
     // getValue
