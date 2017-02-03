@@ -26,16 +26,36 @@ package org.billthefarmer.crossword;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Bundle;
-import android.content.Intent;
 import android.util.Log;
+import android.view.inputmethod.EditorInfo;
+import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 // AnagramActivity
 public class AnagramActivity extends Activity
+    implements AdapterView.OnItemClickListener,
+               TextView.OnEditorActionListener,
+               Data.OnPostExecuteListener,
+               View.OnClickListener
 {
+    private Data data;
+    private Button search;
+    private ListView listView;
+    private TextView textView;
+    private ArrayAdapter adapter;
+    private List<String> wordList;
+    private List<String> anagramList;
+
     // Called when the activity is first created
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -43,10 +63,82 @@ public class AnagramActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.anagram);
 
+        // Get data instance
+        data = Data.getInstance(this);
+
         // Enable back navigation on action bar
         ActionBar actionBar = getActionBar();
         if (actionBar != null)
             actionBar.setDisplayHomeAsUpEnabled(true);
+
+        textView = (TextView)findViewById(R.id.phrase);
+        search = (Button)findViewById(R.id.search);
+        listView = (ListView)findViewById(R.id.list);
+
+        if (textView != null)
+            textView.setOnEditorActionListener(this);
+        if (search != null)
+            search.setOnClickListener(this);
+
+        // Restore anagram list
+        if (data != null)
+            anagramList = data.getAnagramList();
+
+        if (anagramList == null)
+            anagramList = new ArrayList<String>();
+
+        if (listView != null)
+            listView.setOnItemClickListener(this);
+
+        // Create adapter
+        adapter =
+            new ArrayAdapter<String>(this,
+                                     android.R.layout.simple_list_item_1,
+                                     anagramList);
+        if (listView != null)
+            listView.setAdapter(adapter);
+
+        // Restore word list
+        if (data != null)
+            wordList = data.getWordList();
+
+        // Check word list
+        if (wordList != null)
+            return;
+
+        // Create word list
+        wordList = new ArrayList<String>();
+
+        // Load words from resources
+        if (data != null)
+            data.startLoadTask(this, R.raw.words_en, wordList);
+    }
+
+    // onResume
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        // Reconnect listener
+        data = Data.getInstance(this);
+    }
+
+    // onPause
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+
+        // Disconnect listener
+        data = Data.getInstance(null);
+
+        // Save anagram and word list
+        if (data != null)
+        {
+            data.setAnagramList(anagramList);
+            data.setWordList(wordList);
+        }
     }
 
     // On options item selected
@@ -67,5 +159,59 @@ public class AnagramActivity extends Activity
         }
 
         return true;
+    }
+
+    // onItemClick
+    public void onItemClick(AdapterView<?> parent, View view,
+                            int position, long id)
+    {
+    }
+
+    // onEditorAction
+    public boolean onEditorAction(TextView view, int actionId, KeyEvent event)
+    {
+        // Get id
+        switch (actionId)
+        {
+            // Find anagrams
+        case EditorInfo.IME_ACTION_DONE:
+            doSearch();
+            break;
+        }
+
+        return false;
+    }
+
+    // On click
+    @Override
+    public void onClick(View view)
+    {
+        // Get id
+        int id = view.getId();
+
+        // Check id
+        switch (id)
+        {
+        // Search
+        case R.id.search:
+            // doSearch();
+            break;
+
+        default:
+            return;
+        }
+    }
+
+    private void doSearch()
+    {
+        if (data != null && textView != null)
+            data.startAnagramTask(textView.getText().toString(), wordList);
+    }
+
+    // The system calls this to perform work in the UI thread and
+    // delivers the result from doInBackground()
+    @Override
+    public void onPostExecute(List<String> resultList)
+    {
     }
 }

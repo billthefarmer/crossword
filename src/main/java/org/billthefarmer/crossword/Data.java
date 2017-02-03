@@ -38,6 +38,7 @@ public class Data
 {
     private static Data instance;
 
+    private List<String> anagramList;
     private List<String> resultList;
     private List<String> wordList;
 
@@ -80,6 +81,18 @@ public class Data
         return resultList;
     }
 
+    // Set list
+    public void setAnagramList(List<String> list)
+    {
+        anagramList = list;
+    }
+
+    // Get list
+    public List<String> getAnagramList()
+    {
+        return anagramList;
+    }
+
     // Start load task
     protected void startLoadTask(Context context, int id,
                                  List<String> wordList)
@@ -120,6 +133,15 @@ public class Data
 
             return null;
         }
+    }
+
+    // startAnagramTask
+    protected void startAnagramTask(String phrase, List<String> wordList)
+    {
+        // Start the task
+        AnagramTask anagramTask = new AnagramTask();
+        anagramTask.wordList = wordList;
+        anagramTask.execute(phrase);
     }
 
     // AnagramTask
