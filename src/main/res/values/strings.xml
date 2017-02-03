@@ -6,6 +6,8 @@
   <string name="letters">Letters:</string>
   <string name="clear">Clear</string>
   <string name="search">Search</string>
+  <string name="anagram">Anagram</string>
+  <string name="hint">Enter word or phrase</string>
 
   <string name="num_1">1</string>
   <string name="num_2">2</string>

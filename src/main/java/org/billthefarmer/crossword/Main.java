@@ -213,17 +213,31 @@ public class Main extends Activity
         int id = item.getItemId();
         switch (id)
         {
-        // Help
+            // Anagram
+        case R.id.action_anagram:
+            return onAnagramClick();
+
+            // Help
         case R.id.action_help:
             return onHelpClick();
 
-        // About
+            // About
         case R.id.action_about:
             return onAboutClick();
 
         default:
             return false;
         }
+    }
+
+    // On anagram click
+    private boolean onAnagramClick()
+    {
+        // Start anagram activity
+        Intent intent = new Intent(this, AnagramActivity.class);
+        startActivity(intent);
+
+        return true;
     }
 
     // On help click

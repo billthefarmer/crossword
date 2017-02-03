@@ -206,6 +206,21 @@ public class Data
 
             return phrase;
         }
+
+        // showAnagram
+        private void showAnagram(Element element)
+        {
+            // Queue<String> words = new ArrayDeque<String>();
+
+            // while ((element = element.last) != null)
+            //     words.add(element.word);
+			
+            // while (words.peek())
+            // {
+            // }
+
+            // anagrams++;
+        }
     }
 
     // Start search task

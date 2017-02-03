@@ -3,6 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
   <item
+      android:id="@+id/action_anagram"
+      android:showAsAction="ifRoom"
+      android:title="@string/anagram"
+      android:icon="@drawable/ic_action_chat" />
+
+  <item
       android:id="@+id/action_help"
       android:showAsAction="ifRoom"
       android:title="@string/help"
