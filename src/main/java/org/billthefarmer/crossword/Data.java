@@ -26,16 +26,21 @@ package org.billthefarmer.crossword;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 // Data class
 public class Data
 {
+    private static final String TAG = "Anagram";
+    private static final int LENGTH = 2;
+
     private static Data instance;
 
     private List<String> anagramList;
@@ -151,6 +156,7 @@ public class Data
         protected List<String> wordList;
         protected List<String> anagramList;
         private List<Element> elementList;
+        private int anagrams;
 
         // The system calls this to perform work in a worker thread
         // and delivers it the parameters given to AsyncTask.execute()
@@ -181,6 +187,8 @@ public class Data
             for (String word: wordList)
             {
                 char p[];
+                if (word.length() <= 2)
+                    continue;
 
                 if ((p = findString(word, phrase)) != null)
                     elementList.add(new Element(word, new String(p)));
@@ -206,7 +214,9 @@ public class Data
         {
             if (element.phrase.trim().length() == 0)
             {
+                wordList.add(element.word);
                 addAnagram(wordList);
+                wordList.remove(element.word);
                 return;
             }
 
@@ -255,16 +265,62 @@ public class Data
         // showAnagram
         private void addAnagram(List<String> list)
         {
-            // Queue<String> words = new ArrayDeque<String>();
+            StringBuilder buffer = new StringBuilder();
+            for (String word: list)
+                buffer.append(word + " ");
 
-            // while ((element = element.last) != null)
-            //     words.add(element.word);
-			
-            // while (words.peek())
-            // {
-            // }
+            anagramList.add(buffer.toString().trim());
+            anagrams++;
+        }
 
-            // anagrams++;
+        // getValue
+        protected float getValue(String word)
+        {
+            float value = 0;
+            char chars[] = word.toCharArray();
+
+            for (char c: chars)
+            {
+                int i = letterList.indexOf(c);
+                value *= valueList.get(i);
+            }
+
+            return value;
+        }
+    }
+
+    // Scrabble letter values:
+    // A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+    // 1 3 3 2 1 4 2 4 1 8 5 1 3 1 1 3 1 1 1 1 1 4 4 8 4 1
+    //                                 0                 0
+
+    // Letter values
+    private static final Integer values[] =
+    {1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3,
+     1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10};
+
+    // Letters
+    private static final Character letters[] =
+    {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+     'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+
+    // Lists
+    private static final List<Integer> valueList =
+        Arrays.asList(values);
+    private static final List<Character> letterList =
+        Arrays.asList(letters);
+
+    // Element
+    public class Element
+    {
+        protected String word;
+        protected String phrase;
+
+        // Element
+        public Element(String word, String phrase)
+        {
+            this.word = word;
+            this.phrase = phrase;
         }
     }
 

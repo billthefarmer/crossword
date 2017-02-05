@@ -24,7 +24,6 @@
 package org.billthefarmer.crossword;
 
 import java.util.Arrays;
-import java.util.ArrayList;
 import java.util.List;
 
 // Element

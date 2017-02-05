@@ -194,7 +194,7 @@ public class AnagramActivity extends Activity
         {
         // Search
         case R.id.search:
-            // doSearch();
+            doSearch();
             break;
 
         default:
@@ -204,8 +204,13 @@ public class AnagramActivity extends Activity
 
     private void doSearch()
     {
+        search.setEnabled(false);
         if (data != null && textView != null)
-            data.startAnagramTask(textView.getText().toString(), wordList);
+        {
+            String phrase = textView.getText().toString().toLowerCase();
+                if (phrase.length() > 0)
+                    data.startAnagramTask(phrase, wordList);
+        }
     }
 
     // The system calls this to perform work in the UI thread and
@@ -213,5 +218,12 @@ public class AnagramActivity extends Activity
     @Override
     public void onPostExecute(List<String> resultList)
     {
+        anagramList.clear();
+
+        for (String anagram: resultList)
+            anagramList.add(anagram);
+
+        adapter.notifyDataSetChanged();
+        search.setEnabled(true);
     }
 }
