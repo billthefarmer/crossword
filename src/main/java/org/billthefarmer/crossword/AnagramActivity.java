@@ -151,12 +151,7 @@ public class AnagramActivity extends Activity
         {
         // Home
         case android.R.id.home:
-            // Discard anagram word list
-            if (data != null)
-                data.setWordList(null);
-
-            // Done
-            finish();
+            onBackPressed();
             break;
 
         default:
@@ -166,6 +161,16 @@ public class AnagramActivity extends Activity
         return true;
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        // Discard anagram word list
+        if (data != null)
+            data.setWordList(null);
+
+        // Done
+        finish();
+    }
     // onItemClick
     public void onItemClick(AdapterView<?> parent, View view,
                             int position, long id)
