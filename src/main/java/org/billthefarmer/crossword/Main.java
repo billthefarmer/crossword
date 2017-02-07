@@ -330,7 +330,7 @@ public class Main extends Activity
         {
         // Do a dictionary search if there is a letter in the slot
         case EditorInfo.IME_ACTION_NEXT:
-            if (view.length() > 0)
+            if (view.length() > 0 && !data.getSearching())
                 doSearch();
             break;
         }

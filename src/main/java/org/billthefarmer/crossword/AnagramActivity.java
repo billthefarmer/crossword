@@ -215,7 +215,7 @@ public class AnagramActivity extends Activity
     private void doSearch()
     {
         search.setEnabled(false);
-        if (data != null && textView != null)
+        if (data != null && !data.getSearching() && textView != null)
         {
             String phrase = textView.getText()
                 .toString().toLowerCase(Locale.getDefault());

@@ -48,6 +48,7 @@ public class Data
     private List<String> resultList;
     private List<Float> valueList;
     private List<String> wordList;
+    private boolean searching;
 
     private OnPostExecuteListener listener;
 
@@ -100,6 +101,12 @@ public class Data
         return anagramList;
     }
 
+    // Get searching
+    public boolean getSearching()
+    {
+        return searching;
+    }
+
     // Start load task
     protected void startLoadTask(Context context, int id,
                                  List<String> wordList)
@@ -149,6 +156,7 @@ public class Data
         AnagramTask anagramTask = new AnagramTask();
         anagramTask.wordList = wordList;
         anagramTask.execute(phrase);
+        searching = true;
     }
 
     // AnagramTask
@@ -184,7 +192,6 @@ public class Data
             Collections.reverse(list);
             for (float value: list)
             {
-                Log.d(TAG, "Value " + value);
                 int index = valueList.indexOf(value);
                 resultList.add(anagramList.get(index));
                 anagramList.remove(index);
@@ -193,6 +200,7 @@ public class Data
 
             if (listener != null)
                 listener.onPostExecute(resultList);
+            searching = false;
         }
 
         // findWords
@@ -350,6 +358,7 @@ public class Data
         SearchTask searchTask = new SearchTask();
         searchTask.wordList = wordList;
         searchTask.execute(match);
+        searching = true;
     }
 
     // SearchTask
@@ -391,6 +400,7 @@ public class Data
         {
             if (listener != null)
                 listener.onPostExecute(result);
+            searching = false;
         }
     }
 
