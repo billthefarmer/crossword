@@ -33,6 +33,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 // Data class
@@ -45,6 +46,7 @@ public class Data
 
     private List<String> anagramList;
     private List<String> resultList;
+    private List<Float> valueList;
     private List<String> wordList;
 
     private OnPostExecuteListener listener;
@@ -164,6 +166,7 @@ public class Data
         protected List<String> doInBackground(String... phrases)
         {
             anagramList = new ArrayList<String>();
+            valueList = new ArrayList<Float>();
 
             elementList = findWords(phrases[0], wordList);
             findAnagrams(elementList);
@@ -173,10 +176,23 @@ public class Data
         // The system calls this to perform work in the UI thread and
         // delivers the result from doInBackground()
         @Override
-        protected void onPostExecute(List<String> result)
+        protected void onPostExecute(List<String> anagramList)
         {
+            List<String> resultList = new ArrayList<String>();
+            List<Float> list = new ArrayList<Float>(valueList);
+            Collections.sort(list);
+            Collections.reverse(list);
+            for (float value: list)
+            {
+                Log.d(TAG, "Value " + value);
+                int index = valueList.indexOf(value);
+                resultList.add(anagramList.get(index));
+                anagramList.remove(index);
+                valueList.remove(index);
+            }
+
             if (listener != null)
-                listener.onPostExecute(result);
+                listener.onPostExecute(resultList);
         }
 
         // findWords
@@ -265,24 +281,28 @@ public class Data
         // showAnagram
         private void addAnagram(List<String> list)
         {
+            float value = 0;
             StringBuilder buffer = new StringBuilder();
             for (String word: list)
+            {
                 buffer.append(word + " ");
-
+                value += getValue(word);
+            }
             anagramList.add(buffer.toString().trim());
+            valueList.add(value);
             anagrams++;
         }
 
         // getValue
         protected float getValue(String word)
         {
-            float value = 0;
+            float value = 1;
             char chars[] = word.toCharArray();
 
             for (char c: chars)
             {
-                int i = letterList.indexOf(c);
-                value *= valueList.get(i);
+                int i = lettersList.indexOf(c);
+                value *= valuesList.get(i);
             }
 
             return value;
@@ -305,9 +325,9 @@ public class Data
      'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
     // Lists
-    private static final List<Integer> valueList =
+    private static final List<Integer> valuesList =
         Arrays.asList(values);
-    private static final List<Character> letterList =
+    private static final List<Character> lettersList =
         Arrays.asList(letters);
 
     // Element
