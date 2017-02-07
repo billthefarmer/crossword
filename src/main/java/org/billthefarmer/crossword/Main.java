@@ -232,6 +232,10 @@ public class Main extends Activity
     // On anagram click
     private boolean onAnagramClick()
     {
+        // Discard crossword word list
+        if (data != null)
+            data.setWordList(null);
+
         // Start anagram activity
         Intent intent = new Intent(this, AnagramActivity.class);
         startActivity(intent);

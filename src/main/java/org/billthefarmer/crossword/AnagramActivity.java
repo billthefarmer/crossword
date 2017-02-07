@@ -111,7 +111,7 @@ public class AnagramActivity extends Activity
 
         // Load words from resources
         if (data != null)
-            data.startLoadTask(this, R.raw.words_en, wordList);
+            data.startLoadTask(this, R.raw.corncob_lowercase, wordList);
     }
 
     // onResume
@@ -151,6 +151,11 @@ public class AnagramActivity extends Activity
         {
         // Home
         case android.R.id.home:
+            // Discard anagram word list
+            if (data != null)
+                data.setWordList(null);
+
+            // Done
             finish();
             break;
 
