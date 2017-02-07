@@ -259,6 +259,7 @@ public class Data
             wordList.remove(element.word);
         }
 
+        // findString
         private char findString(String w, String p)[]
         {
             char word[] = w.toCharArray();
