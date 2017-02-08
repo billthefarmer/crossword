@@ -48,6 +48,8 @@ public class AnagramActivity extends Activity
                Data.OnPostExecuteListener,
                View.OnClickListener
 {
+    public static final int ANAGRAMS = 1024;
+
     private Data data;
     private Button search;
     private ListView listView;

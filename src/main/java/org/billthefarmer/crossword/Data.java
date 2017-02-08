@@ -31,9 +31,11 @@ import android.util.Log;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
 
 // Data class
@@ -166,7 +168,6 @@ public class Data
         protected List<String> wordList;
         protected List<String> anagramList;
         private List<Element> elementList;
-        private int anagrams;
 
         // The system calls this to perform work in a worker thread
         // and delivers it the parameters given to AsyncTask.execute()
@@ -226,26 +227,23 @@ public class Data
         {
             int length = elementList.size();
             int index = 0;
-            List<String> wordList = new ArrayList<String>();
             for (Element element: elementList)
-                anagram(wordList, elementList.subList(++index, length),
-                        element);
+                anagram(elementList.subList(++index, length), element);
         }
 
         // anagram
-        private void anagram(List<String> wordList, List<Element> elementList,
-                             Element element)
+        private void anagram(List<Element> elementList, Element element)
         {
+            if (anagramList.size() >= AnagramActivity.ANAGRAMS)
+                return;
+
             if (element.phrase.trim().length() == 0)
             {
-                wordList.add(element.word);
-                addAnagram(wordList);
-                wordList.remove(element.word);
+                addAnagram(element);
                 return;
             }
 
             int index = 0;
-            wordList.add(element.word);
             int length = elementList.size();
             for (Element e: elementList)
             {
@@ -253,10 +251,9 @@ public class Data
                 index++;
 
                 if ((p = findString(e.word, element.phrase)) != null)
-                    anagram(wordList, elementList.subList(index, length),
-                            new Element(e.word, new String(p)));
+                    anagram(elementList.subList(index, length),
+                            new Element(e.word, new String(p), element));
             }
-            wordList.remove(element.word);
         }
 
         // findString
@@ -288,18 +285,25 @@ public class Data
         }
 
         // showAnagram
-        private void addAnagram(List<String> list)
+        private void addAnagram(Element element)
         {
+            Deque<String> stack = new ArrayDeque<String>();
+            while (element != null)
+            {
+                stack.push(element.word);
+                element = element.last;
+            }
+
             float value = 0;
             StringBuilder buffer = new StringBuilder();
-            for (String word: list)
+            while (stack.peek() != null)
             {
+                String word = stack.pop();
                 buffer.append(word + " ");
                 value += getValue(word);
             }
             anagramList.add(buffer.toString().trim());
             valueList.add(value);
-            anagrams++;
         }
 
         // getValue
@@ -344,12 +348,20 @@ public class Data
     {
         protected String word;
         protected String phrase;
+        protected Element last;
 
         // Element
         public Element(String word, String phrase)
         {
+            this(word, phrase, null);
+        }
+
+        // Element
+        public Element(String word, String phrase, Element last)
+        {
             this.word = word;
             this.phrase = phrase;
+            this.last = last;
         }
     }
 
