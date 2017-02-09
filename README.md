@@ -4,7 +4,7 @@ Android crossword solver. The app is available on [F-Droid](https://f-droid.org/
 
 ![Crossword](https://github.com/billthefarmer/billthefarmer.github.io/raw/master/images/crossword/Crossword.png) ![Definition](https://github.com/billthefarmer/billthefarmer.github.io/raw/master/images/crossword/Definition.png)
 
-![Help](https://github.com/billthefarmer/billthefarmer.github.io/raw/master/images/crossword/Help.png) ![About](https://github.com/billthefarmer/billthefarmer.github.io/raw/master/images/crossword/About.png)
+![Help](https://github.com/billthefarmer/billthefarmer.github.io/raw/master/images/crossword/Help.png) ![Anagram](https://github.com/billthefarmer/billthefarmer.github.io/raw/master/images/crossword/Anagram.png)
 
 * Words up to 28 letters
 * 110,000 word dictionary
