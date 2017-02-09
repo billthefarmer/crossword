@@ -240,7 +240,7 @@ public class Data
         {
             while (element != null)
             {
-                anagram(element, element);
+                anagram(element.next, element);
                 element = element.next;
             }
         }
@@ -263,7 +263,7 @@ public class Data
 
                 if ((p = findString(elements.word, element.phrase)) != null)
                 {
-                    if (anagram(elements,
+                    if (anagram(elements.next,
                                 new Element(elements.word,
                                             new String(p), element)))
                         return true;
