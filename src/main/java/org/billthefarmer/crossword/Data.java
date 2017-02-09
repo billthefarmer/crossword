@@ -48,7 +48,6 @@ public class Data
 
     private List<String> anagramList;
     private List<String> resultList;
-    private List<Float> valueList;
     private List<String> wordList;
     private boolean searching;
 
@@ -166,8 +165,9 @@ public class Data
         extends AsyncTask<String, Void, List<String>>
     {
         protected List<String> wordList;
-        protected List<String> anagramList;
-        private List<Element> elementList;
+        private List<String> anagramList;
+        private List<Float> valueList;
+        private Element elements;
 
         // The system calls this to perform work in a worker thread
         // and delivers it the parameters given to AsyncTask.execute()
@@ -177,8 +177,8 @@ public class Data
             anagramList = new ArrayList<String>();
             valueList = new ArrayList<Float>();
 
-            elementList = findWords(phrases[0], wordList);
-            findAnagrams(elementList);
+            elements = findWords(phrases[0], wordList);
+            findAnagrams(elements);
             return anagramList;
         }
 
@@ -205,9 +205,10 @@ public class Data
         }
 
         // findWords
-        private List<Element> findWords(String phrase, List<String> wordList)
+        private Element findWords(String phrase, List<String> wordList)
         {
-            ArrayList elementList = new ArrayList<Element>();
+            Element elements = null;
+            Element element = null;
 
             for (String word: wordList)
             {
@@ -216,44 +217,62 @@ public class Data
                     continue;
 
                 if ((p = findString(word, phrase)) != null)
-                    elementList.add(new Element(word, new String(p)));
+                {
+                    if (element == null)
+                    {
+                        element = new Element(word, new String(p));
+                        elements = element;
+                    }
+
+                    else
+                    {
+                        element.next = new Element(word, new String(p));
+                        element = element.next;
+                    }
+                }
             }
 
-            return elementList;
+            return elements;
         }
 
         // findAnagrams
-        private void findAnagrams(List<Element> elementList)
+        private void findAnagrams(Element element)
         {
-            int length = elementList.size();
-            int index = 0;
-            for (Element element: elementList)
-                anagram(elementList.subList(++index, length), element);
+            while (element != null)
+            {
+                anagram(element, element);
+                element = element.next;
+            }
         }
 
         // anagram
-        private void anagram(List<Element> elementList, Element element)
+        private boolean anagram(Element elements, Element element)
         {
             if (anagramList.size() >= AnagramActivity.ANAGRAMS)
-                return;
+                return true;
 
             if (element.phrase.trim().length() == 0)
             {
                 addAnagram(element);
-                return;
+                return true;
             }
 
-            int index = 0;
-            int length = elementList.size();
-            for (Element e: elementList)
+            while (elements != null)
             {
                 char p[];
-                index++;
 
-                if ((p = findString(e.word, element.phrase)) != null)
-                    anagram(elementList.subList(index, length),
-                            new Element(e.word, new String(p), element));
+                if ((p = findString(elements.word, element.phrase)) != null)
+                {
+                    if (anagram(elements,
+                                new Element(elements.word,
+                                            new String(p), element)))
+                        return true;
+                }
+
+                elements = elements.next;
             }
+
+            return false;
         }
 
         // findString
@@ -349,19 +368,33 @@ public class Data
         protected String word;
         protected String phrase;
         protected Element last;
+        protected Element next;
+
+        // Element
+        public Element()
+        {
+            this(null, null, null, null);
+        }
 
         // Element
         public Element(String word, String phrase)
         {
-            this(word, phrase, null);
+            this(word, phrase, null, null);
         }
 
         // Element
         public Element(String word, String phrase, Element last)
         {
+            this(word, phrase, last, null);
+        }
+
+        // Element
+        public Element(String word, String phrase, Element last, Element next)
+        {
             this.word = word;
             this.phrase = phrase;
             this.last = last;
+            this.next = next;
         }
     }
 

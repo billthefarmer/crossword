@@ -25,6 +25,7 @@ package org.billthefarmer.crossword;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.inputmethod.EditorInfo;
@@ -65,9 +66,6 @@ public class AnagramActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.anagram);
 
-        // Get data instance
-        data = Data.getInstance(this);
-
         // Enable back navigation on action bar
         ActionBar actionBar = getActionBar();
         if (actionBar != null)
@@ -79,8 +77,15 @@ public class AnagramActivity extends Activity
 
         if (textView != null)
             textView.setOnEditorActionListener(this);
+
         if (search != null)
             search.setOnClickListener(this);
+
+        if (listView != null)
+            listView.setOnItemClickListener(this);
+
+        // Get data instance
+        data = Data.getInstance(this);
 
         // Restore anagram list
         if (data != null)
@@ -88,9 +93,6 @@ public class AnagramActivity extends Activity
 
         if (anagramList == null)
             anagramList = new ArrayList<String>();
-
-        if (listView != null)
-            listView.setOnItemClickListener(this);
 
         // Create adapter
         adapter =
@@ -166,17 +168,26 @@ public class AnagramActivity extends Activity
     @Override
     public void onBackPressed()
     {
-        // Discard anagram word list
-        if (data != null)
-            data.setWordList(null);
+        // Discard anagram list and anagram word list
+        anagramList = null;
+        wordList = null;
 
         // Done
         finish();
     }
+
     // onItemClick
     public void onItemClick(AdapterView<?> parent, View view,
                             int position, long id)
     {
+        String phrase = (String)parent.getItemAtPosition(position);
+        if (textView != null)
+            textView.setText(phrase);
+
+        // Start the web search
+        Intent intent = new Intent(this, SearchActivity.class);
+        intent.putExtra(Main.WORD, phrase);
+        startActivity(intent);
     }
 
     // onEditorAction

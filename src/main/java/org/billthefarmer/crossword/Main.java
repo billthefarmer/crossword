@@ -84,9 +84,6 @@ public class Main extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        // Get data instance
-        data = Data.getInstance(this);
-
         // Find views
         spinner = (Spinner)findViewById(R.id.spinner);
         letters = (ViewGroup)findViewById(R.id.letters);
@@ -131,6 +128,9 @@ public class Main extends Activity
         if (results != null)
             results.setOnItemClickListener(this);
 
+        // Get data instance
+        data = Data.getInstance(this);
+
         // Restore result list
         if (data != null)
             resultList = data.getResultList();
@@ -148,6 +148,16 @@ public class Main extends Activity
             results.setAdapter(adapter);
             results.setOnItemSelectedListener(this);
         }
+    }
+
+    // onResume
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        // Reconnect listener
+        data = Data.getInstance(this);
 
         // Restore word list
         if (data != null)
@@ -163,16 +173,6 @@ public class Main extends Activity
         // Load words from resources
         if (data != null)
             data.startLoadTask(this, R.raw.words_en, wordList);
-    }
-
-    // onResume
-    @Override
-    protected void onResume()
-    {
-        super.onResume();
-
-        // Reconnect listener
-        data = Data.getInstance(this);
     }
 
     // onPause
@@ -233,8 +233,7 @@ public class Main extends Activity
     private boolean onAnagramClick()
     {
         // Discard crossword word list
-        if (data != null)
-            data.setWordList(null);
+        wordList = null;
 
         // Start anagram activity
         Intent intent = new Intent(this, AnagramActivity.class);
