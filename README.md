@@ -28,7 +28,7 @@ list, the slots will be filled in with that word, and a web search
 will be made for the definition on
 [DuckDuckGo](https://duckduckgo.com).
 
-There are three icons in the toolbar, **Anagram**, wich will show the
+There are three icons in the toolbar, **Anagram**, which will show the
 anagram screen, **Help**, which will show the help screen, and
 **About**, which will show the copyright, licence and version.
 
@@ -40,3 +40,9 @@ search the **Search** button is disabled. The anagram search uses a
 smaller 58,000 word dictionary to reduce the search time, and because
 the larger dictionary contains a large number of not very useful three
 and four letter words and scronyms.
+
+This anagram algorithm is intended as a useful additional function to
+the crossword clue search, but is in no way comprehensive. Use one of
+the online anagram sites, such as at
+[Wordsmith.org](http://wordsmith.org/anagram) for a more comprehensive
+search.
