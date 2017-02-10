@@ -400,12 +400,6 @@ public class Data
         protected Element next;
 
         // Element
-        public Element()
-        {
-            this(null, null, null, null);
-        }
-
-        // Element
         public Element(String word, String phrase)
         {
             this(word, phrase, null, null);

@@ -71,11 +71,13 @@ public class AnagramActivity extends Activity
         if (actionBar != null)
             actionBar.setDisplayHomeAsUpEnabled(true);
 
+        // Find views
         View layout = findViewById(R.id.layout);
         textView = (TextView)findViewById(R.id.phrase);
         search = (Button)findViewById(R.id.search);
         listView = (ListView)findViewById(R.id.list);
 
+        // Set listeners
         if (layout != null)
             layout.setOnClickListener(this);
             
@@ -169,6 +171,7 @@ public class AnagramActivity extends Activity
         return true;
     }
 
+    // onBackPressed
     @Override
     public void onBackPressed()
     {
@@ -181,9 +184,11 @@ public class AnagramActivity extends Activity
     }
 
     // onItemClick
+    @Override
     public void onItemClick(AdapterView<?> parent, View view,
                             int position, long id)
     {
+        // Copy anagram to input field
         String phrase = (String)parent.getItemAtPosition(position);
         if (textView != null)
             textView.setText(phrase);
@@ -195,6 +200,7 @@ public class AnagramActivity extends Activity
     }
 
     // onEditorAction
+    @Override
     public boolean onEditorAction(TextView view, int actionId, KeyEvent event)
     {
         // Get id
@@ -219,11 +225,12 @@ public class AnagramActivity extends Activity
         // Check id
         switch (id)
         {
-        // Search
+            // Search
         case R.id.search:
             doSearch();
             break;
 
+            // Layout
         default:
             if (textView != null)
                 textView.clearFocus();
@@ -231,14 +238,17 @@ public class AnagramActivity extends Activity
         }
     }
 
+    // doSearch
     private void doSearch()
     {
         if (data != null && !data.getSearching() && textView != null)
         {
+            // Get the phrase
             String phrase = textView.getText()
                 .toString().toLowerCase(Locale.getDefault());
             if (phrase.length() > 0)
             {
+                // Find anagrams
                 data.startAnagramTask(phrase, wordList);
                 search.setEnabled(false);
             }
@@ -250,11 +260,14 @@ public class AnagramActivity extends Activity
     @Override
     public void onPostExecute(List<String> resultList)
     {
+        // Empty the current list
         anagramList.clear();
 
+        // Add the new one
         for (String anagram: resultList)
             anagramList.add(anagram);
 
+        // Notify the adapter
         adapter.notifyDataSetChanged();
         search.setEnabled(true);
     }
