@@ -177,7 +177,9 @@ public class Data
             anagramList = new ArrayList<String>();
             valueList = new ArrayList<Float>();
 
+            // Find words that will fit in phrase
             elements = findWords(phrases[0], wordList);
+            // Find anagrams from words
             findAnagrams(elements);
             return anagramList;
         }
@@ -189,6 +191,8 @@ public class Data
         {
             List<String> resultList = new ArrayList<String>();
             List<Float> list = new ArrayList<Float>(valueList);
+
+            // Sort in reverse value order, high value first
             Collections.sort(list);
             Collections.reverse(list);
             for (float value: list)
@@ -210,6 +214,11 @@ public class Data
             Element elements = null;
             Element element = null;
 
+            // Build a forward linked list of elements containing each
+            // word and what is left of the phrase after the word is
+            // removed
+
+            // Check each word in list
             for (String word: wordList)
             {
                 char p[];
@@ -218,12 +227,14 @@ public class Data
 
                 if ((p = findString(word, phrase)) != null)
                 {
+                    // First element
                     if (element == null)
                     {
                         element = new Element(word, new String(p));
                         elements = element;
                     }
 
+                    // Build a list
                     else
                     {
                         element.next = new Element(word, new String(p));
@@ -238,6 +249,7 @@ public class Data
         // findAnagrams
         private void findAnagrams(Element element)
         {
+            // Find anagrams for each word in the list
             while (element != null)
             {
                 anagram(element.next, element);
@@ -248,19 +260,29 @@ public class Data
         // anagram
         private boolean anagram(Element elements, Element element)
         {
+            // Stop when limit reached
             if (anagramList.size() >= AnagramActivity.ANAGRAMS)
                 return true;
 
+            // Found an anagram, don't reuse this word
             if (element.phrase.trim().length() == 0)
             {
                 addAnagram(element);
                 return true;
             }
 
+            // Build a reverse linked list of elements containing each
+            // word and what is left of the phrase after the word is
+            // removed. The last successful element will contain an
+            // all blanks phrase, so trim() will leave an empty string
+
+            // Search forward from this point in the list
             while (elements != null)
             {
                 char p[];
 
+                // If this word fits, try forward in the list, don't
+                // reuse a word if successful
                 if ((p = findString(elements.word, element.phrase)) != null)
                 {
                     if (anagram(elements.next,
@@ -281,14 +303,17 @@ public class Data
             char word[] = w.toCharArray();
             char phrase[] = p.toCharArray();
 
+            // Check each char in the word
             for (char cw: word)
             {
                 boolean found = false;
                 int index = 0;
                 for (char cp: phrase)
                 {
+                    // If the char fits
                     if (cp == cw)
                     {
+                        // Replace char with blank
                         found = true;
                         phrase[index] = ' ';
                         break;
@@ -300,12 +325,14 @@ public class Data
                     return null;
             }
 
+            // Return phrase less letters in this word
             return phrase;
         }
 
-        // showAnagram
+        // addAnagram
         private void addAnagram(Element element)
         {
+            // Reverse order of words
             Deque<String> stack = new ArrayDeque<String>();
             while (element != null)
             {
@@ -313,6 +340,7 @@ public class Data
                 element = element.last;
             }
 
+            // Add words to anagram
             float value = 0;
             StringBuilder buffer = new StringBuilder();
             while (stack.peek() != null)
@@ -331,10 +359,11 @@ public class Data
             float value = 1;
             char chars[] = word.toCharArray();
 
+            // Multiply the scrabble value of the letters in the word
             for (char c: chars)
             {
-                int i = lettersList.indexOf(c);
-                value *= valuesList.get(i);
+                int index = lettersList.indexOf(c);
+                value *= valuesList.get(index);
             }
 
             return value;
