@@ -41,7 +41,8 @@
     </activity>
     <activity
         android:name="AnagramActivity"
-        android:label="@string/anagram">
+        android:label="@string/anagram"
+ 	android:windowSoftInputMode="stateHidden">
     </activity>
     <activity
         android:name="HelpActivity"

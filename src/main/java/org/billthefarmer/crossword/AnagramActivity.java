@@ -71,10 +71,14 @@ public class AnagramActivity extends Activity
         if (actionBar != null)
             actionBar.setDisplayHomeAsUpEnabled(true);
 
+        View layout = findViewById(R.id.layout);
         textView = (TextView)findViewById(R.id.phrase);
         search = (Button)findViewById(R.id.search);
         listView = (ListView)findViewById(R.id.list);
 
+        if (layout != null)
+            layout.setOnClickListener(this);
+            
         if (textView != null)
             textView.setOnEditorActionListener(this);
 
@@ -197,7 +201,7 @@ public class AnagramActivity extends Activity
         switch (actionId)
         {
             // Find anagrams
-        case EditorInfo.IME_ACTION_DONE:
+        case EditorInfo.IME_ACTION_SEARCH:
             doSearch();
             break;
         }
@@ -221,19 +225,23 @@ public class AnagramActivity extends Activity
             break;
 
         default:
+            if (textView != null)
+                textView.clearFocus();
             return;
         }
     }
 
     private void doSearch()
     {
-        search.setEnabled(false);
         if (data != null && !data.getSearching() && textView != null)
         {
             String phrase = textView.getText()
                 .toString().toLowerCase(Locale.getDefault());
-                if (phrase.length() > 0)
-                    data.startAnagramTask(phrase, wordList);
+            if (phrase.length() > 0)
+            {
+                data.startAnagramTask(phrase, wordList);
+                search.setEnabled(false);
+            }
         }
     }
 
