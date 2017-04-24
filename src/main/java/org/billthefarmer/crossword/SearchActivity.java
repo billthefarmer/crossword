@@ -31,6 +31,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import java.util.Locale;
 
@@ -66,8 +67,12 @@ public class SearchActivity extends Activity
         // enabled
         if (webview != null && url != null)
         {
+            // Enable javascript
             WebSettings settings = webview.getSettings();
             settings.setJavaScriptEnabled(true);
+
+            // Follow links
+            webview.setWebViewClient(new WebViewClient());
             webview.loadUrl(url);
         }
     }
@@ -82,7 +87,12 @@ public class SearchActivity extends Activity
         {
         // Home
         case android.R.id.home:
-            finish();
+            // Back navigation
+            if (webview != null && webview.canGoBack())
+                webview.goBack();
+
+            else
+                finish();
             break;
 
         default:
@@ -90,5 +100,17 @@ public class SearchActivity extends Activity
         }
 
         return true;
+    }
+
+    // On back pressed
+    @Override
+    public void onBackPressed()
+    {
+        // Back navigation
+        if (webview != null && webview.canGoBack())
+            webview.goBack();
+
+        else
+            finish();
     }
 }
