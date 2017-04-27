@@ -40,6 +40,7 @@ public class SearchActivity extends Activity
 {
     public static final String FORMAT =
         "https://duckduckgo.com/?q=%s&ia=definition";
+    public static final String URL = "url";
 
     private WebView webview;
 
@@ -58,10 +59,20 @@ public class SearchActivity extends Activity
         if (actionBar != null)
             actionBar.setDisplayHomeAsUpEnabled(true);
 
-        // Get the word from the intent and create url
-        Intent intent = getIntent();
-        String word = intent.getStringExtra(Main.WORD);
-        String url = String.format(Locale.getDefault(), FORMAT, word);
+        String url;
+        // Check if url saved
+        if (savedInstanceState != null &&
+            savedInstanceState.getCharSequence(URL) != null)
+            // Get the url from saved state
+            url = savedInstanceState.getCharSequence(URL).toString();
+
+        else
+        {
+            // Get the word from the intent and create url
+            Intent intent = getIntent();
+            String word = intent.getStringExtra(Main.WORD);
+            url = String.format(Locale.getDefault(), FORMAT, word);
+        }
 
         // Do web search, DuckDuckGo doesn't work unless JavaScript is
         // enabled
@@ -74,6 +85,19 @@ public class SearchActivity extends Activity
             // Follow links
             webview.setWebViewClient(new WebViewClient());
             webview.loadUrl(url);
+        }
+    }
+
+    // On save instance state
+    public void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+
+        if (webview != null)
+        {
+            // Save the url
+            String url = webview.getUrl();
+            outState.putCharSequence(URL, url);
         }
     }
 
