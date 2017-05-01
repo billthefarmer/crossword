@@ -89,6 +89,7 @@ public class SearchActivity extends Activity
     }
 
     // On save instance state
+    @Override
     public void onSaveInstanceState(Bundle outState)
     {
         super.onSaveInstanceState(outState);

@@ -263,68 +263,84 @@ public class Main extends Activity
     }
 
     // onItemSelected
+    @Override
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id)
     {
         // An item was selected. You can retrieve the selected item
         // using parent.getItemAtPosition(pos)
-        String item = (String)parent.getItemAtPosition(pos);
-
-        // Get length
-        length = Integer.parseInt(item);
-
-        // Remove the unused slots
-        if (letters != null)
+        // Check id
+        switch (parent.getId())
         {
-            for (int i = 0; i < letters.getChildCount(); i++)
-            {
-                TextView text = (TextView)letters.getChildAt(i);
-                if (i < length)
-                    text.setVisibility(View.VISIBLE);
+        case R.id.spinner:
+            String item = (String)parent.getItemAtPosition(pos);
 
-                // Temporarily remove the text change listener to stop
-                // unexpected consequences
-                else
+            // Get length
+            length = Integer.parseInt(item);
+
+            // Remove the unused slots
+            if (letters != null)
+            {
+                for (int i = 0; i < letters.getChildCount(); i++)
                 {
-                    text.setVisibility(View.GONE);
-                    text.removeTextChangedListener(this);
-                    text.setText("");
-                    text.addTextChangedListener(this);
+                    TextView text = (TextView)letters.getChildAt(i);
+                    if (i < length)
+                        text.setVisibility(View.VISIBLE);
+
+                    // Temporarily remove the text change listener to
+                    // stop unexpected consequences
+                    else
+                    {
+                        text.setVisibility(View.GONE);
+                        text.removeTextChangedListener(this);
+                        text.setText("");
+                        text.addTextChangedListener(this);
+                    }
                 }
             }
         }
     }
 
     // onNothingSelected
+    @Override
     public void onNothingSelected(AdapterView<?> parent) {}
 
     // onItemClick
+    @Override
     public void onItemClick(AdapterView<?> parent, View view,
                             int position, long id)
     {
-        String word = (String)parent.getItemAtPosition(position);
-        String s = word.toUpperCase(Locale.getDefault());
-
-        // Fill the letters in the slots and temporarily remove the
-        // text change listener to stop unexpected consequences
-        for (int i = 0; i < length; i++)
+        // An item was selected. You can retrieve the selected item
+        // using parent.getItemAtPosition(pos)
+        // Check id
+        switch (parent.getId())
         {
-            TextView text = (TextView)letters.getChildAt(i);
-            text.removeTextChangedListener(this);
-            text.setText(s.substring(i, i + 1));
-            text.addTextChangedListener(this);
-        }
+        case R.id.list:
+            String word = (String)parent.getItemAtPosition(position);
+            String s = word.toUpperCase(Locale.getDefault());
 
-        // Start the web search
-        Intent intent = new Intent(this, SearchActivity.class);
-        intent.putExtra(WORD, word);
-        startActivity(intent);
+            // Fill the letters in the slots and temporarily remove
+            // the text change listener to stop unexpected
+            // consequences
+            for (int i = 0; i < length; i++)
+            {
+                TextView text = (TextView)letters.getChildAt(i);
+                text.removeTextChangedListener(this);
+                text.setText(s.substring(i, i + 1));
+                text.addTextChangedListener(this);
+            }
+
+            // Start the web search
+            Intent intent = new Intent(this, SearchActivity.class);
+            intent.putExtra(WORD, word);
+            startActivity(intent);
+        }
     }
 
     // onEditorAction
     public boolean onEditorAction(TextView view, int actionId, KeyEvent event)
     {
-        // Get id
+        // Check id
         switch (actionId)
         {
         // Do a dictionary search if there is a letter in the slot
