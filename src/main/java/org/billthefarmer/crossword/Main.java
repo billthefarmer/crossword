@@ -144,10 +144,7 @@ public class Main extends Activity
                                      android.R.layout.simple_list_item_1,
                                      resultList);
         if (results != null)
-        {
             results.setAdapter(adapter);
-            results.setOnItemSelectedListener(this);
-        }
     }
 
     // onResume
