@@ -62,9 +62,9 @@ public class SearchActivity extends Activity
         String url;
         // Check if url saved
         if (savedInstanceState != null &&
-            savedInstanceState.getCharSequence(URL) != null)
+            savedInstanceState.getString(URL) != null)
             // Get the url from saved state
-            url = savedInstanceState.getCharSequence(URL).toString();
+            url = savedInstanceState.getString(URL);
 
         else
         {
@@ -98,7 +98,7 @@ public class SearchActivity extends Activity
         {
             // Save the url
             String url = webview.getUrl();
-            outState.putCharSequence(URL, url);
+            outState.putString(URL, url);
         }
     }
 
