@@ -1,4 +1,4 @@
-# ![Logo](src/main/res/drawable-mdpi/ic_launcher.png) Crossword [![Build Status](https://travis-ci.org/billthefarmer/crossword.svg?branch=master)](https://travis-ci.org/billthefarmer/crossword)
+# ![Logo](src/main/res/drawable-mdpi/ic_launcher.png) Crossword [![Build Status](https://travis-ci.org/billthefarmer/crossword.svg?branch=master)](https://travis-ci.org/billthefarmer/crossword) [![Available on F-Droid](https://f-droid.org/wiki/images/c/ca/F-Droid-button_available-on_smaller.png)](https://f-droid.org/repository/browse/?fdid=org.billthefarmer.crossword)
 
 Android crossword solver. The app is available on [F-Droid](https://f-droid.org/repository/browse/?fdid=org.billthefarmer.crossword) and [here](https://github.com/billthefarmer/crossword/releases).
 
