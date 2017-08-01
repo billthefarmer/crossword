@@ -25,8 +25,10 @@ package org.billthefarmer.crossword;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -60,6 +62,8 @@ public class Main extends Activity
     public static final String TAG = "Crossword";
     public static final String WORD = "word";
 
+    public static final String PREF_DARK = "pref_dark";
+
     public static final int LETTERS = 7;
     public static final int RESULTS = 256;
 
@@ -76,12 +80,22 @@ public class Main extends Activity
     private List<String> resultList;
 
     private int length = LETTERS;
+    private boolean dark = true;
 
     // Called when the activity is first created
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        // Get preferences
+        final SharedPreferences preferences =
+            PreferenceManager.getDefaultSharedPreferences(this);
+        dark = preferences.getBoolean(PREF_DARK, false);
+
+        if (dark)
+            setTheme(R.style.AppDarkTheme);
+
         setContentView(R.layout.main);
 
         // Find views
@@ -178,6 +192,15 @@ public class Main extends Activity
     {
         super.onPause();
 
+        // Get preferences
+        final SharedPreferences preferences =
+            PreferenceManager.getDefaultSharedPreferences(this);
+        dark = preferences.getBoolean(PREF_DARK, false);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.putBoolean(PREF_DARK, dark);
+        editor.apply();
+
         // Disconnect listener
         data = Data.getInstance(null);
 
@@ -201,6 +224,15 @@ public class Main extends Activity
         return true;
     }
 
+    // onPrepareOptionsMenu
+    @Override
+    public boolean onPrepareOptionsMenu (Menu menu)
+    {
+        menu.findItem(R.id.action_dark).setChecked (dark);
+
+        return true;
+    }
+
     // On options item selected
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -211,15 +243,19 @@ public class Main extends Activity
         {
             // Anagram
         case R.id.action_anagram:
-            return onAnagramClick();
+            return onAnagramClick(item);
 
             // Help
         case R.id.action_help:
-            return onHelpClick();
+            return onHelpClick(item);
 
             // About
         case R.id.action_about:
-            return onAboutClick();
+            return onAboutClick(item);
+
+            // Dark
+        case R.id.action_dark:
+            return onDarkClick(item);
 
         default:
             return false;
@@ -227,7 +263,7 @@ public class Main extends Activity
     }
 
     // On anagram click
-    private boolean onAnagramClick()
+    private boolean onAnagramClick(MenuItem item)
     {
         // Discard crossword word list
         wordList = null;
@@ -240,7 +276,7 @@ public class Main extends Activity
     }
 
     // On help click
-    private boolean onHelpClick()
+    private boolean onHelpClick(MenuItem item)
     {
         // Start help activity
         Intent intent = new Intent(this, HelpActivity.class);
@@ -250,11 +286,21 @@ public class Main extends Activity
     }
 
     // On about click
-    private boolean onAboutClick()
+    private boolean onAboutClick(MenuItem item)
     {
         // Start about activity
         Intent intent = new Intent(this, AboutActivity.class);
         startActivity(intent);
+
+        return true;
+    }
+
+    // On dark click
+    private boolean onDarkClick(MenuItem item)
+    {
+        dark = !dark;
+        item.setChecked(dark);
+        recreate();
 
         return true;
     }

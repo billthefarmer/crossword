@@ -24,6 +24,7 @@
   <string name="version">Crossword version %s</string>
   <string name="copyright">Copyright \u00A9 2017 Bill Farmer</string>
   <string name="licence">Licence: GNU GPLv3</string>
+  <string name="dark">Dark theme</string>
   <string name="help">Help</string>
 
 </resources>

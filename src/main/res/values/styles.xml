@@ -6,7 +6,17 @@
       replaced by AppBaseTheme from res/values-vXX/styles.xml on newer
       devices.
   -->
-  <style name="AppBaseTheme" parent="android:Theme.Holo">
+  <style name="AppBaseTheme"
+         parent="android:Theme.Holo.Light.DarkActionBar">
+    <!--
+        Theme customizations available in newer API levels can go in
+        res/values-vXX/styles.xml, while customizations related to
+        backward-compatibility can go here.
+    -->
+  </style>
+
+  <style name="AppDarkBaseTheme"
+         parent="android:Theme.Holo">
     <!--
         Theme customizations available in newer API levels can go in
         res/values-vXX/styles.xml, while customizations related to
@@ -22,7 +32,23 @@
     -->
   </style>
 
-  <style name="DialogBaseTheme" parent="android:Theme.Holo.Dialog">
+  <!-- Application theme. -->
+  <style name="AppDarkTheme" parent="AppDarkBaseTheme">
+    <!--
+        All customizations that are NOT specific to a particular
+        API-level can go here.
+    -->
+  </style>
+
+  <style name="DialogBaseTheme" parent="android:Theme.Holo.Light.Dialog">
+    <!--
+        Theme customizations available in newer API levels can go in
+        res/values-vXX/styles.xml, while customizations related to
+        backward-compatibility can go here.
+    -->
+  </style>
+
+  <style name="DialogDarkBaseTheme" parent="android:Theme.Holo.Dialog">
     <!--
         Theme customizations available in newer API levels can go in
         res/values-vXX/styles.xml, while customizations related to
@@ -31,6 +57,13 @@
   </style>
 
   <style name="DialogTheme" parent="DialogBaseTheme">
+    <!--
+        All customizations that are NOT specific to a particular
+        API-level can go here.
+    -->
+  </style>
+
+  <style name="DialogDarkTheme" parent="DialogDarkBaseTheme">
     <!--
         All customizations that are NOT specific to a particular
         API-level can go here.

@@ -26,7 +26,9 @@ package org.billthefarmer.crossword;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 import android.view.KeyEvent;
@@ -64,6 +66,15 @@ public class AnagramActivity extends Activity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        // Get preferences
+        final SharedPreferences preferences =
+            PreferenceManager.getDefaultSharedPreferences(this);
+        boolean dark = preferences.getBoolean(Main.PREF_DARK, false);
+
+        if (dark)
+            setTheme(R.style.AppDarkTheme);
+
         setContentView(R.layout.anagram);
 
         // Enable back navigation on action bar

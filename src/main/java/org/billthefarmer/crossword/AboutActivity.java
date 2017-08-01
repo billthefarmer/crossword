@@ -24,7 +24,9 @@
 package org.billthefarmer.crossword;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -39,6 +41,15 @@ public class AboutActivity extends Activity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+ 
+        // Get preferences
+        final SharedPreferences preferences =
+            PreferenceManager.getDefaultSharedPreferences(this);
+        boolean dark = preferences.getBoolean(Main.PREF_DARK, false);
+
+        if (dark)
+            setTheme(R.style.DialogDarkTheme);
+
         setContentView(R.layout.about);
 
         // Get text view
@@ -53,8 +64,8 @@ public class AboutActivity extends Activity
         }
 
         // Get button
-        Button ok = (Button)findViewById(R.id.ok);
-        ok.setOnClickListener(this);
+        Button button = (Button)findViewById(R.id.ok);
+        button.setOnClickListener(this);
     }
 
     // On click
