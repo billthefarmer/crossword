@@ -89,7 +89,7 @@ public class Main extends Activity
         super.onCreate(savedInstanceState);
 
         // Get preferences
-        final SharedPreferences preferences =
+        SharedPreferences preferences =
             PreferenceManager.getDefaultSharedPreferences(this);
         dark = preferences.getBoolean(PREF_DARK, false);
 
@@ -193,9 +193,8 @@ public class Main extends Activity
         super.onPause();
 
         // Get preferences
-        final SharedPreferences preferences =
+        SharedPreferences preferences =
             PreferenceManager.getDefaultSharedPreferences(this);
-        dark = preferences.getBoolean(PREF_DARK, false);
         SharedPreferences.Editor editor = preferences.edit();
 
         editor.putBoolean(PREF_DARK, dark);

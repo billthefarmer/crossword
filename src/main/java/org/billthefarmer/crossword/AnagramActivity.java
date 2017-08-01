@@ -68,7 +68,7 @@ public class AnagramActivity extends Activity
         super.onCreate(savedInstanceState);
 
         // Get preferences
-        final SharedPreferences preferences =
+        SharedPreferences preferences =
             PreferenceManager.getDefaultSharedPreferences(this);
         boolean dark = preferences.getBoolean(Main.PREF_DARK, false);
 

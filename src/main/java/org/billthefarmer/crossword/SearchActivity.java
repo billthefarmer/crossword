@@ -25,8 +25,10 @@ package org.billthefarmer.crossword;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.os.Bundle;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.webkit.WebSettings;
@@ -49,6 +51,15 @@ public class SearchActivity extends Activity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        // Get preferences
+        SharedPreferences preferences =
+            PreferenceManager.getDefaultSharedPreferences(this);
+        boolean dark = preferences.getBoolean(Main.PREF_DARK, false);
+
+        if (dark)
+            setTheme(R.style.AppDarkTheme);
+
         setContentView(R.layout.search);
 
         // Find web view
