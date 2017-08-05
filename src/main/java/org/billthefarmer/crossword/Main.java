@@ -27,6 +27,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
@@ -66,6 +67,7 @@ public class Main extends Activity
 
     public static final int LETTERS = 7;
     public static final int RESULTS = 256;
+    public static final int VERSION_M = 23;
 
     private Data data;
 
@@ -299,7 +301,8 @@ public class Main extends Activity
     {
         dark = !dark;
         item.setChecked(dark);
-        recreate();
+        if (Build.VERSION.SDK_INT != VERSION_M)
+            recreate();
 
         return true;
     }
