@@ -33,6 +33,12 @@ There are three icons in the toolbar, **Anagram**, which will show the
 anagram screen, **Help**, which will show the help screen, and
 **About**, which will show the copyright, licence and version.
 
+And on the menu, **Dark theme**, which will change the app theme.
+On Android 6, Marshmallow, the theme will not change until you rotate
+the device or restart the app. On other versions the theme will change
+immediately. This is due to an issue with Android 6 which would
+otherwise cause the app to crash.
+
 ## Solve anagrams
 Type in the word or phrase you want anagrams for, and use the keyboard
 **Done** button or the **Search** button to search. The search may
