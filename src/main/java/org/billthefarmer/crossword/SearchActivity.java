@@ -93,8 +93,22 @@ public class SearchActivity extends Activity
             WebSettings settings = webview.getSettings();
             settings.setJavaScriptEnabled(true);
 
-            // Follow links
-            webview.setWebViewClient(new WebViewClient());
+            // Enable zoom
+            settings.setBuiltInZoomControls(true);
+            settings.setDisplayZoomControls(false);
+
+            // Follow links and set title
+            webview.setWebViewClient(new WebViewClient()
+                {
+                    // onPageFinished
+                    @Override
+                    public void onPageFinished (WebView view, String url)
+                    {
+                        // Get page title
+                        if (view.getTitle() != null)
+                            setTitle(view.getTitle());
+                    }
+                });
             webview.loadUrl(url);
         }
     }
