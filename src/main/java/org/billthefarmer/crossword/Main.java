@@ -391,7 +391,7 @@ public class Main extends Activity
             // Fill the letters in the slots and temporarily remove
             // the text change listener to stop unexpected
             // consequences
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < Math.min(length, s.length()); i++)
             {
                 TextView text = (TextView)letters.getChildAt(i);
                 text.removeTextChangedListener(this);
