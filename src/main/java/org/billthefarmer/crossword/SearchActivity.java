@@ -42,7 +42,6 @@ public class SearchActivity extends Activity
 {
     public static final String FORMAT =
         "https://duckduckgo.com/?q=%s&ia=definition";
-    public static final String URL = "url";
 
     private WebView webview;
 
@@ -60,6 +59,7 @@ public class SearchActivity extends Activity
         if (dark)
             setTheme(R.style.AppDarkTheme);
 
+        // Set content
         setContentView(R.layout.search);
 
         // Find web view
@@ -70,26 +70,10 @@ public class SearchActivity extends Activity
         if (actionBar != null)
             actionBar.setDisplayHomeAsUpEnabled(true);
 
-        String url;
-        // Check if url saved
-        if (savedInstanceState != null &&
-            savedInstanceState.getString(URL) != null)
-            // Get the url from saved state
-            url = savedInstanceState.getString(URL);
-
-        else
+        if (webview != null)
         {
-            // Get the word from the intent and create url
-            Intent intent = getIntent();
-            String word = intent.getStringExtra(Main.WORD);
-            url = String.format(Locale.getDefault(), FORMAT, word);
-        }
-
-        // Do web search, DuckDuckGo doesn't work unless JavaScript is
-        // enabled
-        if (webview != null && url != null)
-        {
-            // Enable javascript
+            // Enable javascript, DuckDuckGo doesn't work unless
+            // JavaScript is enabled
             WebSettings settings = webview.getSettings();
             settings.setJavaScriptEnabled(true);
 
@@ -109,7 +93,21 @@ public class SearchActivity extends Activity
                             setTitle(view.getTitle());
                     }
                 });
-            webview.loadUrl(url);
+
+            if (savedInstanceState != null)
+                // Restore state
+                webview.restoreState(savedInstanceState);
+
+            else
+            {
+                // Get the word from the intent and create url
+                Intent intent = getIntent();
+                String word = intent.getStringExtra(Main.WORD);
+                String url = String.format(Locale.getDefault(), FORMAT, word);
+
+                // Do web search
+                webview.loadUrl(url);
+            }
         }
     }
 
@@ -120,11 +118,8 @@ public class SearchActivity extends Activity
         super.onSaveInstanceState(outState);
 
         if (webview != null)
-        {
-            // Save the url
-            String url = webview.getUrl();
-            outState.putString(URL, url);
-        }
+            // Save state
+            webview.saveState(outState);
     }
 
     // On options item selected
