@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <string name="app_name">Crossword</string>
+    <string name="app_name">Crossword</string>
 
-  <string name="letters">Letters:</string>
-  <string name="clear">Clear</string>
-  <string name="search">Search</string>
-  <string name="anagram">Anagram</string>
-  <string name="hint">Enter word or phrase</string>
+    <string name="letters">Letters:</string>
+    <string name="clear">Clear</string>
+    <string name="search">Search</string>
+    <string name="anagram">Anagram</string>
+    <string name="hint">Enter word or phrase</string>
 
-  <string name="num_1">1</string>
-  <string name="num_2">2</string>
-  <string name="num_3">3</string>
-  <string name="num_4">4</string>
-  <string name="num_5">5</string>
-  <string name="num_6">6</string>
-  <string name="num_7">7</string>
-  <string name="num_8">8</string>
-  <string name="num_9">9</string>
-  <string name="num_0">0</string>
+    <string name="num_1">1</string>
+    <string name="num_2">2</string>
+    <string name="num_3">3</string>
+    <string name="num_4">4</string>
+    <string name="num_5">5</string>
+    <string name="num_6">6</string>
+    <string name="num_7">7</string>
+    <string name="num_8">8</string>
+    <string name="num_9">9</string>
+    <string name="num_0">0</string>
 
-  <string name="about">About</string>
-  <string name="version" formatted="false">Crossword version %s\nBuilt
-  %s\nCopyright \u00A9 2017 Bill Farmer\nLicence <a
-  href="https://www.gnu.org/licenses/gpl.txt">GNU GPLv3</a>
+    <string name="about">About</string>
+    <string name="version" formatted="false">Crossword version %s\nBuilt
+  %s\nCopyright \u00A9 2017 Bill Farmer\nLicence <a href="https://www.gnu.org/licenses/gpl.txt">GNU GPLv3</a>
   </string>
-  <string name="dark">Dark theme</string>
-  <string name="help">Help</string>
+    <string name="dark">Dark Theme</string>
+    <string name="help">Help</string>
 
 </resources>
