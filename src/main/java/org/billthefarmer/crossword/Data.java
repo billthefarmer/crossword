@@ -23,6 +23,7 @@
 
 package org.billthefarmer.crossword;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.AsyncTask;
@@ -174,6 +175,7 @@ public class Data
     }
 
     // LoadTask
+    @SuppressLint("StaticFieldLeak")
     protected class LoadTask
         extends AsyncTask<BufferedReader, Void, Void>
     {
@@ -201,6 +203,7 @@ public class Data
     }
 
     // AnagramTask
+    @SuppressLint("StaticFieldLeak")
     protected class AnagramTask
         extends AsyncTask<String, Void, List<String>>
     {
@@ -441,6 +444,7 @@ public class Data
     }
 
     // SearchTask
+    @SuppressLint("StaticFieldLeak")
     protected class SearchTask extends AsyncTask<String, Void, List<String>>
     {
         protected List<String> wordList;

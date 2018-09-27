@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout"
     android:layout_width="fill_parent"
@@ -9,35 +10,36 @@
     android:orientation="vertical"
     tools:ignore="RtlHardcoded">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+  <LinearLayout
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      android:gravity="center"
+      android:orientation="horizontal"
+      tools:ignore="Autofill">
 
-        <EditText
-            android:id="@+id/phrase"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:selectAllOnFocus="true" />
+  <EditText
+      android:id="@+id/phrase"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:hint="@string/hint"
+      android:imeOptions="actionSearch"
+      android:inputType="text"
+      android:selectAllOnFocus="true" />
 
-        <Button
-            android:id="@+id/search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="@string/search" />
+  <Button
+      android:id="@+id/search"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="8dp"
+      android:text="@string/search" />
 
-    </LinearLayout>
+  </LinearLayout>
 
-    <ListView
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+  <ListView
+      android:id="@+id/list"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center" />
 
 </LinearLayout>
