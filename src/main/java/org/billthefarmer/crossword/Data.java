@@ -26,7 +26,6 @@ package org.billthefarmer.crossword;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -39,8 +38,7 @@ import java.util.Deque;
 import java.util.List;
 
 // Data class
-public class Data
-{
+public class Data {
     private static final String TAG = "Anagram";
     private static final int LENGTH = 2;
 
@@ -53,12 +51,26 @@ public class Data
 
     private OnPostExecuteListener listener;
 
+    // Letter values
+    private static final Integer values[] =
+            {1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3,
+                    1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10};
+    // Letters
+    private static final Character letters[] =
+            {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+                    'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+    // Lists
+    private static final List<Integer> valuesList =
+            Arrays.asList(values);
+    private static final List<Character> lettersList =
+            Arrays.asList(letters);
+
     // Constructor
-    private Data() {}
+    private Data() {
+    }
 
     // Get instance
-    public static Data getInstance(OnPostExecuteListener listener)
-    {
+    public static Data getInstance(OnPostExecuteListener listener) {
         if (instance == null)
             instance = new Data();
 
@@ -66,52 +78,49 @@ public class Data
         return instance;
     }
 
-    // Set list
-    public void setWordList(List<String> list)
-    {
-        wordList = list;
-    }
-
     // Get list
-    public List<String> getWordList()
-    {
+    public List<String> getWordList() {
         return wordList;
     }
 
     // Set list
-    public void setResultList(List<String> list)
-    {
-        resultList = list;
+    public void setWordList(List<String> list) {
+        wordList = list;
     }
 
     // Get list
-    public List<String> getResultList()
-    {
+    public List<String> getResultList() {
         return resultList;
     }
 
     // Set list
-    public void setAnagramList(List<String> list)
-    {
-        anagramList = list;
+    public void setResultList(List<String> list) {
+        resultList = list;
     }
 
     // Get list
-    public List<String> getAnagramList()
-    {
+    public List<String> getAnagramList() {
         return anagramList;
     }
 
+    // Set list
+    public void setAnagramList(List<String> list) {
+        anagramList = list;
+    }
+
     // Get searching
-    public boolean getSearching()
-    {
+    public boolean getSearching() {
         return searching;
     }
 
+    // Scrabble letter values:
+    // A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+    // 1 3 3 2 1 4 2 4 1 8 5 1 3 1 1 3 1 1 1 1 1 4 4 8 4 1
+    //                                 0                 0
+
     // Start load task
     protected void startLoadTask(Context context, int id,
-                                 List<String> wordList)
-    {
+                                 List<String> wordList) {
         // Read words from resources
         Resources resources = context.getResources();
         InputStream stream = resources.openRawResource(id);
@@ -124,35 +133,8 @@ public class Data
         loadTask.execute(buffer);
     }
 
-    // LoadTask
-    protected class LoadTask
-        extends AsyncTask<BufferedReader, Void, Void>
-    {
-        protected List<String> wordList;
-
-        // The system calls this to perform work in a worker thread
-        // and delivers it the parameters given to AsyncTask.execute()
-        @Override
-        protected Void doInBackground(BufferedReader... buffer)
-        {
-            String word;
-
-            // Read words
-            try
-            {
-                while ((word = buffer[0].readLine()) != null)
-                    wordList.add(word);
-            }
-
-            catch (Exception e) {}
-
-            return null;
-        }
-    }
-
     // startAnagramTask
-    protected void startAnagramTask(String phrase, List<String> wordList)
-    {
+    protected void startAnagramTask(String phrase, List<String> wordList) {
         // Start the task
         AnagramTask anagramTask = new AnagramTask();
         anagramTask.wordList = wordList;
@@ -160,10 +142,44 @@ public class Data
         searching = true;
     }
 
+    // Start search task
+    protected void startSearchTask(String match, List<String> wordList) {
+        SearchTask searchTask = new SearchTask();
+        searchTask.wordList = wordList;
+        searchTask.execute(match);
+        searching = true;
+    }
+
+    // OnPostExecuteListener interface
+    interface OnPostExecuteListener {
+        void onPostExecute(List<String> resultList);
+    }
+
+    // LoadTask
+    protected class LoadTask
+            extends AsyncTask<BufferedReader, Void, Void> {
+        protected List<String> wordList;
+
+        // The system calls this to perform work in a worker thread
+        // and delivers it the parameters given to AsyncTask.execute()
+        @Override
+        protected Void doInBackground(BufferedReader... buffer) {
+            String word;
+
+            // Read words
+            try {
+                while ((word = buffer[0].readLine()) != null)
+                    wordList.add(word);
+            } catch (Exception e) {
+            }
+
+            return null;
+        }
+    }
+
     // AnagramTask
     protected class AnagramTask
-        extends AsyncTask<String, Void, List<String>>
-    {
+            extends AsyncTask<String, Void, List<String>> {
         protected List<String> wordList;
         private List<String> anagramList;
         private List<Float> valueList;
@@ -172,10 +188,9 @@ public class Data
         // The system calls this to perform work in a worker thread
         // and delivers it the parameters given to AsyncTask.execute()
         @Override
-        protected List<String> doInBackground(String... phrases)
-        {
-            anagramList = new ArrayList<String>();
-            valueList = new ArrayList<Float>();
+        protected List<String> doInBackground(String... phrases) {
+            anagramList = new ArrayList<>();
+            valueList = new ArrayList<>();
 
             // Find words that will fit in phrase
             elements = findWords(phrases[0], wordList);
@@ -187,16 +202,14 @@ public class Data
         // The system calls this to perform work in the UI thread and
         // delivers the result from doInBackground()
         @Override
-        protected void onPostExecute(List<String> anagramList)
-        {
-            List<String> resultList = new ArrayList<String>();
-            List<Float> list = new ArrayList<Float>(valueList);
+        protected void onPostExecute(List<String> anagramList) {
+            List<String> resultList = new ArrayList<>();
+            List<Float> list = new ArrayList<>(valueList);
 
             // Sort in reverse value order, high value first
             Collections.sort(list);
             Collections.reverse(list);
-            for (float value: list)
-            {
+            for (float value : list) {
                 int index = valueList.indexOf(value);
                 resultList.add(anagramList.get(index));
                 anagramList.remove(index);
@@ -209,8 +222,7 @@ public class Data
         }
 
         // findWords
-        private Element findWords(String phrase, List<String> wordList)
-        {
+        private Element findWords(String phrase, List<String> wordList) {
             Element elements = null;
             Element element = null;
 
@@ -219,24 +231,20 @@ public class Data
             // removed
 
             // Check each word in list
-            for (String word: wordList)
-            {
+            for (String word : wordList) {
                 char p[];
                 if (word.length() <= 2)
                     continue;
 
-                if ((p = findString(word, phrase)) != null)
-                {
+                if ((p = findString(word, phrase)) != null) {
                     // First element
-                    if (element == null)
-                    {
+                    if (element == null) {
                         element = new Element(word, new String(p));
                         elements = element;
                     }
 
                     // Build a list
-                    else
-                    {
+                    else {
                         element.next = new Element(word, new String(p));
                         element = element.next;
                     }
@@ -247,26 +255,22 @@ public class Data
         }
 
         // findAnagrams
-        private void findAnagrams(Element element)
-        {
+        private void findAnagrams(Element element) {
             // Find anagrams for each word in the list
-            while (element != null)
-            {
+            while (element != null) {
                 anagram(element.next, element);
                 element = element.next;
             }
         }
 
         // anagram
-        private boolean anagram(Element elements, Element element)
-        {
+        private boolean anagram(Element elements, Element element) {
             // Stop when limit reached
             if (anagramList.size() >= AnagramActivity.ANAGRAMS)
                 return true;
 
             // Found an anagram, don't reuse this word
-            if (element.phrase.trim().length() == 0)
-            {
+            if (element.phrase.trim().length() == 0) {
                 addAnagram(element);
                 return true;
             }
@@ -277,17 +281,15 @@ public class Data
             // all blanks phrase, so trim() will leave an empty string
 
             // Search forward from this point in the list
-            while (elements != null)
-            {
+            while (elements != null) {
                 char p[];
 
                 // If this word fits, try forward in the list, don't
                 // reuse a word if successful
-                if ((p = findString(elements.word, element.phrase)) != null)
-                {
+                if ((p = findString(elements.word, element.phrase)) != null) {
                     if (anagram(elements.next,
-                                new Element(elements.word,
-                                            new String(p), element)))
+                            new Element(elements.word,
+                                    new String(p), element)))
                         return true;
                 }
 
@@ -298,21 +300,17 @@ public class Data
         }
 
         // findString
-        private char findString(String w, String p)[]
-        {
+        private char findString(String w, String p)[] {
             char word[] = w.toCharArray();
             char phrase[] = p.toCharArray();
 
             // Check each char in the word
-            for (char cw: word)
-            {
+            for (char cw : word) {
                 boolean found = false;
                 int index = 0;
-                for (char cp: phrase)
-                {
+                for (char cp : phrase) {
                     // If the char fits
-                    if (cp == cw)
-                    {
+                    if (cp == cw) {
                         // Replace char with blank
                         found = true;
                         phrase[index] = ' ';
@@ -330,12 +328,10 @@ public class Data
         }
 
         // addAnagram
-        private void addAnagram(Element element)
-        {
+        private void addAnagram(Element element) {
             // Reverse order of words
-            Deque<String> stack = new ArrayDeque<String>();
-            while (element != null)
-            {
+            Deque<String> stack = new ArrayDeque<>();
+            while (element != null) {
                 stack.push(element.word);
                 element = element.last;
             }
@@ -343,10 +339,9 @@ public class Data
             // Add words to anagram
             float value = 0;
             StringBuilder buffer = new StringBuilder();
-            while (stack.peek() != null)
-            {
+            while (stack.peek() != null) {
                 String word = stack.pop();
-                buffer.append(word + " ");
+                buffer.append(word).append(" ");
                 value += getValue(word);
             }
             anagramList.add(buffer.toString().trim());
@@ -354,14 +349,12 @@ public class Data
         }
 
         // getValue
-        protected float getValue(String word)
-        {
+        protected float getValue(String word) {
             float value = 1;
             char chars[] = word.toCharArray();
 
             // Multiply the scrabble value of the letters in the word
-            for (char c: chars)
-            {
+            for (char c : chars) {
                 int index = lettersList.indexOf(c);
                 value *= valuesList.get(index);
             }
@@ -370,50 +363,25 @@ public class Data
         }
     }
 
-    // Scrabble letter values:
-    // A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
-    // 1 3 3 2 1 4 2 4 1 8 5 1 3 1 1 3 1 1 1 1 1 4 4 8 4 1
-    //                                 0                 0
-
-    // Letter values
-    private static final Integer values[] =
-    {1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3,
-     1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10};
-
-    // Letters
-    private static final Character letters[] =
-    {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-     'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
-
-    // Lists
-    private static final List<Integer> valuesList =
-        Arrays.asList(values);
-    private static final List<Character> lettersList =
-        Arrays.asList(letters);
-
     // Element
-    public class Element
-    {
+    public class Element {
         protected String word;
         protected String phrase;
         protected Element last;
         protected Element next;
 
         // Element
-        public Element(String word, String phrase)
-        {
+        public Element(String word, String phrase) {
             this(word, phrase, null, null);
         }
 
         // Element
-        public Element(String word, String phrase, Element last)
-        {
+        public Element(String word, String phrase, Element last) {
             this(word, phrase, last, null);
         }
 
         // Element
-        public Element(String word, String phrase, Element last, Element next)
-        {
+        public Element(String word, String phrase, Element last, Element next) {
             this.word = word;
             this.phrase = phrase;
             this.last = last;
@@ -421,33 +389,20 @@ public class Data
         }
     }
 
-    // Start search task
-    protected void startSearchTask(String match, List<String> wordList)
-    {
-        SearchTask searchTask = new SearchTask();
-        searchTask.wordList = wordList;
-        searchTask.execute(match);
-        searching = true;
-    }
-
     // SearchTask
-    protected class SearchTask
-        extends AsyncTask<String, Void, List<String>>
-    {
+    protected class SearchTask extends AsyncTask<String, Void, List<String>> {
         protected List<String> wordList;
         private List<String> resultList;
 
         // The system calls this to perform work in a worker thread
         // and delivers it the parameters given to AsyncTask.execute()
         @Override
-        protected List<String> doInBackground(String... matches)
-        {
-            resultList = new ArrayList<String>();
+        protected List<String> doInBackground(String... matches) {
+            resultList = new ArrayList<>();
 
             String match = matches[0];
             int length = match.length();
-            for (String word : wordList)
-            {
+            for (String word : wordList) {
                 if (word.length() != length)
                     continue;
 
@@ -465,17 +420,10 @@ public class Data
         // The system calls this to perform work in the UI thread and
         // delivers the result from doInBackground()
         @Override
-        protected void onPostExecute(List<String> result)
-        {
+        protected void onPostExecute(List<String> result) {
             if (listener != null)
                 listener.onPostExecute(result);
             searching = false;
         }
-    }
-
-    // OnPostExecuteListener interface
-    interface OnPostExecuteListener
-    {
-        void onPostExecute(List<String> resultList);
     }
 }

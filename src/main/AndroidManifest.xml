@@ -1,60 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="org.billthefarmer.crossword"
-    tools:ignore="GoogleAppIndexingWarning"
-    android:versionCode="108"
-    android:versionName="1.08"
-    android:installLocation="auto">
+    android:installLocation="auto"
+    tools:ignore="GoogleAppIndexingWarning">
 
-  <uses-sdk
-      tools:ignore="OldTargetApi"
-      android:minSdkVersion="14"
-      android:targetSdkVersion="25" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
-  <uses-permission
-      android:name="android.permission.INTERNET" />
+    <meta-data
+        android:name="android.webkit.WebView.MetricsOptOut"
+        android:value="true" />
 
-  <meta-data
-      android:name="android.webkit.WebView.MetricsOptOut"
-      android:value="true" />
-
-  <application
-      tools:ignore="AllowBackup"
-      android:allowBackup="true"
-      android:label="@string/app_name"
-      android:icon="@drawable/ic_launcher"
-      android:theme="@style/AppTheme">
-
-    <activity
-        android:name="Main"
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
- 	android:windowSoftInputMode="stateHidden">
-     <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-      </intent-filter>
-    </activity>
-    <activity
-        android:name="SearchActivity"
-        android:label="@string/app_name">
-    </activity>
-    <activity
-        android:name="AnagramActivity"
-        android:label="@string/anagram"
- 	android:windowSoftInputMode="stateHidden">
-    </activity>
-    <activity
-        android:name="HelpActivity"
-        android:label="@string/help">
-    </activity>
-    <activity
-        android:name="AboutActivity"
-        android:label="@string/about"
-	android:theme="@style/DialogTheme">
-    </activity>
+        android:theme="@style/AppTheme"
+        tools:ignore="AllowBackup">
 
-  </application>
+        <activity
+            android:name="Main"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="SearchActivity"
+            android:label="@string/app_name">
+
+        </activity>
+        <activity
+            android:name="AnagramActivity"
+            android:label="@string/anagram"
+            android:windowSoftInputMode="stateHidden">
+
+        </activity>
+        <activity
+            android:name="HelpActivity"
+            android:label="@string/help">
+
+        </activity>
+        <activity
+            android:name="AboutActivity"
+            android:label="@string/about"
+            android:theme="@style/DialogTheme">
+
+        </activity>
+
+    </application>
 
 </manifest>

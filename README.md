@@ -1,6 +1,6 @@
-# ![Logo](src/main/res/drawable-mdpi/ic_launcher.png) Crossword [![Build Status](https://travis-ci.org/billthefarmer/crossword.svg?branch=master)](https://travis-ci.org/billthefarmer/crossword) [![Available on F-Droid](https://f-droid.org/wiki/images/c/ca/F-Droid-button_available-on_smaller.png)](https://f-droid.org/repository/browse/?fdid=org.billthefarmer.crossword)
+# ![Logo](src/main/res/drawable-hdpi/ic_launcher.png) Crossword [![Build Status](https://travis-ci.org/billthefarmer/crossword.svg?branch=master)](https://travis-ci.org/billthefarmer/crossword) [![Available on F-Droid](https://f-droid.org/wiki/images/c/ca/F-Droid-button_available-on_smaller.png)](https://f-droid.org/packages/org.billthefarmer.crossword)
 
-Android crossword solver. The app is available on [F-Droid](https://f-droid.org/repository/browse/?fdid=org.billthefarmer.crossword) and [here](https://github.com/billthefarmer/crossword/releases).
+Android crossword solver. The app is available on [F-Droid](https://f-droid.org/packages/org.billthefarmer.crossword) and [here](https://github.com/billthefarmer/crossword/releases).
 
 ![Crossword](https://github.com/billthefarmer/billthefarmer.github.io/raw/master/images/crossword/Crossword.png) ![Definition](https://github.com/billthefarmer/billthefarmer.github.io/raw/master/images/crossword/Definition.png)
 
@@ -29,7 +29,7 @@ will be made for the definition on
 [DuckDuckGo](https://duckduckgo.com). You may select links on the page
 and navigate back using the **Home** button on the toolbar.
 
-There are three icons in the toolbar, **Anagram**, which will show the
+There are three icons in the toolbar: **Anagram**, which will show the
 anagram screen, **Help**, which will show the help screen, and
 **About**, which will show the copyright, licence and version.
 
@@ -54,6 +54,5 @@ doesn't mean that some gems might not be hiding down the list.
 
 This anagram algorithm is intended as a useful additional function to
 the crossword clue search, but is in no way comprehensive. Use one of
-the online anagram sites, such as at
-[Wordsmith.org](http://wordsmith.org/anagram) for a more comprehensive
-search.
+the online anagram sites, such as [Wordsmith.org](https://wordsmith.org/anagram)
+for a more comprehensive search.

@@ -29,13 +29,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
-import android.view.inputmethod.EditorInfo;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -46,16 +45,14 @@ import java.util.Locale;
 
 // AnagramActivity
 public class AnagramActivity extends Activity
-    implements AdapterView.OnItemClickListener,
-               TextView.OnEditorActionListener,
-               Data.OnPostExecuteListener,
-               View.OnClickListener
-{
+        implements AdapterView.OnItemClickListener,
+        TextView.OnEditorActionListener,
+        Data.OnPostExecuteListener,
+        View.OnClickListener {
     public static final int ANAGRAMS = 1024;
 
     private Data data;
     private Button search;
-    private ListView listView;
     private TextView textView;
     private ArrayAdapter adapter;
     private List<String> wordList;
@@ -63,13 +60,12 @@ public class AnagramActivity extends Activity
 
     // Called when the activity is first created
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Get preferences
         SharedPreferences preferences =
-            PreferenceManager.getDefaultSharedPreferences(this);
+                PreferenceManager.getDefaultSharedPreferences(this);
         boolean dark = preferences.getBoolean(Main.PREF_DARK, false);
 
         if (dark)
@@ -84,14 +80,14 @@ public class AnagramActivity extends Activity
 
         // Find views
         View layout = findViewById(R.id.layout);
-        textView = (TextView)findViewById(R.id.phrase);
-        search = (Button)findViewById(R.id.search);
-        listView = (ListView)findViewById(R.id.list);
+        textView = findViewById(R.id.phrase);
+        search = findViewById(R.id.search);
+        ListView listView = findViewById(R.id.list);
 
         // Set listeners
         if (layout != null)
             layout.setOnClickListener(this);
-            
+
         if (textView != null)
             textView.setOnEditorActionListener(this);
 
@@ -109,13 +105,13 @@ public class AnagramActivity extends Activity
             anagramList = data.getAnagramList();
 
         if (anagramList == null)
-            anagramList = new ArrayList<String>();
+            anagramList = new ArrayList<>();
 
         // Create adapter
         adapter =
-            new ArrayAdapter<String>(this,
-                                     android.R.layout.simple_list_item_1,
-                                     anagramList);
+                new ArrayAdapter<>(this,
+                        android.R.layout.simple_list_item_1,
+                        anagramList);
         if (listView != null)
             listView.setAdapter(adapter);
 
@@ -128,7 +124,7 @@ public class AnagramActivity extends Activity
             return;
 
         // Create word list
-        wordList = new ArrayList<String>();
+        wordList = new ArrayList<>();
 
         // Load words from resources
         if (data != null)
@@ -137,8 +133,7 @@ public class AnagramActivity extends Activity
 
     // onResume
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
 
         // Reconnect listener
@@ -147,16 +142,14 @@ public class AnagramActivity extends Activity
 
     // onPause
     @Override
-    protected void onPause()
-    {
+    protected void onPause() {
         super.onPause();
 
         // Disconnect listener
         data = Data.getInstance(null);
 
         // Save anagram and word list
-        if (data != null)
-        {
+        if (data != null) {
             data.setAnagramList(anagramList);
             data.setWordList(wordList);
         }
@@ -164,19 +157,17 @@ public class AnagramActivity extends Activity
 
     // On options item selected
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         // Get id
         int id = item.getItemId();
-        switch (id)
-        {
-        // Home
-        case android.R.id.home:
-            onBackPressed();
-            break;
+        switch (id) {
+            // Home
+            case android.R.id.home:
+                onBackPressed();
+                break;
 
-        default:
-            return false;
+            default:
+                return false;
         }
 
         return true;
@@ -184,8 +175,7 @@ public class AnagramActivity extends Activity
 
     // onBackPressed
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         // Discard anagram list and anagram word list
         anagramList = null;
         wordList = null;
@@ -197,10 +187,9 @@ public class AnagramActivity extends Activity
     // onItemClick
     @Override
     public void onItemClick(AdapterView<?> parent, View view,
-                            int position, long id)
-    {
+                            int position, long id) {
         // Copy anagram to input field
-        String phrase = (String)parent.getItemAtPosition(position);
+        String phrase = (String) parent.getItemAtPosition(position);
         if (textView != null)
             textView.setText(phrase);
 
@@ -212,15 +201,13 @@ public class AnagramActivity extends Activity
 
     // onEditorAction
     @Override
-    public boolean onEditorAction(TextView view, int actionId, KeyEvent event)
-    {
+    public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
         // Get id
-        switch (actionId)
-        {
+        switch (actionId) {
             // Find anagrams
-        case EditorInfo.IME_ACTION_SEARCH:
-            doSearch();
-            break;
+            case EditorInfo.IME_ACTION_SEARCH:
+                doSearch();
+                break;
         }
 
         return false;
@@ -228,37 +215,31 @@ public class AnagramActivity extends Activity
 
     // On click
     @Override
-    public void onClick(View view)
-    {
+    public void onClick(View view) {
         // Get id
         int id = view.getId();
 
         // Check id
-        switch (id)
-        {
+        switch (id) {
             // Search
-        case R.id.search:
-            doSearch();
-            break;
+            case R.id.search:
+                doSearch();
+                break;
 
             // Layout
-        default:
-            if (textView != null)
-                textView.clearFocus();
-            return;
+            default:
+                if (textView != null)
+                    textView.clearFocus();
         }
     }
 
     // doSearch
-    private void doSearch()
-    {
-        if (data != null && !data.getSearching() && textView != null)
-        {
+    private void doSearch() {
+        if (data != null && !data.getSearching() && textView != null) {
             // Get the phrase
             String phrase = textView.getText()
-                .toString().toLowerCase(Locale.getDefault());
-            if (phrase.length() > 0)
-            {
+                    .toString().toLowerCase(Locale.getDefault());
+            if (phrase.length() > 0) {
                 // Find anagrams
                 data.startAnagramTask(phrase, wordList);
                 search.setEnabled(false);
@@ -269,14 +250,12 @@ public class AnagramActivity extends Activity
     // The system calls this to perform work in the UI thread and
     // delivers the result from doInBackground()
     @Override
-    public void onPostExecute(List<String> resultList)
-    {
+    public void onPostExecute(List<String> resultList) {
         // Empty the current list
         anagramList.clear();
 
         // Add the new one
-        for (String anagram: resultList)
-            anagramList.add(anagram);
+        anagramList.addAll(resultList);
 
         // Notify the adapter
         adapter.notifyDataSetChanged();
