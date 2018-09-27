@@ -45,10 +45,11 @@ import java.util.Locale;
 
 // AnagramActivity
 public class AnagramActivity extends Activity
-        implements AdapterView.OnItemClickListener,
-        TextView.OnEditorActionListener,
-        Data.OnPostExecuteListener,
-        View.OnClickListener {
+    implements AdapterView.OnItemClickListener,
+    TextView.OnEditorActionListener,
+    Data.OnPostExecuteListener,
+    View.OnClickListener
+{
     public static final int ANAGRAMS = 1024;
 
     private Data data;
@@ -60,12 +61,13 @@ public class AnagramActivity extends Activity
 
     // Called when the activity is first created
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         // Get preferences
         SharedPreferences preferences =
-                PreferenceManager.getDefaultSharedPreferences(this);
+            PreferenceManager.getDefaultSharedPreferences(this);
         boolean dark = preferences.getBoolean(Main.PREF_DARK, false);
 
         if (dark)
@@ -109,9 +111,9 @@ public class AnagramActivity extends Activity
 
         // Create adapter
         adapter =
-                new ArrayAdapter<>(this,
-                        android.R.layout.simple_list_item_1,
-                        anagramList);
+            new ArrayAdapter<>(this,
+                               android.R.layout.simple_list_item_1,
+                               anagramList);
         if (listView != null)
             listView.setAdapter(adapter);
 
@@ -133,7 +135,8 @@ public class AnagramActivity extends Activity
 
     // onResume
     @Override
-    protected void onResume() {
+    protected void onResume()
+    {
         super.onResume();
 
         // Reconnect listener
@@ -142,14 +145,16 @@ public class AnagramActivity extends Activity
 
     // onPause
     @Override
-    protected void onPause() {
+    protected void onPause()
+    {
         super.onPause();
 
         // Disconnect listener
         data = Data.getInstance(null);
 
         // Save anagram and word list
-        if (data != null) {
+        if (data != null)
+        {
             data.setAnagramList(anagramList);
             data.setWordList(wordList);
         }
@@ -157,17 +162,19 @@ public class AnagramActivity extends Activity
 
     // On options item selected
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         // Get id
         int id = item.getItemId();
-        switch (id) {
-            // Home
-            case android.R.id.home:
-                onBackPressed();
-                break;
+        switch (id)
+        {
+        // Home
+        case android.R.id.home:
+            onBackPressed();
+            break;
 
-            default:
-                return false;
+        default:
+            return false;
         }
 
         return true;
@@ -175,7 +182,8 @@ public class AnagramActivity extends Activity
 
     // onBackPressed
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         // Discard anagram list and anagram word list
         anagramList = null;
         wordList = null;
@@ -187,7 +195,8 @@ public class AnagramActivity extends Activity
     // onItemClick
     @Override
     public void onItemClick(AdapterView<?> parent, View view,
-                            int position, long id) {
+                            int position, long id)
+    {
         // Copy anagram to input field
         String phrase = (String) parent.getItemAtPosition(position);
         if (textView != null)
@@ -201,13 +210,15 @@ public class AnagramActivity extends Activity
 
     // onEditorAction
     @Override
-    public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
+    public boolean onEditorAction(TextView view, int actionId, KeyEvent event)
+    {
         // Get id
-        switch (actionId) {
-            // Find anagrams
-            case EditorInfo.IME_ACTION_SEARCH:
-                doSearch();
-                break;
+        switch (actionId)
+        {
+        // Find anagrams
+        case EditorInfo.IME_ACTION_SEARCH:
+            doSearch();
+            break;
         }
 
         return false;
@@ -215,31 +226,36 @@ public class AnagramActivity extends Activity
 
     // On click
     @Override
-    public void onClick(View view) {
+    public void onClick(View view)
+    {
         // Get id
         int id = view.getId();
 
         // Check id
-        switch (id) {
-            // Search
-            case R.id.search:
-                doSearch();
-                break;
+        switch (id)
+        {
+        // Search
+        case R.id.search:
+            doSearch();
+            break;
 
-            // Layout
-            default:
-                if (textView != null)
-                    textView.clearFocus();
+        // Layout
+        default:
+            if (textView != null)
+                textView.clearFocus();
         }
     }
 
     // doSearch
-    private void doSearch() {
-        if (data != null && !data.getSearching() && textView != null) {
+    private void doSearch()
+    {
+        if (data != null && !data.getSearching() && textView != null)
+        {
             // Get the phrase
             String phrase = textView.getText()
-                    .toString().toLowerCase(Locale.getDefault());
-            if (phrase.length() > 0) {
+                            .toString().toLowerCase(Locale.getDefault());
+            if (phrase.length() > 0)
+            {
                 // Find anagrams
                 data.startAnagramTask(phrase, wordList);
                 search.setEnabled(false);
@@ -250,7 +266,8 @@ public class AnagramActivity extends Activity
     // The system calls this to perform work in the UI thread and
     // delivers the result from doInBackground()
     @Override
-    public void onPostExecute(List<String> resultList) {
+    public void onPostExecute(List<String> resultList)
+    {
         // Empty the current list
         anagramList.clear();
 

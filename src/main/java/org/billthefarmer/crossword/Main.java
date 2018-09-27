@@ -55,12 +55,13 @@ import java.util.Locale;
 
 // Main
 public class Main extends Activity
-        implements AdapterView.OnItemSelectedListener,
-        AdapterView.OnItemClickListener,
-        TextView.OnEditorActionListener,
-        Data.OnPostExecuteListener,
-        View.OnClickListener,
-        TextWatcher {
+    implements AdapterView.OnItemSelectedListener,
+    AdapterView.OnItemClickListener,
+    TextView.OnEditorActionListener,
+    Data.OnPostExecuteListener,
+    View.OnClickListener,
+    TextWatcher
+{
     public static final String TAG = "Crossword";
     public static final String WORD = "word";
 
@@ -84,12 +85,13 @@ public class Main extends Activity
 
     // Called when the activity is first created
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         // Get preferences
         SharedPreferences preferences =
-                PreferenceManager.getDefaultSharedPreferences(this);
+            PreferenceManager.getDefaultSharedPreferences(this);
         dark = preferences.getBoolean(PREF_DARK, false);
 
         if (dark)
@@ -105,7 +107,8 @@ public class Main extends Activity
         search = findViewById(R.id.search);
 
         // Set up listeners
-        if (spinner != null) {
+        if (spinner != null)
+        {
             spinner.setSelection(LETTERS - 1);
             spinner.setOnItemSelectedListener(this);
         }
@@ -117,13 +120,16 @@ public class Main extends Activity
             search.setOnClickListener(this);
 
         // Set up letter slots
-        if (letters != null) {
-            for (int i = 0; i < letters.getChildCount(); i++) {
+        if (letters != null)
+        {
+            for (int i = 0; i < letters.getChildCount(); i++)
+            {
                 TextView letter = (TextView) letters.getChildAt(i);
                 if (i < LETTERS)
                     letter.setVisibility(View.VISIBLE);
 
-                else {
+                else
+                {
                     letter.setVisibility(View.GONE);
                     letter.setText("");
                 }
@@ -149,16 +155,17 @@ public class Main extends Activity
 
         // Create adapter
         adapter =
-                new ArrayAdapter<>(this,
-                        android.R.layout.simple_list_item_1,
-                        resultList);
+            new ArrayAdapter<>(this,
+                               android.R.layout.simple_list_item_1,
+                               resultList);
         if (results != null)
             results.setAdapter(adapter);
     }
 
     // onResume
     @Override
-    protected void onResume() {
+    protected void onResume()
+    {
         super.onResume();
 
         // Reconnect listener
@@ -182,12 +189,13 @@ public class Main extends Activity
 
     // onPause
     @Override
-    protected void onPause() {
+    protected void onPause()
+    {
         super.onPause();
 
         // Get preferences
         SharedPreferences preferences =
-                PreferenceManager.getDefaultSharedPreferences(this);
+            PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
 
         editor.putBoolean(PREF_DARK, dark);
@@ -197,7 +205,8 @@ public class Main extends Activity
         data = Data.getInstance(null);
 
         // Save result and word list
-        if (data != null) {
+        if (data != null)
+        {
             data.setResultList(resultList);
             data.setWordList(wordList);
         }
@@ -205,7 +214,8 @@ public class Main extends Activity
 
     // On create options menu
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         // Inflate the menu; this adds items to the action bar if it
         // is present.
         MenuInflater inflater = getMenuInflater();
@@ -216,7 +226,8 @@ public class Main extends Activity
 
     // onPrepareOptionsMenu
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
+    public boolean onPrepareOptionsMenu(Menu menu)
+    {
         menu.findItem(R.id.action_dark).setChecked(dark);
 
         return true;
@@ -224,33 +235,36 @@ public class Main extends Activity
 
     // On options item selected
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         // Get id
         int id = item.getItemId();
-        switch (id) {
-            // Anagram
-            case R.id.action_anagram:
-                return onAnagramClick(item);
+        switch (id)
+        {
+        // Anagram
+        case R.id.action_anagram:
+            return onAnagramClick(item);
 
-            // Help
-            case R.id.action_help:
-                return onHelpClick(item);
+        // Help
+        case R.id.action_help:
+            return onHelpClick(item);
 
-            // About
-            case R.id.action_about:
-                return onAboutClick(item);
+        // About
+        case R.id.action_about:
+            return onAboutClick(item);
 
-            // Dark
-            case R.id.action_dark:
-                return onDarkClick(item);
+        // Dark
+        case R.id.action_dark:
+            return onDarkClick(item);
 
-            default:
-                return false;
+        default:
+            return false;
         }
     }
 
     // On anagram click
-    private boolean onAnagramClick(MenuItem item) {
+    private boolean onAnagramClick(MenuItem item)
+    {
         // Discard crossword word list
         wordList = null;
 
@@ -262,7 +276,8 @@ public class Main extends Activity
     }
 
     // On help click
-    private boolean onHelpClick(MenuItem item) {
+    private boolean onHelpClick(MenuItem item)
+    {
         // Start help activity
         Intent intent = new Intent(this, HelpActivity.class);
         startActivity(intent);
@@ -271,7 +286,8 @@ public class Main extends Activity
     }
 
     // On about click
-    private boolean onAboutClick(MenuItem item) {
+    private boolean onAboutClick(MenuItem item)
+    {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.about);
 
@@ -279,9 +295,9 @@ public class Main extends Activity
         String format = getString(R.string.version);
 
         String message =
-                String.format(Locale.getDefault(),
-                        format, BuildConfig.VERSION_NAME,
-                        dateFormat.format(BuildConfig.BUILT));
+            String.format(Locale.getDefault(),
+                          format, BuildConfig.VERSION_NAME,
+                          dateFormat.format(BuildConfig.BUILT));
         builder.setMessage(message);
 
         // Add the button
@@ -299,7 +315,8 @@ public class Main extends Activity
     }
 
     // On dark click
-    private boolean onDarkClick(MenuItem item) {
+    private boolean onDarkClick(MenuItem item)
+    {
         dark = !dark;
         item.setChecked(dark);
         if (Build.VERSION.SDK_INT != VERSION_M)
@@ -311,80 +328,91 @@ public class Main extends Activity
     // onItemSelected
     @Override
     public void onItemSelected(AdapterView<?> parent, View view,
-                               int pos, long id) {
+                               int pos, long id)
+    {
         // An item was selected. You can retrieve the selected item
         // using parent.getItemAtPosition(pos)
         // Check id
-        switch (parent.getId()) {
-            case R.id.spinner:
-                String item = (String) parent.getItemAtPosition(pos);
+        switch (parent.getId())
+        {
+        case R.id.spinner:
+            String item = (String) parent.getItemAtPosition(pos);
 
-                // Get length
-                length = Integer.parseInt(item);
+            // Get length
+            length = Integer.parseInt(item);
 
-                // Remove the unused slots
-                if (letters != null) {
-                    for (int i = 0; i < letters.getChildCount(); i++) {
-                        TextView text = (TextView) letters.getChildAt(i);
-                        if (i < length)
-                            text.setVisibility(View.VISIBLE);
+            // Remove the unused slots
+            if (letters != null)
+            {
+                for (int i = 0; i < letters.getChildCount(); i++)
+                {
+                    TextView text = (TextView) letters.getChildAt(i);
+                    if (i < length)
+                        text.setVisibility(View.VISIBLE);
 
-                            // Temporarily remove the text change listener to
-                            // stop unexpected consequences
-                        else {
-                            text.setVisibility(View.GONE);
-                            text.removeTextChangedListener(this);
-                            text.setText("");
-                            text.addTextChangedListener(this);
-                        }
+                    // Temporarily remove the text change listener to
+                    // stop unexpected consequences
+                    else
+                    {
+                        text.setVisibility(View.GONE);
+                        text.removeTextChangedListener(this);
+                        text.setText("");
+                        text.addTextChangedListener(this);
                     }
                 }
+            }
         }
     }
 
     // onNothingSelected
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
+    public void onNothingSelected(AdapterView<?> parent)
+    {
     }
 
     // onItemClick
     @Override
     public void onItemClick(AdapterView<?> parent, View view,
-                            int position, long id) {
+                            int position, long id)
+    {
         // An item was selected. You can retrieve the selected item
         // using parent.getItemAtPosition(pos)
         // Check id
-        switch (parent.getId()) {
-            case R.id.list:
-                String word = (String) parent.getItemAtPosition(position);
-                String s = word.toUpperCase(Locale.getDefault());
+        switch (parent.getId())
+        {
+        case R.id.list:
+            String word = (String) parent.getItemAtPosition(position);
+            String s = word.toUpperCase(Locale.getDefault());
 
-                // Fill the letters in the slots and temporarily remove
-                // the text change listener to stop unexpected
-                // consequences
-                for (int i = 0; i < Math.min(length, s.length()); i++) {
-                    TextView text = (TextView) letters.getChildAt(i);
-                    text.removeTextChangedListener(this);
-                    text.setText(s.substring(i, i + 1));
-                    text.addTextChangedListener(this);
-                }
+            // Fill the letters in the slots and temporarily remove
+            // the text change listener to stop unexpected
+            // consequences
+            for (int i = 0; i < Math.min(length, s.length()); i++)
+            {
+                TextView text = (TextView) letters.getChildAt(i);
+                text.removeTextChangedListener(this);
+                text.setText(s.substring(i, i + 1));
+                text.addTextChangedListener(this);
+            }
 
-                // Start the web search
-                Intent intent = new Intent(this, SearchActivity.class);
-                intent.putExtra(WORD, word);
-                startActivity(intent);
+            // Start the web search
+            Intent intent = new Intent(this, SearchActivity.class);
+            intent.putExtra(WORD, word);
+            startActivity(intent);
         }
     }
 
     // onEditorAction
-    public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
+    public boolean onEditorAction(TextView view, int actionId, KeyEvent event)
+    {
         // Check id
-        switch (actionId) {
-            // Do a dictionary search if there is a letter in the slot
-            case EditorInfo.IME_ACTION_NEXT:
-                if (view.length() > 0 && !data.getSearching())
-                    doSearch();
-                break;
+        switch (actionId)
+        {
+        // Do a dictionary search if there is a letter in the slot
+        case EditorInfo.IME_ACTION_NEXT:
+            if (view.length() > 0 && !data.getSearching())
+                doSearch();
+            break;
         }
 
         return false;
@@ -392,12 +420,14 @@ public class Main extends Activity
 
     // onTextChanged
     @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
+    public void onTextChanged(CharSequence s, int start, int before, int count)
+    {
         TextView text = (TextView) getCurrentFocus();
 
         // Can't be sure if we got the right slot, but move focus to
         // the next one if there is a letter in the slot
-        if (text != null && text.length() > 0) {
+        if (text != null && text.length() > 0)
+        {
             View next = text.focusSearch(View.FOCUS_RIGHT);
             if (next != null)
                 next.requestFocus();
@@ -408,47 +438,54 @@ public class Main extends Activity
 
     // afterTextChanged
     @Override
-    public void afterTextChanged(Editable s) {
+    public void afterTextChanged(Editable s)
+    {
     }
 
     // beforeTextChanged
     @Override
     public void beforeTextChanged(CharSequence s, int start,
-                                  int count, int after) {
+                                  int count, int after)
+    {
     }
 
     // On click
     @Override
-    public void onClick(View view) {
+    public void onClick(View view)
+    {
         // Get id
         int id = view.getId();
 
         // Check id
-        switch (id) {
-            // Clear
-            case R.id.clear:
-                doClear();
-                break;
+        switch (id)
+        {
+        // Clear
+        case R.id.clear:
+            doClear();
+            break;
 
-            // Search
-            case R.id.search:
-                doSearch();
-                break;
+        // Search
+        case R.id.search:
+            doSearch();
+            break;
 
-            default:
+        default:
         }
     }
 
     // doSearch
-    private void doSearch() {
+    private void doSearch()
+    {
         // Build a match string
         StringBuilder buffer = new StringBuilder();
         boolean empty = true;
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < length; i++)
+        {
             TextView text = (TextView) letters.getChildAt(i);
 
             // If there is a letter in the slot
-            if (text.length() > 0) {
+            if (text.length() > 0)
+            {
                 String letter = text.getText().toString();
                 buffer.append(letter.toLowerCase(Locale.getDefault()));
                 empty = false;
@@ -467,17 +504,20 @@ public class Main extends Activity
         String match = buffer.toString();
 
         // Start search task
-        if (data != null) {
+        if (data != null)
+        {
             data.startSearchTask(match, wordList);
             search.setEnabled(false);
         }
     }
 
     // doClear
-    private void doClear() {
+    private void doClear()
+    {
         // Temporarily remove the text change listener to stop
         // unexpected consequences
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < length; i++)
+        {
             TextView text = (TextView) letters.getChildAt(i);
             text.removeTextChangedListener(this);
             text.setText("");
@@ -488,8 +528,10 @@ public class Main extends Activity
     // The system calls this to perform work in the UI thread and
     // delivers the result from doInBackground()
     @Override
-    public void onPostExecute(List<String> resultList) {
-        if (resultList != null) {
+    public void onPostExecute(List<String> resultList)
+    {
+        if (resultList != null)
+        {
             this.resultList.clear();
 
             // Add results to list

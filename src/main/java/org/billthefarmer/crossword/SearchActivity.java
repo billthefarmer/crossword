@@ -37,20 +37,22 @@ import android.webkit.WebViewClient;
 import java.util.Locale;
 
 // SearchActivity
-public class SearchActivity extends Activity {
+public class SearchActivity extends Activity
+{
     public static final String FORMAT =
-            "https://duckduckgo.com/?q=%s&ia=definition";
+        "https://duckduckgo.com/?q=%s&ia=definition";
 
     private WebView webview;
 
     // Called when the activity is first created
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         // Get preferences
         SharedPreferences preferences =
-                PreferenceManager.getDefaultSharedPreferences(this);
+            PreferenceManager.getDefaultSharedPreferences(this);
         boolean dark = preferences.getBoolean(Main.PREF_DARK, false);
 
         if (dark)
@@ -67,7 +69,8 @@ public class SearchActivity extends Activity {
         if (actionBar != null)
             actionBar.setDisplayHomeAsUpEnabled(true);
 
-        if (webview != null) {
+        if (webview != null)
+        {
             // Enable javascript, DuckDuckGo doesn't work unless
             // JavaScript is enabled
             WebSettings settings = webview.getSettings();
@@ -78,10 +81,12 @@ public class SearchActivity extends Activity {
             settings.setDisplayZoomControls(false);
 
             // Follow links and set title
-            webview.setWebViewClient(new WebViewClient() {
+            webview.setWebViewClient(new WebViewClient()
+            {
                 // onPageFinished
                 @Override
-                public void onPageFinished(WebView view, String url) {
+                public void onPageFinished(WebView view, String url)
+                {
                     // Get page title
                     if (view.getTitle() != null)
                         setTitle(view.getTitle());
@@ -92,7 +97,8 @@ public class SearchActivity extends Activity {
                 // Restore state
                 webview.restoreState(savedInstanceState);
 
-            else {
+            else
+            {
                 // Get the word from the intent and create url
                 Intent intent = getIntent();
                 String word = intent.getStringExtra(Main.WORD);
@@ -106,7 +112,8 @@ public class SearchActivity extends Activity {
 
     // On save instance state
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState)
+    {
         super.onSaveInstanceState(outState);
 
         if (webview != null)
@@ -116,22 +123,24 @@ public class SearchActivity extends Activity {
 
     // On options item selected
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         // Get id
         int id = item.getItemId();
-        switch (id) {
-            // Home
-            case android.R.id.home:
-                // Back navigation
-                if (webview != null && webview.canGoBack())
-                    webview.goBack();
+        switch (id)
+        {
+        // Home
+        case android.R.id.home:
+            // Back navigation
+            if (webview != null && webview.canGoBack())
+                webview.goBack();
 
-                else
-                    finish();
-                break;
+            else
+                finish();
+            break;
 
-            default:
-                return false;
+        default:
+            return false;
         }
 
         return true;
@@ -139,7 +148,8 @@ public class SearchActivity extends Activity {
 
     // On back pressed
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         // Back navigation
         if (webview != null && webview.canGoBack())
             webview.goBack();
