@@ -21,8 +21,10 @@
   <string name="num_0">0</string>
 
   <string name="about">About</string>
-  <string name="version" formatted="false">Crossword version %s\nBuilt
-  %s\nCopyright \u00A9 2017 Bill Farmer\nLicence <a href="https://www.gnu.org/licenses/gpl.txt">GNU GPLv3</a>
+  <string name="version" formatted="false">Crossword <a
+  href="https://github.com/billthefarmer/crossword/releases/latest">version
+  %s</a>\nBuilt %s\nCopyright \u00A9 2017 Bill Farmer\nLicence <a
+  href="https://www.gnu.org/licenses/gpl.txt">GNU GPLv3</a>
   </string>
   <string name="dark">Dark Theme</string>
   <string name="help">Help</string>
