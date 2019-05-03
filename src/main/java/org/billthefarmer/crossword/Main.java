@@ -344,7 +344,7 @@ public class Main extends Activity
         switch (parent.getId())
         {
         case R.id.spinner:
-            String item = (String) parent.getItemAtPosition(pos);
+            String item = parent.getItemAtPosition(pos).toString();
 
             // Get length
             length = Integer.parseInt(item);
@@ -389,7 +389,7 @@ public class Main extends Activity
         switch (parent.getId())
         {
         case R.id.list:
-            String word = (String) parent.getItemAtPosition(position);
+            String word = parent.getItemAtPosition(position).toString();
             String s = word.toUpperCase(Locale.getDefault());
 
             // Fill the letters in the slots and temporarily remove

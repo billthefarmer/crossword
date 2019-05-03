@@ -198,7 +198,7 @@ public class AnagramActivity extends Activity
                             int position, long id)
     {
         // Copy anagram to input field
-        String phrase = (String) parent.getItemAtPosition(position);
+        String phrase = parent.getItemAtPosition(position).toString();
         if (textView != null)
             textView.setText(phrase);
 
