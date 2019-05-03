@@ -1,0 +1,6 @@
+Simple crossword solver and anagram search.
+
+ * Words up to 28 letters
+ * 110,000 word dictionary
+ * Web search word definitions
+ * Anagram search
