@@ -30,8 +30,8 @@ android {
         applicationId "org.billthefarmer.crossword"
         minSdkVersion 14
         targetSdkVersion 28
-        versionCode 110
-        versionName "1.10"
+        versionCode 111
+        versionName "1.11"
 
         buildConfigField "long", "BUILT", System.currentTimeMillis() + "L"
     }
