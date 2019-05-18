@@ -157,10 +157,8 @@ public class Main extends Activity
             resultList = new ArrayList<>();
 
         // Create adapter
-        adapter =
-            new ArrayAdapter<>(this,
-                               android.R.layout.simple_list_item_1,
-                               resultList);
+        adapter = new ArrayAdapter<>
+            (this, android.R.layout.simple_list_item_1, resultList);
         if (results != null)
             results.setAdapter(adapter);
     }

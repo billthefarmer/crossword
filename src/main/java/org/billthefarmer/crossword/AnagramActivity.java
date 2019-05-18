@@ -110,10 +110,8 @@ public class AnagramActivity extends Activity
             anagramList = new ArrayList<>();
 
         // Create adapter
-        adapter =
-            new ArrayAdapter<>(this,
-                               android.R.layout.simple_list_item_1,
-                               anagramList);
+        adapter = new ArrayAdapter<>
+            (this, android.R.layout.simple_list_item_1, anagramList);
         if (listView != null)
             listView.setAdapter(adapter);
 

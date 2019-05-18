@@ -137,16 +137,11 @@ public class Data
     protected void startLoadTask(Context context, int id,
                                  List<String> wordList)
     {
-        // Read words from resources
-        Resources resources = context.getResources();
-        InputStream stream = resources.openRawResource(id);
-        InputStreamReader reader = new InputStreamReader(stream);
-        BufferedReader buffer = new BufferedReader(reader);
-
         // Start the task
         LoadTask loadTask = new LoadTask();
         loadTask.wordList = wordList;
-        loadTask.execute(buffer);
+        loadTask.context = context;
+        loadTask.execute(id);
     }
 
     // startAnagramTask
@@ -177,23 +172,28 @@ public class Data
     // LoadTask
     @SuppressLint("StaticFieldLeak")
     protected class LoadTask
-        extends AsyncTask<BufferedReader, Void, Void>
+        extends AsyncTask<Integer, Void, Void>
     {
         protected List<String> wordList;
+        protected Context context;
 
         // The system calls this to perform work in a worker thread
         // and delivers it the parameters given to AsyncTask.execute()
         @Override
-        protected Void doInBackground(BufferedReader... buffer)
+        protected Void doInBackground(Integer... ids)
         {
-            String word;
+            Resources resources = context.getResources();
 
-            // Read words
-            try
+            // Read words from resources
+            try (InputStream stream = resources.openRawResource(ids[0]);
+                 InputStreamReader reader = new InputStreamReader(stream);
+                 BufferedReader buffer = new BufferedReader(reader))
             {
-                while ((word = buffer[0].readLine()) != null)
+                String word;
+                while ((word = buffer.readLine()) != null)
                     wordList.add(word);
             }
+
             catch (Exception e)
             {
             }
