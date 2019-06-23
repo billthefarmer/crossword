@@ -171,7 +171,7 @@ public class Data
 
     // LoadTask
     @SuppressLint("StaticFieldLeak")
-    protected class LoadTask
+    protected static class LoadTask
         extends AsyncTask<Integer, Void, Void>
     {
         protected List<String> wordList;
