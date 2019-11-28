@@ -304,7 +304,7 @@ public class Data
         private boolean anagram(Element elements, Element element)
         {
             // Stop when limit reached
-            if (anagramList.size() >= AnagramActivity.ANAGRAMS)
+            if (anagramList.size() >= Anagram.ANAGRAMS)
                 return true;
 
             // Found an anagram, don't reuse this word

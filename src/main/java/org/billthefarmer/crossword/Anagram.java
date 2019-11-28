@@ -43,8 +43,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-// AnagramActivity
-public class AnagramActivity extends Activity
+// Anagram
+public class Anagram extends Activity
     implements AdapterView.OnItemClickListener,
     TextView.OnEditorActionListener,
     Data.OnPostExecuteListener,

@@ -269,7 +269,7 @@ public class Main extends Activity
         wordList = null;
 
         // Start anagram activity
-        Intent intent = new Intent(this, AnagramActivity.class);
+        Intent intent = new Intent(this, Anagram.class);
         startActivity(intent);
 
         return true;
