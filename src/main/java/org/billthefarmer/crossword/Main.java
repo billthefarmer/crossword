@@ -44,7 +44,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -72,11 +72,10 @@ public class Main extends Activity
 
     public static final int LETTERS = 7;
     public static final int RESULTS = 256;
-    public static final int VERSION_M = 23;
 
     private Data data;
 
-    private Button search;
+    private ImageButton search;
     private ViewGroup letters;
     private ArrayAdapter<String> adapter;
 
@@ -106,7 +105,7 @@ public class Main extends Activity
         Spinner spinner = findViewById(R.id.spinner);
         letters = findViewById(R.id.letters);
         ListView results = findViewById(R.id.list);
-        Button clear = findViewById(R.id.clear);
+        ImageButton clear = findViewById(R.id.clear);
         search = findViewById(R.id.search);
 
         // Set up listeners
@@ -325,7 +324,7 @@ public class Main extends Activity
     {
         dark = !dark;
         item.setChecked(dark);
-        if (Build.VERSION.SDK_INT != VERSION_M)
+        if (Build.VERSION.SDK_INT != Build.VERSION_CODES.M)
             recreate();
 
         return true;

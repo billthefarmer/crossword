@@ -28,6 +28,10 @@
         All customizations that are NOT specific to a particular
         API-level can go here.
     -->
+
+    <item name="action_clear">@drawable/ic_action_cancel</item>
+    <item name="action_search">@drawable/ic_action_search</item>
+
   </style>
 
   <!-- Application theme. -->
@@ -36,6 +40,10 @@
         All customizations that are NOT specific to a particular
         API-level can go here.
     -->
+
+    <item name="action_clear">@drawable/ic_action_cancel_dark</item>
+    <item name="action_search">@drawable/ic_action_search_dark</item>
+
   </style>
 
 </resources>

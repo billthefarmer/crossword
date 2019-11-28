@@ -35,7 +35,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -53,7 +53,7 @@ public class AnagramActivity extends Activity
     public static final int ANAGRAMS = 1024;
 
     private Data data;
-    private Button search;
+    private ImageButton search;
     private TextView textView;
     private ArrayAdapter adapter;
     private List<String> wordList;

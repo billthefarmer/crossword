@@ -14,14 +14,15 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="8dp"
       android:gravity="center"
-      android:orientation="horizontal">
+      android:orientation="horizontal"
+      tools:ignore="ContentDescription">
 
     <TextView
         android:id="@+id/chars"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/letters"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Spinner
         android:id="@+id/spinner"
@@ -30,19 +31,19 @@
         android:layout_marginLeft="8dp"
         android:entries="@array/numbers" />
 
-    <Button
+    <ImageButton
         android:id="@+id/clear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
-        android:text="@string/clear" />
+        android:src="?attr/action_clear" />
 
-    <Button
+    <ImageButton
         android:id="@+id/search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
-        android:text="@string/search" />
+        android:src="?attr/action_search" />
 
   </LinearLayout>
 
@@ -68,7 +69,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter2"
@@ -78,7 +80,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter3"
@@ -88,7 +91,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter4"
@@ -98,7 +102,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter5"
@@ -108,7 +113,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter6"
@@ -118,7 +124,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter7"
@@ -128,7 +135,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter8"
@@ -138,7 +146,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter9"
@@ -148,7 +157,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter10"
@@ -158,7 +168,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter11"
@@ -168,7 +179,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter12"
@@ -178,7 +190,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter13"
@@ -188,7 +201,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter14"
@@ -198,7 +212,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter15"
@@ -208,7 +223,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter16"
@@ -218,7 +234,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter17"
@@ -228,7 +245,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter18"
@@ -238,7 +256,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter19"
@@ -248,7 +267,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter20"
@@ -258,7 +278,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter21"
@@ -268,7 +289,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter22"
@@ -278,7 +300,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter23"
@@ -288,7 +311,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter24"
@@ -298,7 +322,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter25"
@@ -308,7 +333,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter26"
@@ -318,7 +344,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter27"
@@ -328,7 +355,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <EditText
           android:id="@+id/letter28"
@@ -338,7 +366,8 @@
           android:imeOptions="actionNext"
           android:inputType="textCapCharacters"
           android:maxLength="1"
-          android:selectAllOnFocus="true" />
+          android:selectAllOnFocus="true"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </LinearLayout>
 
