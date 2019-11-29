@@ -23,7 +23,6 @@
 
 package org.billthefarmer.crossword;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.AsyncTask;
@@ -31,6 +30,7 @@ import android.os.AsyncTask;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.ref.WeakReference;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,9 +49,9 @@ public class Data
     private List<String> anagramList;
     private List<String> resultList;
     private List<String> wordList;
-    private boolean searching;
+    private static boolean searching;
 
-    private OnPostExecuteListener listener;
+    private static OnPostExecuteListener listener;
 
     // Letter values
     private static final Integer values[] =
@@ -138,9 +138,7 @@ public class Data
                                  List<String> wordList)
     {
         // Start the task
-        LoadTask loadTask = new LoadTask();
-        loadTask.wordList = wordList;
-        loadTask.context = context;
+        LoadTask loadTask = new LoadTask(context, wordList);
         loadTask.execute(id);
     }
 
@@ -170,18 +168,28 @@ public class Data
     }
 
     // LoadTask
-    @SuppressLint("StaticFieldLeak")
     protected static class LoadTask
         extends AsyncTask<Integer, Void, Void>
     {
-        protected List<String> wordList;
-        protected Context context;
+        private List<String> wordList;
+        private WeakReference<Context> contextWeakReference;
+
+        // LoadTask
+        public LoadTask(Context context, List<String> wordList)
+        {
+            contextWeakReference = new WeakReference<>(context);
+            this.wordList = wordList;
+        }
 
         // The system calls this to perform work in a worker thread
         // and delivers it the parameters given to AsyncTask.execute()
         @Override
         protected Void doInBackground(Integer... ids)
         {
+            final Context context = contextWeakReference.get();
+            if (context == null)
+                return null;
+
             Resources resources = context.getResources();
 
             // Read words from resources
@@ -203,8 +211,7 @@ public class Data
     }
 
     // AnagramTask
-    @SuppressLint("StaticFieldLeak")
-    protected class AnagramTask
+    protected static class AnagramTask
         extends AsyncTask<String, Void, List<String>>
     {
         protected List<String> wordList;
@@ -414,7 +421,7 @@ public class Data
     }
 
     // Element
-    public class Element
+    public static class Element
     {
         protected String word;
         protected String phrase;
@@ -444,8 +451,8 @@ public class Data
     }
 
     // SearchTask
-    @SuppressLint("StaticFieldLeak")
-    protected class SearchTask extends AsyncTask<String, Void, List<String>>
+    protected static class SearchTask
+        extends AsyncTask<String, Void, List<String>>
     {
         protected List<String> wordList;
         private List<String> resultList;
