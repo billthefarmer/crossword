@@ -286,10 +286,11 @@ public class Main extends Activity
     }
 
     // On about click
+    @SuppressWarnings("deprecation")
     private boolean onAboutClick(MenuItem item)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.about);
+        builder.setTitle(R.string.app_name);
 
         DateFormat dateFormat = DateFormat.getDateTimeInstance();
         SpannableStringBuilder spannable =
@@ -314,7 +315,11 @@ public class Main extends Activity
         // Set movement method
         TextView text = dialog.findViewById(android.R.id.message);
         if (text != null)
+        {
+            text.setTextAppearance(builder.getContext(),
+                                   android.R.style.TextAppearance_Small);
             text.setMovementMethod(LinkMovementMethod.getInstance());
+        }
 
         return true;
     }
