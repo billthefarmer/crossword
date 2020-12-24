@@ -96,8 +96,8 @@ public class Main extends Activity
             PreferenceManager.getDefaultSharedPreferences(this);
         dark = preferences.getBoolean(PREF_DARK, false);
 
-        if (dark)
-            setTheme(R.style.AppDarkTheme);
+        if (!dark)
+            setTheme(R.style.AppTheme);
 
         setContentView(R.layout.main);
 

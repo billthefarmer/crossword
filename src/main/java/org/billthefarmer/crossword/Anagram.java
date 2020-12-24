@@ -70,8 +70,8 @@ public class Anagram extends Activity
             PreferenceManager.getDefaultSharedPreferences(this);
         boolean dark = preferences.getBoolean(Main.PREF_DARK, false);
 
-        if (dark)
-            setTheme(R.style.AppDarkTheme);
+        if (!dark)
+            setTheme(R.style.AppTheme);
 
         setContentView(R.layout.anagram);
 

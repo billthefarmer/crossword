@@ -55,8 +55,8 @@ public class SearchActivity extends Activity
             PreferenceManager.getDefaultSharedPreferences(this);
         boolean dark = preferences.getBoolean(Main.PREF_DARK, false);
 
-        if (dark)
-            setTheme(R.style.AppDarkTheme);
+        if (!dark)
+            setTheme(R.style.AppTheme);
 
         // Set content
         setContentView(R.layout.search);
