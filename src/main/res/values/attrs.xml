@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <declare-styleable name="Diary">
+  <declare-styleable name="Crossword">
     <attr name="action_clear" format="reference" />
     <attr name="action_search" format="reference" />
   </declare-styleable>
