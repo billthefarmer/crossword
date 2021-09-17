@@ -28,7 +28,6 @@ import android.content.res.Resources;
 import android.os.AsyncTask;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
 import java.util.ArrayDeque;
@@ -193,9 +192,8 @@ public class Data
             Resources resources = context.getResources();
 
             // Read words from resources
-            try (InputStream stream = resources.openRawResource(ids[0]);
-                 InputStreamReader reader = new InputStreamReader(stream);
-                 BufferedReader buffer = new BufferedReader(reader))
+            try (BufferedReader buffer = new BufferedReader
+                 (new InputStreamReader(resources.openRawResource(ids[0]))))
             {
                 String word;
                 while ((word = buffer.readLine()) != null)
