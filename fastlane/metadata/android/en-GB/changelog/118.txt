@@ -1,0 +1,2 @@
+* Update anagram icon
+* Update read task
