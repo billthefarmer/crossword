@@ -107,6 +107,15 @@ public class Main extends Activity
         ListView results = findViewById(R.id.list);
         ImageButton clear = findViewById(R.id.clear);
         search = findViewById(R.id.search);
+        // Create an ArrayAdapter using the string array and a default
+        // spinner layout
+        ArrayAdapter<CharSequence> adapt = ArrayAdapter
+            .createFromResource(this, R.array.numbers,
+                                R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapt.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapt);
 
         // Set up listeners
         if (spinner != null)
@@ -156,7 +165,7 @@ public class Main extends Activity
             resultList = new ArrayList<>();
 
         // Create adapter
-        adapter = new ArrayAdapter<>
+        adapter = new ArrayAdapter<String>
             (this, android.R.layout.simple_list_item_1, resultList);
         if (results != null)
             results.setAdapter(adapter);
