@@ -8,6 +8,12 @@
       android:title="@string/anagram" />
 
   <item
+      android:id="@+id/action_share"
+      android:icon="@drawable/ic_action_share"
+      android:showAsAction="ifRoom"
+      android:title="@string/share" />
+
+  <item
       android:id="@+id/action_help"
       android:icon="@drawable/ic_action_help"
       android:showAsAction="ifRoom"

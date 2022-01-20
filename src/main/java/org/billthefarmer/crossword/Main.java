@@ -68,6 +68,7 @@ public class Main extends Activity
     public static final String TAG = "Crossword";
     public static final String WORD = "word";
 
+    public static final String TEXT_PLAIN = "text/plain";
     public static final String PREF_DARK = "pref_dark";
 
     public static final int LETTERS = 7;
@@ -77,6 +78,7 @@ public class Main extends Activity
 
     private ImageButton search;
     private ViewGroup letters;
+    private Spinner spinner;
     private ArrayAdapter<String> adapter;
 
     private List<String> wordList;
@@ -102,7 +104,7 @@ public class Main extends Activity
         setContentView(R.layout.main);
 
         // Find views
-        Spinner spinner = findViewById(R.id.spinner);
+        spinner = findViewById(R.id.spinner);
         letters = findViewById(R.id.letters);
         ListView results = findViewById(R.id.list);
         ImageButton clear = findViewById(R.id.clear);
@@ -254,6 +256,10 @@ public class Main extends Activity
         case R.id.action_anagram:
             return onAnagramClick(item);
 
+        // Share
+        case R.id.action_share:
+            return onShareClick(item);
+
         // Help
         case R.id.action_help:
             return onHelpClick(item);
@@ -281,6 +287,40 @@ public class Main extends Activity
         Intent intent = new Intent(this, Anagram.class);
         startActivity(intent);
 
+        return true;
+    }
+
+    // On share click
+    private boolean onShareClick(MenuItem item)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.append(String.format(Locale.getDefault(), "%s %d, ",
+                                     getString(R.string.letters), length));
+
+        for (int i = 0; i < length; i++)
+        {
+            TextView text = (TextView) letters.getChildAt(i);
+
+            // If there is a letter in the slot
+            if (text.length() > 0)
+            {
+                String letter = text.getText().toString();
+                builder.append(letter.toLowerCase(Locale.getDefault()));
+            }
+
+            // Wildcard
+            else
+                builder.append(".");
+        }
+
+        builder.append("\n");
+        for (String result: resultList.toArray(new String[0]))
+            builder.append(String.format("%s\n", result));
+        
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType(TEXT_PLAIN);
+        intent.putExtra(Intent.EXTRA_TEXT, builder.toString());
+        startActivity(Intent.createChooser(intent, null));
         return true;
     }
 
@@ -496,7 +536,7 @@ public class Main extends Activity
     private void doSearch()
     {
         // Build a match string
-        StringBuilder buffer = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
         boolean empty = true;
         for (int i = 0; i < length; i++)
         {
@@ -506,13 +546,13 @@ public class Main extends Activity
             if (text.length() > 0)
             {
                 String letter = text.getText().toString();
-                buffer.append(letter.toLowerCase(Locale.getDefault()));
+                builder.append(letter.toLowerCase(Locale.getDefault()));
                 empty = false;
             }
 
             // Wildcard
             else
-                buffer.append(".");
+                builder.append(".");
         }
 
         // Don't search if no letters
@@ -520,7 +560,7 @@ public class Main extends Activity
             return;
 
         // Match string
-        String match = buffer.toString();
+        String match = builder.toString();
 
         // Start search task
         if (data != null)
