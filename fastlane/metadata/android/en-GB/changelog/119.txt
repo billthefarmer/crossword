@@ -1,0 +1,2 @@
+* Add share button
+* Update spinner text size
