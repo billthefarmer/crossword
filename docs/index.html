@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-gb" lang="en-gb">
+<head>
+  <meta name="generator" content="Hugo 0.92.0" />
+
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>Crossword</title>
+
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link rel="stylesheet" href="https://billthefarmer.github.io/crossword/css/styles.css">
+  <link rel="stylesheet" href="https://billthefarmer.github.io/crossword/css/custom.css">
+  <link href="/crossword/index.xml" rel="alternate" type="application/rss+xml" title="Crossword" />
+
+</head>
+<body>
+
+<div class="sidebar sidebar-cyan">
+  <div class="navigation">
+    <div class="logo">
+  
+  
+  <a href="https://github.com/billthefarmer/crossword" target="_blank" >
+    <img src="images/icon.png"
+          style="max-width: 25%"
+          />
+  </a>
+  
+  <a href="https://f-droid.org/packages/org.billthefarmer.crossword" target="_blank" >
+    <img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.svg"
+          style="max-width: 40%"
+          />
+  </a>
+  
+  <a href="https://github.com/billthefarmer/crossword/releases" target="_blank" >
+    <img src="https://img.shields.io/github/v/release/billthefarmer/crossword.svg?logo=github"
+          />
+  </a>
+  
+  
+</div>
+
+    <h1 class="site-title"><a href="https://billthefarmer.github.io/crossword/">Crossword</a></h1>
+
+
+    <nav class="internal">
+      <ul>
+    
+        
+                <li>
+        <a href="#introduction">Introduction</a>
+
+    </li>
+
+
+        
+                <li>
+        <a href="#solve">Solve crossword entries</a>
+
+    </li>
+
+
+        
+                <li>
+        <a href="#anagram">Solve anagrams</a>
+
+    </li>
+
+
+        
+    
+</ul>
+
+    </nav>
+
+    <nav class="external">
+      <div class="external-title"></div>
+      
+    </nav>
+  </div>
+
+  <div class="version">
+    <p>
+  Copyright &copy; 2022 Bill Farmer
+</p>
+
+  </div>
+</div>
+
+<div class="content">
+    
+        
+                <section class="page" id="introduction">
+    
+    <h3>
+        <a href="#introduction">Introduction</a>
+    </h3>
+    
+    <div class="content">
+        <p>Android crossword solver.</p>
+<p><img src="images/Crossword.png" alt="Crossword"> <img src="images/Definition.png" alt="Definition"></p>
+<p><img src="images/Anagram.png" alt="Anagram"> <img src="images/Help.png" alt="Help"></p>
+<ul>
+<li>Words up to 28 letters</li>
+<li>110,000 word dictionary</li>
+<li>Web search word definitions</li>
+<li>Anagram search</li>
+</ul>
+
+    </div>
+</section>
+
+
+
+
+        
+                <section class="page" id="solve">
+    
+    <h3>
+        <a href="#solve">Solve crossword entries</a>
+    </h3>
+    
+    <div class="content">
+        <p>Set the number of letters in the word you are looking for using the
+dropdown. If the number of slots won&rsquo;t fit on the screen, rotate the
+phone so they will. The letter slots will scroll sideways. The longest
+word in the dictionary is antidisestablishmentarianism, which is 28
+letters.  Even if 28 slots won&rsquo;t fit on the screen, the app should
+still find this word.</p>
+<p>Fill in the letters you have in the slots. As each letter is entered
+the next slot will be selected and the app will search for words. You
+can also use the the keyboard <strong>Next</strong> button or the <strong>Search</strong> button
+to search. A stop character may be used as a wildcard.</p>
+<p>A list of matching words will appear below. If you select a word in the
+list, the slots will be filled in with that word, and a web search
+will be made for the definition on
+<a href="https://duckduckgo.com">DuckDuckGo</a>. You may select links on the page
+and navigate back using the <strong>Home</strong> button on the toolbar.</p>
+<p>There are three icons in the toolbar: <strong>Anagram</strong>, which will show the
+anagram screen, <strong>Help</strong>, which will show the help screen, and
+<strong>About</strong>, which will show the copyright, licence and version.</p>
+<p>And on the menu, <strong>Dark theme</strong>, which will change the app theme.
+On Android 6, Marshmallow, the theme will not change until you rotate
+the device or restart the app. On other versions the theme will change
+immediately. This is due to an issue with Android 6 which would
+otherwise cause the app to crash.</p>
+
+    </div>
+</section>
+
+
+
+
+        
+                <section class="page" id="anagram">
+    
+    <h3>
+        <a href="#anagram">Solve anagrams</a>
+    </h3>
+    
+    <div class="content">
+        <p>Type in the word or phrase you want anagrams for, and use the keyboard
+<strong>Next</strong> button or the <strong>Search</strong> button to search. The search may
+take a long time, depending on the length of the phrase. During the
+search the <strong>Search</strong> button is disabled. The anagram search uses a
+smaller 58,000 word dictionary to reduce the search time, and because
+the larger dictionary contains a large number of not very useful three
+and four letter words and acronyms.</p>
+<p>A list of anagrams will appear below, sorted in reverse order of
+value, derived from Scrabble letter values. If you select an entry in
+the list, the entry will be copied to the input field and a new screen
+will show a web search for the definition of the entry on
+<a href="https://duckduckgo.com">DuckDuckGo</a>.</p>
+<p>The results are ordered by an algorithm using Scrabble letter values to
+hopefully get the more interesting anagrams to the top of the list. That
+doesn&rsquo;t mean that some gems might not be hiding down the list.</p>
+<p>This anagram algorithm is intended as a useful additional function to
+the crossword clue search, but is in no way comprehensive. Use one of
+the online anagram sites, such as <a href="https://wordsmith.org/anagram">Wordsmith.org</a>
+for a more comprehensive search.</p>
+
+    </div>
+</section>
+
+
+
+
+        
+    
+</div>
+</body>
+</html>
+
