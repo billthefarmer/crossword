@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <!--  light theme  -->
+  <color name="light_button_normal">#d7d7d7</color>
+  <color name="light_button_pressed">#c1c1c1</color>
+
+  <!--  dark theme  -->
+  <color name="dark_button_normal">#5d595c</color>
+  <color name="dark_button_pressed">#6a6a6c</color>
+
+  <!--  Blue theme  -->
+  <color name="blue_background">#242d48</color>
+  <color name="blue_action_bar">#2d3d72</color>
+  <color name="blue_button_normal">#0e152a</color>
+  <color name="blue_button_pressed">#40434c</color>
+
+  <!--  red theme  -->
+  <color name="red_background">#ed2424</color>
+  <color name="red_action_bar">#7a0f28</color>
+  <color name="red_button_normal">#781431</color>
+  <color name="red_button_pressed">#cc2353</color>
+
+  <!--  orange theme  -->
+  <color name="orange_background">#f35b1f</color>
+  <color name="orange_action_bar">#f34712</color>
+  <color name="orange_button_normal">#9c2e1d</color>
+  <color name="orange_button_pressed">#b45344</color>
+
+
+  <!--  cyan theme  -->
+  <color name="cyan_background">#60e8ff</color>
+  <color name="cyan_action_bar">#5696a1</color>
+  <color name="cyan_button_normal">#1b555f</color>
+  <color name="cyan_button_pressed">#3e97a6</color>
+
+  <!--  purple theme  -->
+  <color name="purple_background">#a42ee5</color>
+  <color name="purple_action_bar">#8a3ab5</color>
+  <color name="purple_button_normal">#331643</color>
+  <color name="purple_button_pressed">#5c058c</color>
+
+</resources>

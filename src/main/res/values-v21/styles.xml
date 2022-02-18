@@ -14,4 +14,8 @@
     <!-- API 21 theme customizations can go here. -->
   </style>
 
+  <style name="ActionBarBaseStyle"
+         parent="android:style/Widget.Material.ActionBar">
+  </style>
+
 </resources>

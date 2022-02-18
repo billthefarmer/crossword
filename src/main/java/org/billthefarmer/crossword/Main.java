@@ -69,10 +69,19 @@ public class Main extends Activity
     public static final String WORD = "word";
 
     public static final String TEXT_PLAIN = "text/plain";
-    public static final String PREF_DARK = "pref_dark";
+    public static final String PREF_THEME = "pref_theme";
 
     public static final int LETTERS = 7;
     public static final int RESULTS = 256;
+
+
+    public static final int PREF_LIGHT  = 1;
+    public static final int PREF_DARK   = 2;
+    public static final int PREF_CYAN   = 3;
+    public static final int PREF_BLUE   = 4;
+    public static final int PREF_ORANGE = 5;
+    public static final int PREF_PURPLE = 6;
+    public static final int PREF_RED    = 7;
 
     private Data data;
 
@@ -85,7 +94,7 @@ public class Main extends Activity
     private List<String> resultList;
 
     private int length = LETTERS;
-    private boolean dark = true;
+    private int theme = 0;
 
     // Called when the activity is first created
     @Override
@@ -96,10 +105,38 @@ public class Main extends Activity
         // Get preferences
         SharedPreferences preferences =
             PreferenceManager.getDefaultSharedPreferences(this);
-        dark = preferences.getBoolean(PREF_DARK, false);
+        theme = preferences.getInt(PREF_THEME, 0);
 
-        if (!dark)
+        switch (theme)
+        {
+        case PREF_LIGHT:
             setTheme(R.style.AppTheme);
+            break;
+
+        case PREF_DARK:
+            setTheme(R.style.AppDarkTheme);
+            break;
+
+        case PREF_CYAN:
+            setTheme(R.style.AppCyanTheme);
+            break;
+
+        case PREF_BLUE:
+            setTheme(R.style.AppBlueTheme);
+            break;
+
+        case PREF_ORANGE:
+            setTheme(R.style.AppOrangeTheme);
+            break;
+
+        case PREF_PURPLE:
+            setTheme(R.style.AppPurpleTheme);
+            break;
+
+        case PREF_RED:
+            setTheme(R.style.AppRedTheme);
+            break;
+        }
 
         setContentView(R.layout.main);
 
@@ -209,7 +246,7 @@ public class Main extends Activity
             PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
 
-        editor.putBoolean(PREF_DARK, dark);
+        editor.putInt(PREF_THEME, theme);
         editor.apply();
 
         // Disconnect listener
@@ -235,15 +272,6 @@ public class Main extends Activity
         return true;
     }
 
-    // onPrepareOptionsMenu
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu)
-    {
-        menu.findItem(R.id.action_dark).setChecked(dark);
-
-        return true;
-    }
-
     // On options item selected
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -264,13 +292,37 @@ public class Main extends Activity
         case R.id.action_help:
             return onHelpClick(item);
 
-        // About
-        case R.id.action_about:
-            return onAboutClick(item);
+        // Light
+        case R.id.action_light:
+            return onLightClick(item);
 
         // Dark
         case R.id.action_dark:
             return onDarkClick(item);
+
+        // Cyan
+        case R.id.action_cyan:
+            return onCyanClick(item);
+
+        // Blue
+        case R.id.action_blue:
+            return onBlueClick(item);
+
+        // Orange
+        case R.id.action_orange:
+            return onOrangeClick(item);
+
+        // Purple
+        case R.id.action_purple:
+            return onPurpleClick(item);
+
+        // Red
+        case R.id.action_red:
+            return onRedClick(item);
+
+        // About
+        case R.id.action_about:
+            return onAboutClick(item);
 
         default:
             return false;
@@ -334,6 +386,76 @@ public class Main extends Activity
         return true;
     }
 
+    // On light click
+    private boolean onLightClick(MenuItem item)
+    {
+        theme = PREF_LIGHT;
+        if (Build.VERSION.SDK_INT != Build.VERSION_CODES.M)
+            recreate();
+
+        return true;
+    }
+
+    // On dark click
+    private boolean onDarkClick(MenuItem item)
+    {
+        theme = PREF_DARK;
+        if (Build.VERSION.SDK_INT != Build.VERSION_CODES.M)
+            recreate();
+
+        return true;
+    }
+
+    // On cyan click
+    private boolean onCyanClick(MenuItem item)
+    {
+        theme = PREF_CYAN;
+        if (Build.VERSION.SDK_INT != Build.VERSION_CODES.M)
+            recreate();
+
+        return true;
+    }
+
+    // On blue click
+    private boolean onBlueClick(MenuItem item)
+    {
+        theme = PREF_BLUE;
+        if (Build.VERSION.SDK_INT != Build.VERSION_CODES.M)
+            recreate();
+
+        return true;
+    }
+
+    // On orange click
+    private boolean onOrangeClick(MenuItem item)
+    {
+        theme = PREF_ORANGE;
+        if (Build.VERSION.SDK_INT != Build.VERSION_CODES.M)
+            recreate();
+
+        return true;
+    }
+
+    // On purple click
+    private boolean onPurpleClick(MenuItem item)
+    {
+        theme = PREF_PURPLE;
+        if (Build.VERSION.SDK_INT != Build.VERSION_CODES.M)
+            recreate();
+
+        return true;
+    }
+
+    // On red click
+    private boolean onRedClick(MenuItem item)
+    {
+        theme = PREF_RED;
+        if (Build.VERSION.SDK_INT != Build.VERSION_CODES.M)
+            recreate();
+
+        return true;
+    }
+
     // On about click
     @SuppressWarnings("deprecation")
     private boolean onAboutClick(MenuItem item)
@@ -369,17 +491,6 @@ public class Main extends Activity
                                    android.R.style.TextAppearance_Small);
             text.setMovementMethod(LinkMovementMethod.getInstance());
         }
-
-        return true;
-    }
-
-    // On dark click
-    private boolean onDarkClick(MenuItem item)
-    {
-        dark = !dark;
-        item.setChecked(dark);
-        if (Build.VERSION.SDK_INT != Build.VERSION_CODES.M)
-            recreate();
 
         return true;
     }
@@ -462,6 +573,7 @@ public class Main extends Activity
     }
 
     // onEditorAction
+    @Override
     public boolean onEditorAction(TextView view, int actionId, KeyEvent event)
     {
         // Check id

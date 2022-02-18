@@ -22,6 +22,9 @@
     -->
   </style>
 
+  <style name="ActionBarBaseStyle" parent="android:style/Widget.Holo.ActionBar">
+  </style>
+
   <!-- Application theme. -->
   <style name="AppTheme" parent="AppBaseTheme">
     <!--
@@ -31,6 +34,8 @@
 
     <item name="action_clear">@drawable/ic_action_cancel</item>
     <item name="action_search">@drawable/ic_action_search</item>
+    <item name="button_normal">@color/light_button_normal</item>
+    <item name="button_pressed">@color/light_button_pressed</item>
 
   </style>
 
@@ -43,6 +48,108 @@
 
     <item name="action_clear">@drawable/ic_action_cancel_dark</item>
     <item name="action_search">@drawable/ic_action_search_dark</item>
+    <item name="button_normal">@color/dark_button_normal</item>
+    <item name="button_pressed">@color/dark_button_pressed</item>
+
+  </style>
+
+  <!-- Application theme. -->
+  <style name="AppCyanTheme" parent="AppDarkTheme">
+    <!--
+        All customizations that are NOT specific to a particular
+        API-level can go here.
+    -->
+
+    <item name="android:windowBackground">@color/cyan_background</item>
+    <item name="android:actionBarStyle">@style/ActionBarCyanStyle</item>
+    <item name="button_normal">@color/cyan_button_normal</item>
+    <item name="button_pressed">@color/cyan_button_pressed</item>
+
+  </style>
+
+  <!-- Application theme. -->
+  <style name="AppBlueTheme" parent="AppDarkTheme">
+    <!--
+        All customizations that are NOT specific to a particular
+        API-level can go here.
+    -->
+
+    <item name="android:windowBackground">@color/blue_background</item>
+    <item name="android:actionBarStyle">@style/ActionBarBlueStyle</item>
+    <item name="button_normal">@color/blue_button_normal</item>
+    <item name="button_pressed">@color/blue_button_pressed</item>
+
+  </style>
+
+  <!-- Application theme. -->
+  <style name="AppOrangeTheme" parent="AppDarkTheme">
+    <!--
+        All customizations that are NOT specific to a particular
+        API-level can go here.
+    -->
+
+    <item name="android:windowBackground">@color/orange_background</item>
+    <item name="android:actionBarStyle">@style/ActionBarOrangeStyle</item>
+    <item name="button_normal">@color/orange_button_normal</item>
+    <item name="button_pressed">@color/orange_button_pressed</item>
+
+  </style>
+
+  <!-- Application theme. -->
+  <style name="AppPurpleTheme" parent="AppDarkTheme">
+    <!--
+        All customizations that are NOT specific to a particular
+        API-level can go here.
+    -->
+
+    <item name="android:windowBackground">@color/purple_background</item>
+    <item name="android:actionBarStyle">@style/ActionBarPurpleStyle</item>
+    <item name="button_normal">@color/purple_button_normal</item>
+    <item name="button_pressed">@color/purple_button_pressed</item>
+
+  </style>
+
+  <!-- Application theme. -->
+  <style name="AppRedTheme" parent="AppDarkTheme">
+    <!--
+        All customizations that are NOT specific to a particular
+        API-level can go here.
+    -->
+
+    <item name="android:windowBackground">@color/red_background</item>
+    <item name="android:actionBarStyle">@style/ActionBarRedStyle</item>
+    <item name="button_normal">@color/red_button_normal</item>
+    <item name="button_pressed">@color/red_button_pressed</item>
+
+  </style>
+
+  <style name="ActionBarCyanStyle" parent="ActionBarBaseStyle">
+
+    <item name="android:background">@color/cyan_action_bar</item>
+
+  </style>
+
+  <style name="ActionBarBlueStyle" parent="ActionBarBaseStyle">
+
+    <item name="android:background">@color/blue_action_bar</item>
+
+  </style>
+
+  <style name="ActionBarOrangeStyle" parent="ActionBarBaseStyle">
+
+    <item name="android:background">@color/orange_action_bar</item>
+
+  </style>
+
+  <style name="ActionBarPurpleStyle" parent="ActionBarBaseStyle">
+
+    <item name="android:background">@color/purple_action_bar</item>
+
+  </style>
+
+  <style name="ActionBarRedStyle" parent="ActionBarBaseStyle">
+
+    <item name="android:background">@color/red_action_bar</item>
 
   </style>
 

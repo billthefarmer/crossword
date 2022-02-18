@@ -53,10 +53,38 @@ public class SearchActivity extends Activity
         // Get preferences
         SharedPreferences preferences =
             PreferenceManager.getDefaultSharedPreferences(this);
-        boolean dark = preferences.getBoolean(Main.PREF_DARK, false);
+        int theme = preferences.getInt(Main.PREF_THEME, 0);
 
-        if (!dark)
+        switch (theme)
+        {
+        case Main.PREF_LIGHT:
             setTheme(R.style.AppTheme);
+            break;
+
+        case Main.PREF_DARK:
+            setTheme(R.style.AppDarkTheme);
+            break;
+
+        case Main.PREF_CYAN:
+            setTheme(R.style.AppCyanTheme);
+            break;
+
+        case Main.PREF_BLUE:
+            setTheme(R.style.AppBlueTheme);
+            break;
+
+        case Main.PREF_ORANGE:
+            setTheme(R.style.AppOrangeTheme);
+            break;
+
+        case Main.PREF_PURPLE:
+            setTheme(R.style.AppPurpleTheme);
+            break;
+
+        case Main.PREF_RED:
+            setTheme(R.style.AppRedTheme);
+            break;
+        }
 
         // Set content
         setContentView(R.layout.search);
