@@ -11,6 +11,7 @@ Android crossword solver. The app is available on [F-Droid](https://f-droid.org/
  * 110,000 word dictionary
  * Web search word definitions
  * Anagram search
+ * Themes
 
 ## Solve crossword entries
 Set the number of letters in the word you are looking for using the
