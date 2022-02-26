@@ -2,10 +2,14 @@
 <resources>
 
   <declare-styleable name="Crossword">
+
+    <attr name="dialog_bgcolour" format="reference" />
+
     <attr name="button_normal" format="reference" />
     <attr name="button_pressed" format="reference" />
     <attr name="action_clear" format="reference" />
     <attr name="action_search" format="reference" />
+
   </declare-styleable>
 
 </resources>

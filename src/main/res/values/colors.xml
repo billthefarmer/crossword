@@ -2,10 +2,12 @@
 <resources>
 
   <!--  light theme  -->
+  <color name="light_background">#fafafa</color>
   <color name="light_button_normal">#d7d7d7</color>
   <color name="light_button_pressed">#c1c1c1</color>
 
   <!--  dark theme  -->
+  <color name="dark_background">#303030</color>
   <color name="dark_button_normal">#5d595c</color>
   <color name="dark_button_pressed">#6a6a6c</color>
 
