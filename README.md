@@ -36,7 +36,6 @@ There are three icons in the toolbar: **Anagram**, which will show the
 anagram screen, **Help**, which will show the help screen, and
 **About**, which will show the copyright, licence and version.
 
-And on the menu, **Themes**, which will change the app theme.
 On Android 6, Marshmallow, the theme will not change until you rotate
 the device or restart the app. On other versions the theme will change
 immediately. This is due to an issue with Android 6 which would
