@@ -21,10 +21,17 @@ word in the dictionary is antidisestablishmentarianism, which is 28
 letters.  Even if 28 slots won't fit on the screen, the app should
 still find this word.
 
-Fill in the letters you have in the slots. As each letter is entered
-the next slot will be selected and the app will search for words. You
-can also use the the keyboard **Next** button or the **Search** button
-to search. A stop character may be used as a wildcard.
+Fill in the letters you have in the correct position in the first row
+of slots, coloured green. Fill in letters that are in the word in any
+position in the second row of slots, coloured yellow. As each letter
+is entered the next slot will be selected and the app will search for
+words. You can also use the the keyboard **Next** button or the
+**Search** button to search. A stop character may be used as a
+wildcard.
+
+The search will find words that have the letters in the first row in
+the position entered, and the letters in the second row in any
+position.
 
 A list of matching words will appear below. If you select a word in the
 list, the slots will be filled in with that word, and a web search

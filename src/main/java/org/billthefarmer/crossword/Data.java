@@ -152,11 +152,12 @@ public class Data
     }
 
     // Start search task
-    protected void startSearchTask(String match, List<String> wordList)
+    protected void startSearchTask(String match, String content,
+                                   List<String> wordList)
     {
         SearchTask searchTask = new SearchTask();
         searchTask.wordList = wordList;
-        searchTask.execute(match);
+        searchTask.execute(match, content);
         searching = true;
     }
 
@@ -458,15 +459,29 @@ public class Data
         // The system calls this to perform work in a worker thread
         // and delivers it the parameters given to AsyncTask.execute()
         @Override
-        protected List<String> doInBackground(String... matches)
+        protected List<String> doInBackground(String... params)
         {
             resultList = new ArrayList<>();
 
-            String match = matches[0];
+            String match = params[0];
+            String content = params[1];
             int length = match.length();
             for (String word : wordList)
             {
                 if (word.length() != length)
+                    continue;
+
+                boolean contains = true;
+                for (int i = 0; i < content.length(); i++)
+                {
+                    if (!word.contains(content.substring(i, i + 1)))
+                    {
+                        contains = false;
+                        break;
+                    }
+                }
+
+                if (!contains)
                     continue;
 
                 if (word.matches(match))

@@ -87,6 +87,7 @@ public class Main extends Activity
 
     private ImageButton search;
     private ViewGroup letters;
+    private ViewGroup contains;
     private Spinner spinner;
     private ArrayAdapter<String> adapter;
 
@@ -143,6 +144,7 @@ public class Main extends Activity
         // Find views
         spinner = findViewById(R.id.spinner);
         letters = findViewById(R.id.letters);
+        contains = findViewById(R.id.contains);
         ListView results = findViewById(R.id.list);
         ImageButton clear = findViewById(R.id.clear);
         search = findViewById(R.id.search);
@@ -175,18 +177,26 @@ public class Main extends Activity
             for (int i = 0; i < letters.getChildCount(); i++)
             {
                 TextView letter = (TextView) letters.getChildAt(i);
+                TextView content = (TextView) contains.getChildAt(i);
                 if (i < LETTERS)
+                {
                     letter.setVisibility(View.VISIBLE);
+                    content.setVisibility(View.VISIBLE);
+                }
 
                 else
                 {
                     letter.setVisibility(View.GONE);
+                    content.setVisibility(View.GONE);
                     letter.setText("");
+                    content.setText("");
                 }
 
                 // Add listeners
                 letter.setOnEditorActionListener(this);
+                content.setOnEditorActionListener(this);
                 letter.addTextChangedListener(this);
+                content.addTextChangedListener(this);
             }
         }
 
@@ -346,7 +356,7 @@ public class Main extends Activity
     private boolean onShareClick(MenuItem item)
     {
         StringBuilder builder = new StringBuilder();
-        builder.append(String.format(Locale.getDefault(), "%s %d, ",
+        builder.append(String.format(Locale.getDefault(), "%s %d, '",
                                      getString(R.string.letters), length));
 
         for (int i = 0; i < length; i++)
@@ -365,7 +375,22 @@ public class Main extends Activity
                 builder.append(".");
         }
 
-        builder.append("\n");
+        builder.append("', '");
+
+        for (int i = 0; i < length; i++)
+        {
+            TextView text = (TextView) contains.getChildAt(i);
+
+            // If there is a letter in the slot
+            if (text.length() > 0)
+            {
+                String letter = text.getText().toString();
+                builder.append(letter.toLowerCase(Locale.getDefault()));
+            }
+        }
+
+        builder.append("'\n\n");
+
         for (String result: resultList.toArray(new String[0]))
             builder.append(String.format("%s\n", result));
         
@@ -516,18 +541,26 @@ public class Main extends Activity
             {
                 for (int i = 0; i < letters.getChildCount(); i++)
                 {
-                    TextView text = (TextView) letters.getChildAt(i);
+                    TextView letter = (TextView) letters.getChildAt(i);
+                    TextView content = (TextView) contains.getChildAt(i);
                     if (i < length)
-                        text.setVisibility(View.VISIBLE);
+                    {
+                        letter.setVisibility(View.VISIBLE);
+                        content.setVisibility(View.VISIBLE);
+                    }
 
                     // Temporarily remove the text change listener to
                     // stop unexpected consequences
                     else
                     {
-                        text.setVisibility(View.GONE);
-                        text.removeTextChangedListener(this);
-                        text.setText("");
-                        text.addTextChangedListener(this);
+                        letter.setVisibility(View.GONE);
+                        letter.removeTextChangedListener(this);
+                        letter.setText("");
+                        letter.addTextChangedListener(this);
+                        content.setVisibility(View.GONE);
+                        content.removeTextChangedListener(this);
+                        content.setText("");
+                        content.addTextChangedListener(this);
                     }
                 }
             }
@@ -559,10 +592,10 @@ public class Main extends Activity
             // consequences
             for (int i = 0; i < Math.min(length, s.length()); i++)
             {
-                TextView text = (TextView) letters.getChildAt(i);
-                text.removeTextChangedListener(this);
-                text.setText(s.substring(i, i + 1));
-                text.addTextChangedListener(this);
+                TextView letter = (TextView) letters.getChildAt(i);
+                letter.removeTextChangedListener(this);
+                letter.setText(s.substring(i, i + 1));
+                letter.addTextChangedListener(this);
             }
 
             // Start the web search
@@ -667,17 +700,33 @@ public class Main extends Activity
                 builder.append(".");
         }
 
+        // Build a contains string
+        StringBuilder buffer = new StringBuilder();
+        for (int i = 0; i < length; i++)
+        {
+            TextView text = (TextView) contains.getChildAt(i);
+
+            // If there is a letter in the slot
+            if (text.length() > 0)
+            {
+                String letter = text.getText().toString();
+                buffer.append(letter.toLowerCase(Locale.getDefault()));
+                empty = false;
+            }
+        }
+
         // Don't search if no letters
         if (empty)
             return;
 
         // Match string
         String match = builder.toString();
+        String content = buffer.toString();
 
         // Start search task
         if (data != null)
         {
-            data.startSearchTask(match, wordList);
+            data.startSearchTask(match, content, wordList);
             search.setEnabled(false);
         }
     }
@@ -690,6 +739,10 @@ public class Main extends Activity
         for (int i = 0; i < length; i++)
         {
             TextView text = (TextView) letters.getChildAt(i);
+            text.removeTextChangedListener(this);
+            text.setText("");
+            text.addTextChangedListener(this);
+            text = (TextView) contains.getChildAt(i);
             text.removeTextChangedListener(this);
             text.setText("");
             text.addTextChangedListener(this);
