@@ -747,6 +747,8 @@ public class Main extends Activity
             text.setText("");
             text.addTextChangedListener(this);
         }
+
+        letters.getChildAt(0).requestFocus();
     }
 
     // The system calls this to perform work in the UI thread and
