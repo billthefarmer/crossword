@@ -8,10 +8,20 @@
   -->
   <style name="AppBaseTheme" parent="android:Theme.Material.Light.DarkActionBar">
     <!-- API 21 theme customizations can go here. -->
+
+    <item name="android:textAppearanceLarge">
+      @style/textAppearanceLargeBold
+    </item>
+
   </style>
 
   <style name="AppDarkBaseTheme" parent="android:Theme.Material">
     <!-- API 21 theme customizations can go here. -->
+
+    <item name="android:textAppearanceLarge">
+      @style/textAppearanceLargeBold
+    </item>
+
   </style>
 
   <style name="ActionBarBaseStyle"

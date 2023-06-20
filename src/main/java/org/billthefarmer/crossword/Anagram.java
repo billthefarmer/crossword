@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.Locale;
 
 // Anagram
+@SuppressWarnings("deprecation")
 public class Anagram extends Activity
     implements AdapterView.OnItemClickListener,
     TextView.OnEditorActionListener,

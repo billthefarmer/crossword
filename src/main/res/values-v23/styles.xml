@@ -12,6 +12,9 @@
     <item name="android:colorBackgroundFloating">
       ?attr/dialog_bgcolour
     </item>
+    <item name="android:textAppearanceLarge">
+      @style/textAppearanceLargeBold
+    </item>
 
   </style>
 
@@ -20,6 +23,9 @@
 
     <item name="android:colorBackgroundFloating">
       ?attr/dialog_bgcolour
+    </item>
+    <item name="android:textAppearanceLarge">
+      @style/textAppearanceLargeBold
     </item>
 
   </style>

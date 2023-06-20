@@ -37,6 +37,7 @@ import android.webkit.WebViewClient;
 import java.util.Locale;
 
 // SearchActivity
+@SuppressWarnings("deprecation")
 public class SearchActivity extends Activity
 {
     public static final String FORMAT =

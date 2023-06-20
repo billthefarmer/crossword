@@ -5,7 +5,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.0'
+        classpath 'com.android.tools.build:gradle:7.4.2'
     }
 }
 
@@ -23,12 +23,13 @@ allprojects {
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    namespace "org.billthefarmer.crossword"
+    compileSdkVersion 31
 
     defaultConfig {
         applicationId "org.billthefarmer.crossword"
         minSdkVersion 14
-        targetSdkVersion 28
+        targetSdkVersion 31
         versionName "1.21"
         versionCode 121
 
@@ -37,12 +38,12 @@ android {
 
     lintOptions {
         disable 'IconDensities', 'SetJavaScriptEnabled', 'OldTargetApi',
-	    'NonConstantResourceId', 'ExpiredTargetSdkVersion'
+	    'NonConstantResourceId', 'ExpiredTargetSdkVersion', 'AndroidGradlePluginVersion'
         // abortOnError false
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_9
+        targetCompatibility JavaVersion.VERSION_1_9
     }
 }

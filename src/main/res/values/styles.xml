@@ -12,6 +12,11 @@
         res/values-vXX/styles.xml, while customizations related to
         backward-compatibility can go here.
     -->
+
+    <item name="android:textAppearanceLarge">
+      @style/textAppearanceLargeBold
+    </item>
+
   </style>
 
   <style name="AppDarkBaseTheme" parent="android:Theme.Holo">
@@ -20,6 +25,11 @@
         res/values-vXX/styles.xml, while customizations related to
         backward-compatibility can go here.
     -->
+
+    <item name="android:textAppearanceLarge">
+      @style/textAppearanceLargeBold
+    </item>
+
   </style>
 
   <style name="ActionBarBaseStyle" parent="android:style/Widget.Holo.ActionBar">
@@ -159,6 +169,13 @@
   <style name="ActionBarRedStyle" parent="ActionBarBaseStyle">
 
     <item name="android:background">@color/red_action_bar</item>
+
+  </style>
+
+  <style name="textAppearanceLargeBold"
+         parent="android:style/TextAppearance.Large">
+
+        <item name="android:textStyle">bold</item>
 
   </style>
 

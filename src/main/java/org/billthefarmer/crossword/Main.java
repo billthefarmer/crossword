@@ -57,6 +57,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 // Main
+@SuppressWarnings("deprecation")
 public class Main extends Activity
     implements AdapterView.OnItemSelectedListener,
     AdapterView.OnItemClickListener,
