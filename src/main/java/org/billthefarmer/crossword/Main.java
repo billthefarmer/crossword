@@ -35,6 +35,8 @@ import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -75,6 +77,7 @@ public class Main extends Activity
     public static final int LETTERS = 7;
     public static final int RESULTS = 256;
 
+    public static final int DELAY   = 32;
 
     public static final int PREF_LIGHT  = 1;
     public static final int PREF_DARK   = 2;
@@ -83,6 +86,8 @@ public class Main extends Activity
     public static final int PREF_ORANGE = 5;
     public static final int PREF_PURPLE = 6;
     public static final int PREF_RED    = 7;
+
+    private static float textSize = 0;
 
     private Data data;
 
@@ -340,6 +345,48 @@ public class Main extends Activity
         }
     }
 
+    //resizeLetters
+    private void resizeLetters()
+    {
+        if (textSize == 0)
+            textSize = ((TextView) findViewById(R.id.chars)).getTextSize();
+
+        if (BuildConfig.DEBUG)
+            Log.d(TAG, "Size " + textSize);
+
+        for (int i = 0; i < letters.getChildCount(); i++)
+        {
+            TextView v = (TextView) letters.getChildAt(i);
+            v.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+            v = (TextView) contains.getChildAt(i);
+            v.setTextSize(TypedValue.COMPLEX_UNIT_PX,textSize);
+        }
+
+        // Delay resizing
+        letters.postDelayed(() ->
+        {
+            View content = findViewById(android.R.id.content);
+            float scale = (float) content.getWidth() / letters.getWidth();
+            float newSize = textSize * scale;
+
+            if (newSize < textSize)
+                newSize = textSize;
+            if (newSize > textSize * 3)
+                newSize = textSize * 3;
+
+            if (BuildConfig.DEBUG)
+                Log.d(TAG, "New size " + newSize);
+
+            for (int i = 0; i < letters.getChildCount(); i++)
+            {
+                TextView v = (TextView) letters.getChildAt(i);
+                v.setTextSize(TypedValue.COMPLEX_UNIT_PX, newSize);
+                v = (TextView) contains.getChildAt(i);
+                v.setTextSize(TypedValue.COMPLEX_UNIT_PX,newSize);
+            }
+        }, DELAY);
+    }
+
     // On anagram click
     private boolean onAnagramClick(MenuItem item)
     {
@@ -564,6 +611,8 @@ public class Main extends Activity
                         content.addTextChangedListener(this);
                     }
                 }
+
+                resizeLetters();
             }
         }
     }

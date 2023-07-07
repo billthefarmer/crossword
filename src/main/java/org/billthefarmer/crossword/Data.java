@@ -38,6 +38,7 @@ import java.util.Deque;
 import java.util.List;
 
 // Data class
+@SuppressWarnings("deprecation")
 public class Data
 {
     private static final String TAG = "Anagram";
