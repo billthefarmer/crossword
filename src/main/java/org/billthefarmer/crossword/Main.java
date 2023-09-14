@@ -48,8 +48,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -62,6 +64,7 @@ import java.util.regex.Pattern;
 @SuppressWarnings("deprecation")
 public class Main extends Activity
     implements AdapterView.OnItemSelectedListener,
+    PopupMenu.OnMenuItemClickListener,
     AdapterView.OnItemClickListener,
     TextView.OnEditorActionListener,
     Data.OnPostExecuteListener,
@@ -95,6 +98,7 @@ public class Main extends Activity
     private ViewGroup letters;
     private ViewGroup contains;
     private Spinner spinner;
+    private Toolbar toolbar;
     private ArrayAdapter<String> adapter;
 
     private List<String> wordList;
@@ -154,6 +158,21 @@ public class Main extends Activity
         ListView results = findViewById(R.id.list);
         ImageButton clear = findViewById(R.id.clear);
         search = findViewById(R.id.search);
+
+        // Find toolbar
+        ViewGroup root = (ViewGroup) getWindow().getDecorView();
+        toolbar = findToolbar(root);
+
+        // Set up navigation
+        toolbar.setNavigationIcon(R.drawable.ic_menu_white_36dp);
+        toolbar.setNavigationOnClickListener((v) ->
+        {
+            PopupMenu popup = new PopupMenu(this, v);
+            popup.inflate(R.menu.navigation);
+            popup.setOnMenuItemClickListener(this);
+            popup.show();
+        });
+
         // Create an ArrayAdapter using the string array and a default
         // spinner layout
         ArrayAdapter<CharSequence> adapt = ArrayAdapter
@@ -343,6 +362,48 @@ public class Main extends Activity
         default:
             return false;
         }
+    }
+
+    // onMenuItemClick
+    @Override
+    public boolean onMenuItemClick(MenuItem item)
+    {
+        // Get id
+        int id = item.getItemId();
+        switch (id)
+        {
+        // Anagram
+        case R.id.action_anagram:
+            return onAnagramClick(item);
+
+        // Help
+        case R.id.action_help:
+            return onHelpClick(item);
+
+        default:
+            return false;
+        }
+    }
+
+    // findToolbar
+    private Toolbar findToolbar(ViewGroup group)
+    {
+        View result = null;
+        final int count = group.getChildCount();
+        for (int i = 0; i < count; i++)
+        {
+            View view = group.getChildAt(i);
+            if (view instanceof Toolbar)
+                return (Toolbar) view;
+
+            if (view instanceof ViewGroup)
+                result = findToolbar((ViewGroup) view);
+
+            if (result != null)
+                break;
+        }
+
+        return (Toolbar) result;
     }
 
     //resizeLetters

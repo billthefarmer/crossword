@@ -41,7 +41,7 @@ import java.util.Locale;
 public class SearchActivity extends Activity
 {
     public static final String FORMAT =
-        "https://duckduckgo.com/?q=%s&ia=definition";
+        "https://en.wiktionary.org/wiki/%s";
 
     private WebView webview;
 

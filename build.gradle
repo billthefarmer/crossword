@@ -28,7 +28,7 @@ android {
 
     defaultConfig {
         applicationId "org.billthefarmer.crossword"
-        minSdkVersion 14
+        minSdkVersion 21
         targetSdkVersion 31
         versionName "1.21"
         versionCode 121
