@@ -2,6 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
   <item
+      android:id="@+id/action_crossword"
+      android:title="@string/app_name" />
+
+  <item
       android:id="@+id/action_anagram"
       android:title="@string/anagram" />
 

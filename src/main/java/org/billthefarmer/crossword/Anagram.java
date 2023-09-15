@@ -32,12 +32,15 @@ import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +50,7 @@ import java.util.Locale;
 @SuppressWarnings("deprecation")
 public class Anagram extends Activity
     implements AdapterView.OnItemClickListener,
+    PopupMenu.OnMenuItemClickListener,
     TextView.OnEditorActionListener,
     Data.OnPostExecuteListener,
     View.OnClickListener
@@ -54,6 +58,7 @@ public class Anagram extends Activity
     public static final int ANAGRAMS = 1024;
 
     private Data data;
+    private Toolbar toolbar;
     private ImageButton search;
     private TextView textView;
     private ArrayAdapter adapter;
@@ -105,9 +110,23 @@ public class Anagram extends Activity
         setContentView(R.layout.anagram);
 
         // Enable back navigation on action bar
-        ActionBar actionBar = getActionBar();
-        if (actionBar != null)
-            actionBar.setDisplayHomeAsUpEnabled(true);
+        // ActionBar actionBar = getActionBar();
+        // if (actionBar != null)
+        //     actionBar.setDisplayHomeAsUpEnabled(true);
+
+        // Find toolbar
+        ViewGroup root = (ViewGroup) getWindow().getDecorView();
+        toolbar = findToolbar(root);
+
+        // Set up navigation
+        toolbar.setNavigationIcon(R.drawable.ic_menu_white_36dp);
+        toolbar.setNavigationOnClickListener((v) ->
+        {
+            PopupMenu popup = new PopupMenu(this, v);
+            popup.inflate(R.menu.navigation);
+            popup.setOnMenuItemClickListener(this);
+            popup.show();
+        });
 
         // Find views
         View layout = findViewById(R.id.layout);
@@ -271,6 +290,59 @@ public class Anagram extends Activity
             if (textView != null)
                 textView.clearFocus();
         }
+    }
+
+    // onMenuItemClick
+    @Override
+    public boolean onMenuItemClick(MenuItem item)
+    {
+        // Get id
+        int id = item.getItemId();
+        switch (id)
+        {
+        // Crossword
+        case R.id.action_crossword:
+            onBackPressed();
+            return true;
+
+        // Help
+        case R.id.action_help:
+            return onHelpClick(item);
+
+        default:
+            return false;
+        }
+    }
+
+    // findToolbar
+    private Toolbar findToolbar(ViewGroup group)
+    {
+        View result = null;
+        final int count = group.getChildCount();
+        for (int i = 0; i < count; i++)
+        {
+            View view = group.getChildAt(i);
+            if (view instanceof Toolbar)
+                return (Toolbar) view;
+
+            if (view instanceof ViewGroup)
+                result = findToolbar((ViewGroup) view);
+
+            if (result != null)
+                break;
+        }
+
+        return (Toolbar) result;
+    }
+
+    // On help click
+    private boolean onHelpClick(MenuItem item)
+    {
+        // Start help activity
+        Intent intent = new Intent(this, HelpActivity.class);
+        startActivity(intent);
+
+        return true;
     }
 
     // doSearch
