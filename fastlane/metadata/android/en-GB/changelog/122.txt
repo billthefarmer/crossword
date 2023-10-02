@@ -1,0 +1,2 @@
+ * Resize display
+ * Add navigation menu

@@ -109,11 +109,6 @@ public class Anagram extends Activity
 
         setContentView(R.layout.anagram);
 
-        // Enable back navigation on action bar
-        // ActionBar actionBar = getActionBar();
-        // if (actionBar != null)
-        //     actionBar.setDisplayHomeAsUpEnabled(true);
-
         // Find toolbar
         ViewGroup root = (ViewGroup) getWindow().getDecorView();
         toolbar = findToolbar(root);
