@@ -76,11 +76,13 @@ public class Main extends Activity
 
     public static final String TEXT_PLAIN = "text/plain";
     public static final String PREF_THEME = "pref_theme";
+    public static final String SEPARATOR = "[,;|]";
 
     public static final int LETTERS = 7;
     public static final int RESULTS = 256;
+    public static final int MAX_LENGTH = 28;
 
-    public static final int DELAY   = 32;
+    public static final int DELAY   = 96;
 
     public static final int PREF_LIGHT  = 1;
     public static final int PREF_DARK   = 2;
@@ -242,16 +244,6 @@ public class Main extends Activity
             (this, R.layout.simple_list_item_1, resultList);
         if (results != null)
             results.setAdapter(adapter);
-    }
-
-    // onResume
-    @Override
-    protected void onResume()
-    {
-        super.onResume();
-
-        // Reconnect listener
-        data = Data.getInstance(this);
 
         // Restore word list
         if (data != null)
@@ -267,6 +259,19 @@ public class Main extends Activity
         // Load words from resources
         if (data != null)
             data.startLoadTask(this, R.raw.words_en, wordList);
+
+        // Check intent
+        checkIntent(getIntent());
+    }
+
+    // onResume
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        // Reconnect listener
+        data = Data.getInstance(this);
     }
 
     // onPause
@@ -361,6 +366,13 @@ public class Main extends Activity
         default:
             return false;
         }
+    }
+
+    // onNewIntent
+    @Override
+    public void onNewIntent(Intent intent)
+    {
+        checkIntent(intent);
     }
 
     // onMenuItemClick
@@ -763,6 +775,56 @@ public class Main extends Activity
             break;
 
         default:
+        }
+    }
+
+    // checkIntent
+    private void checkIntent(Intent intent)
+    {
+        if (intent.hasExtra(Intent.EXTRA_TEXT))
+        {
+            String text = intent.getStringExtra(Intent.EXTRA_TEXT)
+                .toUpperCase(Locale.getDefault());
+
+            if (text.isEmpty())
+                return;
+
+            String words[] = text.split(SEPARATOR);
+            final String word = words[0];
+            if (word.length() > MAX_LENGTH)
+                return;
+
+            spinner.setSelection(word.length() - 1);
+            letters.postDelayed(() ->
+            {
+                for (int i = 0; i < word.length(); i++)
+                {
+                    TextView letter = (TextView) letters.getChildAt(i);
+                    if (Character.isLetter(word.charAt(i)))
+                    {
+                        letter.removeTextChangedListener(this);
+                        letter.setText(word.substring(i, i + 1));
+                        letter.addTextChangedListener(this);
+                    }
+                }
+
+                if (words.length > 1)
+                {
+                    String cont = words[1];
+                    if (cont.length() > word.length())
+                        return;
+
+                    for (int i = 0; i < cont.length(); i++)
+                    {
+                        TextView letter = (TextView) contains.getChildAt(i);
+                        letter.removeTextChangedListener(this);
+                        letter.setText(cont.substring(i, i + 1));
+                        letter.addTextChangedListener(this);
+                    }
+                }
+
+                letters.postDelayed(() -> doSearch(), DELAY);
+            }, DELAY);
         }
     }
 

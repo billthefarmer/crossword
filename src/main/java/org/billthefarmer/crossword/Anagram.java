@@ -56,6 +56,7 @@ public class Anagram extends Activity
     View.OnClickListener
 {
     public static final int ANAGRAMS = 1024;
+    public static final int MAX_LENGTH = 32;
 
     private Data data;
     private Toolbar toolbar;
@@ -171,6 +172,9 @@ public class Anagram extends Activity
         // Load words from resources
         if (data != null)
             data.startLoadTask(this, R.raw.corncob_lowercase, wordList);
+
+        // Check intent
+        checkIntent(getIntent());
     }
 
     // onResume
@@ -218,6 +222,13 @@ public class Anagram extends Activity
         }
 
         return true;
+    }
+
+    // onNewIntent
+    @Override
+    public void onNewIntent(Intent intent)
+    {
+        checkIntent(intent);
     }
 
     // onBackPressed
@@ -316,6 +327,21 @@ public class Anagram extends Activity
         startActivity(intent);
 
         return true;
+    }
+
+    // checkIntent
+    private void checkIntent(Intent intent)
+    {
+        if (intent.hasExtra(Intent.EXTRA_TEXT))
+        {
+            String text = intent.getStringExtra(Intent.EXTRA_TEXT);
+            
+            if (text.isEmpty() || text.length() > MAX_LENGTH)
+                return;
+
+            textView.setText(text);
+            doSearch();
+        }
     }
 
     // doSearch
