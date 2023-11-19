@@ -91,8 +91,15 @@ results.
 | | android.intent.action.VIEW |
 | Category | android.intent.category.LAUNCHER |
 | | android.intent.category.DEFAULT |
-| Extras | android.intent.extra.TEXT | string | The text may contain blanks or dots for unknown letters, optionally a comma and letters known to be in results |
-| | | | Text for the anagram function should just contain letters |
+| Extras | android.intent.extra.TEXT | string | The text may contain |
+| | | | blanks or dots for |
+| | | | unknown letters, |
+| | | | optionally a comma |
+| | | | and letters known to |
+| | | | in results. | 
+| | | | Text for the anagram |
+| | | | function should just |
+| | | | contain letters |
 
 This may be tested using the [Android Debug
 Bridge](https://developer.android.com/studio/command-line/adb#am).
