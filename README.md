@@ -71,3 +71,35 @@ This anagram algorithm is intended as a useful additional function to
 the crossword clue search, but is in no way comprehensive. Use one of
 the online anagram sites, such as [Wordsmith.org](https://wordsmith.org/anagram)
 for a more comprehensive search.
+
+## External control
+Send an
+[Intent](https://developer.android.com/reference/android/content/Intent)
+with an
+[EXTRA_TEXT](https://developer.android.com/reference/android/content/Intent#EXTRA_TEXT)
+with the text containing the known letters and blanks or dots for the
+unknown letters. The app will start or restart and display the
+results.
+
+| Parameter | Activity/Action/Category/Extra | Type | Value |
+| --------- | ------------------------------ | ---- | ----- |
+| Activity | org.billthefarmer.crossword.Main |
+| | org.billthefarmer.crossword.Anagram |
+| Action | android.intent.action.MAIN |
+| | android.intent.action.DEFAULT |
+| | android.intent.action.SEND |
+| | android.intent.action.VIEW |
+| Category | android.intent.category.LAUNCHER |
+| | android.intent.category.DEFAULT |
+| Extras | android.intent.extra.TEXT | string | The text may contain blanks or dots for unknown letters, optionally a comma and letters known to be in results |
+| | | | Text for the anagram function should just contain letters |
+
+This may be tested using the [Android Debug
+Bridge](https://developer.android.com/studio/command-line/adb#am).
+```shell
+$ adb shell am start -e android.intent.extra.TEXT bill..,d  -n org.billthefarmer.crossword/.Main
+Starting: Intent { cmp=org.billthefarmer.crossword/.Main (has extras) }
+$ adb shell am start -e android.intent.extra.TEXT billfarmer -n org.billthefarmer.crossword/.Anagram
+Starting: Intent { cmp=org.billthefarmer.crossword/.Anagram (has extras) }
+Warning: Activity not started, its current task has been brought to the front
+```
