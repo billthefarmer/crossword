@@ -172,9 +172,6 @@ public class Anagram extends Activity
         // Load words from resources
         if (data != null)
             data.startLoadTask(this, R.raw.corncob_lowercase, wordList);
-
-        // Check intent
-        checkIntent(getIntent());
     }
 
     // onResume
@@ -185,6 +182,9 @@ public class Anagram extends Activity
 
         // Reconnect listener
         data = Data.getInstance(this);
+
+        // Check intent
+        checkIntent(getIntent());
     }
 
     // onPause
@@ -334,12 +334,16 @@ public class Anagram extends Activity
     {
         if (intent.hasExtra(Intent.EXTRA_TEXT))
         {
+            // Get text
             String text = intent.getStringExtra(Intent.EXTRA_TEXT);
-            
+            // Ensure it only does it once
+            intent.removeExtra(Intent.EXTRA_TEXT);
+            // Check text
             if (text.isEmpty() || text.length() > MAX_LENGTH)
                 return;
 
             textView.setText(text);
+            // Do the search
             doSearch();
         }
     }

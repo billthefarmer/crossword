@@ -259,9 +259,6 @@ public class Main extends Activity
         // Load words from resources
         if (data != null)
             data.startLoadTask(this, R.raw.words_en, wordList);
-
-        // Check intent
-        checkIntent(getIntent());
     }
 
     // onResume
@@ -272,6 +269,9 @@ public class Main extends Activity
 
         // Reconnect listener
         data = Data.getInstance(this);
+
+        // Check intent
+        checkIntent(getIntent());
     }
 
     // onPause
@@ -783,20 +783,30 @@ public class Main extends Activity
     {
         if (intent.hasExtra(Intent.EXTRA_TEXT))
         {
+            // Get text
             String text = intent.getStringExtra(Intent.EXTRA_TEXT)
                 .toUpperCase(Locale.getDefault());
-
+            // Ensure it only does it once
+            intent.removeExtra(Intent.EXTRA_TEXT);
+            // Check text
             if (text.isEmpty())
                 return;
 
+            // Split words
             String words[] = text.split(SEPARATOR);
             final String word = words[0];
+            // Check word
             if (word.length() > MAX_LENGTH)
                 return;
 
+            // Set word length
             spinner.setSelection(word.length() - 1);
+            // Delay to let spinner sort itself out
             letters.postDelayed(() ->
             {
+                // Clear the letters
+                doClear();
+                // Fill in the letters
                 for (int i = 0; i < word.length(); i++)
                 {
                     TextView letter = (TextView) letters.getChildAt(i);
@@ -811,9 +821,11 @@ public class Main extends Activity
                 if (words.length > 1)
                 {
                     String cont = words[1];
+                    // Check contains text
                     if (cont.length() > word.length())
                         return;
 
+                    // Fill in contains letters
                     for (int i = 0; i < cont.length(); i++)
                     {
                         TextView letter = (TextView) contains.getChildAt(i);
@@ -823,7 +835,8 @@ public class Main extends Activity
                     }
                 }
 
-                letters.postDelayed(() -> doSearch(), DELAY);
+                // Do the search
+                doSearch();
             }, DELAY);
         }
     }
