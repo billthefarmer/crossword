@@ -96,7 +96,7 @@ results.
 | | | | unknown letters, |
 | | | | optionally a comma |
 | | | | and letters known to |
-| | | | in results. | 
+| | | | be in results. | 
 | | | | Text for the anagram |
 | | | | function should just |
 | | | | contain letters |
