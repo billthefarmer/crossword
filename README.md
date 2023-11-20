@@ -73,7 +73,7 @@ the online anagram sites, such as [Wordsmith.org](https://wordsmith.org/anagram)
 for a more comprehensive search.
 
 ## External control
-Send an
+Share text from another app, or send an
 [Intent](https://developer.android.com/reference/android/content/Intent)
 with an
 [EXTRA_TEXT](https://developer.android.com/reference/android/content/Intent#EXTRA_TEXT)

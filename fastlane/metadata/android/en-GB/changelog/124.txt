@@ -1,0 +1,1 @@
+ * Add receive text, remote control
