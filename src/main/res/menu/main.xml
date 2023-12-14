@@ -57,4 +57,28 @@
     </menu>
   </item>
 
+  <item
+      android:id="@+id/dict"
+      android:showAsAction="never"
+      android:title="@string/dict">
+    <menu>
+      <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/wikt"
+            android:checked="true"
+            android:title="@string/wikt" />
+
+        <item
+            android:id="@+id/aard2"
+            android:title="@string/aard2" />
+
+        <item
+            android:id="@+id/quickdic"
+            android:title="@string/quickdic" />
+
+      </group>
+    </menu>
+  </item>
+
 </menu>

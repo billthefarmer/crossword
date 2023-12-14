@@ -26,6 +26,7 @@ package org.billthefarmer.crossword;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.SearchManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -76,7 +77,12 @@ public class Main extends Activity
 
     public static final String TEXT_PLAIN = "text/plain";
     public static final String PREF_THEME = "pref_theme";
+    public static final String PREF_DICT = "pref_dict";
     public static final String SEPARATOR = "[,;|]";
+
+    public static final String AARD2_LOOKUP = "aard2.lookup";
+    public static final String SEARCH_DICT =
+        "com.hughes.action.ACTION_SEARCH_DICT";
 
     public static final int LETTERS = 7;
     public static final int RESULTS = 256;
@@ -91,6 +97,10 @@ public class Main extends Activity
     public static final int PREF_ORANGE = 5;
     public static final int PREF_PURPLE = 6;
     public static final int PREF_RED    = 7;
+
+    public static final int WIKTIONARY = 0;
+    public static final int AARD2      = 1;
+    public static final int QUICKDIC   = 2;
 
     private static float textSize = 0;
 
@@ -108,6 +118,7 @@ public class Main extends Activity
 
     private int length = LETTERS;
     private int theme = 0;
+    private int dict;
 
     // Called when the activity is first created
     @Override
@@ -119,6 +130,7 @@ public class Main extends Activity
         SharedPreferences preferences =
             PreferenceManager.getDefaultSharedPreferences(this);
         theme = preferences.getInt(PREF_THEME, 0);
+        dict = preferences.getInt(PREF_DICT, WIKTIONARY);
 
         switch (theme)
         {
@@ -359,6 +371,18 @@ public class Main extends Activity
         case R.id.action_red:
             return onRedClick(item);
 
+        // aard2
+        case R.id.aard2:
+            return aard2(item);
+
+        // quickdic
+        case R.id.quickdic:
+            return quickdic(item);
+
+        // wikt
+        case R.id.wikt:
+            return wikt(item);
+
         // About
         case R.id.action_about:
             return onAboutClick(item);
@@ -372,6 +396,7 @@ public class Main extends Activity
     @Override
     public void onNewIntent(Intent intent)
     {
+        // Check intent
         checkIntent(intent);
     }
 
@@ -580,6 +605,33 @@ public class Main extends Activity
         return true;
     }
 
+    // aard2
+    private boolean aard2(MenuItem item)
+    {
+        dict = AARD2;
+        item.setChecked(true);
+
+        return true;
+    }
+
+    // quickdic
+    private boolean quickdic(MenuItem item)
+    {
+        dict = QUICKDIC;
+        item.setChecked(true);
+
+        return true;
+    }
+
+    // wikt
+    private boolean wikt(MenuItem item)
+    {
+        dict = WIKTIONARY;
+        item.setChecked(true);
+
+        return true;
+    }
+
     // On about click
     @SuppressWarnings("deprecation")
     private boolean onAboutClick(MenuItem item)
@@ -699,10 +751,37 @@ public class Main extends Activity
                 letter.addTextChangedListener(this);
             }
 
-            // Start the web search
-            Intent intent = new Intent(this, SearchActivity.class);
-            intent.putExtra(WORD, word);
-            startActivity(intent);
+            // Check dictionary
+            Intent intent;
+            switch (dict)
+            {
+            case AARD2:
+                // Start Aard2 search
+                intent = new Intent(AARD2_LOOKUP);
+                intent.putExtra(Intent.EXTRA_TEXT, word);
+                if (intent.resolveActivity(getPackageManager()) != null)
+                {
+                    startActivity(intent);
+                    break;
+                }
+
+            case QUICKDIC:
+                // Start quickdic search
+                intent = new Intent(SEARCH_DICT);
+                intent.putExtra(SearchManager.QUERY, word);
+                if (intent.resolveActivity(getPackageManager()) != null)
+                {
+                    startActivity(intent);
+                    break;
+                }
+
+            default:
+            case WIKTIONARY:
+                // Start the web search
+                intent = new Intent(this, SearchActivity.class);
+                intent.putExtra(WORD, word);
+                startActivity(intent);
+            }
         }
     }
 
