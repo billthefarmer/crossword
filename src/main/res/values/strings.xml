@@ -34,6 +34,8 @@
   <string name="orange">Orange</string>
   <string name="purple">Purple</string>
   <string name="red">Red</string>
+  <string name="black">Black</string>
+  <string name="white">White</string>
   <string name="dict">Dictionary</string>
   <string name="aard2">Aard2</string>
   <string name="quickdic">Quickdic</string>

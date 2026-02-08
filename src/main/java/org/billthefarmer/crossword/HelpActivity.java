@@ -83,6 +83,14 @@ public class HelpActivity extends Activity
         case Main.PREF_RED:
             setTheme(R.style.AppRedTheme);
             break;
+
+        case Main.PREF_BLACK:
+            setTheme(R.style.AppBlackTheme);
+            break;
+
+        case Main.PREF_WHITE:
+            setTheme(R.style.AppWhiteTheme);
+            break;
         }
 
         setContentView(R.layout.help);

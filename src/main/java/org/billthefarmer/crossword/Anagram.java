@@ -25,6 +25,7 @@ package org.billthefarmer.crossword;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.SearchManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -52,7 +53,7 @@ public class Anagram extends Activity
     implements AdapterView.OnItemClickListener,
     PopupMenu.OnMenuItemClickListener,
     TextView.OnEditorActionListener,
-    Data.OnPostExecuteListener,
+    Data.OnResultListener,
     View.OnClickListener
 {
     public static final int ANAGRAMS = 1024;
@@ -66,6 +67,8 @@ public class Anagram extends Activity
     private List<String> wordList;
     private List<String> anagramList;
 
+    private int dict;
+
     // Called when the activity is first created
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -76,6 +79,7 @@ public class Anagram extends Activity
         SharedPreferences preferences =
             PreferenceManager.getDefaultSharedPreferences(this);
         int theme = preferences.getInt(Main.PREF_THEME, 0);
+        int dict = preferences.getInt(Main.PREF_DICT, Main.WIKTIONARY);
 
         switch (theme)
         {
@@ -106,6 +110,14 @@ public class Anagram extends Activity
         case Main.PREF_RED:
             setTheme(R.style.AppRedTheme);
             break;
+
+        case Main.PREF_BLACK:
+            setTheme(R.style.AppBlackTheme);
+            break;
+
+        case Main.PREF_WHITE:
+            setTheme(R.style.AppWhiteTheme);
+            break;
         }
 
         setContentView(R.layout.anagram);
@@ -114,7 +126,15 @@ public class Anagram extends Activity
         toolbar = findViewById(getResources().getIdentifier("action_bar",
                                                             "id", "android"));
         // Set up navigation
-        toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
+        switch (theme)
+        {
+        case Main.PREF_WHITE:
+            toolbar.setNavigationIcon(R.drawable.ic_menu_black_24dp);
+            break;
+
+        default:
+            toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
+        }
         toolbar.setNavigationOnClickListener((v) ->
         {
             PopupMenu popup = new PopupMenu(this, v);
@@ -253,10 +273,37 @@ public class Anagram extends Activity
         if (textView != null)
             textView.setText(phrase);
 
-        // Start the web search
-        Intent intent = new Intent(this, SearchActivity.class);
-        intent.putExtra(Main.WORD, phrase);
-        startActivity(intent);
+        // Check dictionary
+        Intent intent;
+        switch (dict)
+        {
+        case Main.AARD2:
+            // Start Aard2 search
+            intent = new Intent(Main.AARD2_LOOKUP);
+            intent.putExtra(Intent.EXTRA_TEXT, phrase);
+            if (intent.resolveActivity(getPackageManager()) != null)
+            {
+                startActivity(intent);
+                break;
+            }
+
+        case Main.QUICKDIC:
+            // Start quickdic search
+            intent = new Intent(Main.SEARCH_DICT);
+            intent.putExtra(SearchManager.QUERY, phrase);
+            if (intent.resolveActivity(getPackageManager()) != null)
+            {
+                startActivity(intent);
+                break;
+            }
+
+        default:
+        case Main.WIKTIONARY:
+            // Start the web search
+            intent = new Intent(this, SearchActivity.class);
+            intent.putExtra(Main.WORD, phrase);
+            startActivity(intent);
+        }
     }
 
     // onEditorAction
@@ -359,16 +406,15 @@ public class Anagram extends Activity
             if (phrase.length() > 0)
             {
                 // Find anagrams
-                data.startAnagramTask(phrase, wordList);
+                data.startAnagrams(phrase, wordList);
                 search.setEnabled(false);
             }
         }
     }
 
-    // The system calls this to perform work in the UI thread and
-    // delivers the result from doInBackground()
+    // onResult
     @Override
-    public void onPostExecute(List<String> resultList)
+    public void onResult(List<String> resultList)
     {
         // Empty the current list
         anagramList.clear();

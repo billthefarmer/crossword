@@ -42,4 +42,10 @@
   <color name="purple_button_normal">#331643</color>
   <color name="purple_button_pressed">#5c058c</color>
 
+  <!--  black theme  -->
+  <color name="black_background">#000000</color>
+
+  <!--  white theme  -->
+  <color name="white_background">#ffffff</color>
+
 </resources>

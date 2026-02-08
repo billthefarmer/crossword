@@ -5,6 +5,9 @@
 
     <attr name="dialog_bgcolour" format="reference" />
 
+    <attr name="menu_share" format="reference" />
+    <attr name="menu_info" format="reference" />
+
     <attr name="button_normal" format="reference" />
     <attr name="button_pressed" format="reference" />
     <attr name="action_clear" format="reference" />

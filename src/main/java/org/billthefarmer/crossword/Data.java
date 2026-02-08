@@ -25,7 +25,8 @@ package org.billthefarmer.crossword;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -36,6 +37,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
 
 // Data class
 @SuppressWarnings("deprecation")
@@ -49,9 +53,12 @@ public class Data
     private List<String> anagramList;
     private List<String> resultList;
     private List<String> wordList;
+    private List<Float> valueList;
+    private Element elements;
+    private ExecutorService executor;
     private static boolean searching;
 
-    private static OnPostExecuteListener listener;
+    private static OnResultListener listener;
 
     // Letter values
     private static final Integer values[] =
@@ -77,12 +84,16 @@ public class Data
     }
 
     // Get instance
-    public static Data getInstance(OnPostExecuteListener listener)
+    public static Data getInstance(OnResultListener listener)
     {
         if (instance == null)
             instance = new Data();
 
         instance.listener = listener;
+
+        // Executor
+        executor =  Executors.newSingleThreadExecutor();
+
         return instance;
     }
 
@@ -133,111 +144,60 @@ public class Data
     // 1 3 3 2 1 4 2 4 1 8 5 1 3 1 1 3 1 1 1 1 1 4 4 8 4 1
     //                                 0                 0
 
-    // Start load task
-    protected void startLoadTask(Context context, int id,
-                                 List<String> wordList)
+    // startLoad
+    protected void startLoad(Context context, int id, List<String> wordList)
     {
+        // Start
+        executor.execute(() -> doLoad(context, id, wordlist));
         // Start the task
-        LoadTask loadTask = new LoadTask(context, wordList);
-        loadTask.execute(id);
+        // LoadTask loadTask = new LoadTask(context, wordList);
+        // loadTask.execute(id);
     }
 
-    // startAnagramTask
-    protected void startAnagramTask(String phrase, List<String> wordList)
+    // doLoad
+    private doLoad(Context context, int id, List<String>wordlist)
     {
+
+        Resources resources = context.getResources();
+
+        // Read words from resources
+        try (BufferedReader buffer = new BufferedReader
+             (new InputStreamReader(resources.openRawResource(id))))
+        {
+            String word;
+            while ((word = buffer.readLine()) != null)
+                wordList.add(word);
+        }
+
+        catch (Exception e) {}
+    }
+
+    // startAnagrams
+    protected void startAnagrams(String phrase, List<String> wordList)
+    {
+        // Start
+        executor.execute(() -> doAnagrams(phrase, wordlist));
         // Start the task
-        AnagramTask anagramTask = new AnagramTask();
-        anagramTask.wordList = wordList;
-        anagramTask.execute(phrase);
+        // AnagramTask anagramTask = new AnagramTask();
+        // anagramTask.wordList = wordList;
+        // anagramTask.execute(phrase);
         searching = true;
     }
 
-    // Start search task
-    protected void startSearchTask(String match, String content,
-                                   List<String> wordList)
+    // doAnagrams
+    void doAnagrams(String phrase, List<String> wordlist)
     {
-        SearchTask searchTask = new SearchTask();
-        searchTask.wordList = wordList;
-        searchTask.execute(match, content);
-        searching = true;
-    }
+        anagramList = new ArrayList<>();
+        valueList = new ArrayList<>();
 
-    // OnPostExecuteListener interface
-    interface OnPostExecuteListener
-    {
-        void onPostExecute(List<String> resultList);
-    }
+        // Find words that will fit in phrase
+        elements = findWords(phrase, wordList);
+        // Find anagrams from words
+        findAnagrams(elements);
 
-    // LoadTask
-    protected static class LoadTask
-        extends AsyncTask<Integer, Void, Void>
-    {
-        private List<String> wordList;
-        private WeakReference<Context> contextWeakReference;
-
-        // LoadTask
-        public LoadTask(Context context, List<String> wordList)
-        {
-            contextWeakReference = new WeakReference<>(context);
-            this.wordList = wordList;
-        }
-
-        // The system calls this to perform work in a worker thread
-        // and delivers it the parameters given to AsyncTask.execute()
-        @Override
-        protected Void doInBackground(Integer... ids)
-        {
-            final Context context = contextWeakReference.get();
-            if (context == null)
-                return null;
-
-            Resources resources = context.getResources();
-
-            // Read words from resources
-            try (BufferedReader buffer = new BufferedReader
-                 (new InputStreamReader(resources.openRawResource(ids[0]))))
-            {
-                String word;
-                while ((word = buffer.readLine()) != null)
-                    wordList.add(word);
-            }
-
-            catch (Exception e)
-            {
-            }
-
-            return null;
-        }
-    }
-
-    // AnagramTask
-    protected static class AnagramTask
-        extends AsyncTask<String, Void, List<String>>
-    {
-        protected List<String> wordList;
-        private List<String> anagramList;
-        private List<Float> valueList;
-        private Element elements;
-
-        // The system calls this to perform work in a worker thread
-        // and delivers it the parameters given to AsyncTask.execute()
-        @Override
-        protected List<String> doInBackground(String... phrases)
-        {
-            anagramList = new ArrayList<>();
-            valueList = new ArrayList<>();
-
-            // Find words that will fit in phrase
-            elements = findWords(phrases[0], wordList);
-            // Find anagrams from words
-            findAnagrams(elements);
-            return anagramList;
-        }
-
-        // The system calls this to perform work in the UI thread and
-        // delivers the result from doInBackground()
-        @Override
-        protected void onPostExecute(List<String> anagramList)
+        // Handler
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() ->
         {
             List<String> resultList = new ArrayList<>();
             List<Float> list = new ArrayList<>(valueList);
@@ -254,171 +214,482 @@ public class Data
             }
 
             if (listener != null)
-                listener.onPostExecute(resultList);
+                listener.onResult(resultList);
             searching = false;
-        }
+        });
+    }
 
-        // findWords
-        private Element findWords(String phrase, List<String> wordList)
+    // findWords
+    private Element findWords(String phrase, List<String> wordList)
+    {
+        Element elements = null;
+        Element element = null;
+
+        // Build a forward linked list of elements containing each
+        // word and what is left of the phrase after the word is
+        // removed
+
+        // Check each word in list
+        for (String word : wordList)
         {
-            Element elements = null;
-            Element element = null;
+            char p[];
+            if (word.length() <= 2)
+                continue;
 
-            // Build a forward linked list of elements containing each
-            // word and what is left of the phrase after the word is
-            // removed
-
-            // Check each word in list
-            for (String word : wordList)
+            if ((p = findString(word, phrase)) != null)
             {
-                char p[];
-                if (word.length() <= 2)
-                    continue;
-
-                if ((p = findString(word, phrase)) != null)
+                // First element
+                if (element == null)
                 {
-                    // First element
-                    if (element == null)
-                    {
-                        element = new Element(word, new String(p));
-                        elements = element;
-                    }
-
-                    // Build a list
-                    else
-                    {
-                        element.next = new Element(word, new String(p));
-                        element = element.next;
-                    }
-                }
-            }
-
-            return elements;
-        }
-
-        // findAnagrams
-        private void findAnagrams(Element element)
-        {
-            // Find anagrams for each word in the list
-            while (element != null)
-            {
-                anagram(element.next, element);
-                element = element.next;
-            }
-        }
-
-        // anagram
-        private boolean anagram(Element elements, Element element)
-        {
-            // Stop when limit reached
-            if (anagramList.size() >= Anagram.ANAGRAMS)
-                return true;
-
-            // Found an anagram, don't reuse this word
-            if (element.phrase.trim().length() == 0)
-            {
-                addAnagram(element);
-                return true;
-            }
-
-            // Build a reverse linked list of elements containing each
-            // word and what is left of the phrase after the word is
-            // removed. The last successful element will contain an
-            // all blanks phrase, so trim() will leave an empty string
-
-            // Search forward from this point in the list
-            while (elements != null)
-            {
-                char p[];
-
-                // If this word fits, try forward in the list, don't
-                // reuse a word if successful
-                if ((p = findString(elements.word, element.phrase)) != null)
-                {
-                    if (anagram(elements.next,
-                                new Element(elements.word,
-                                            new String(p), element)))
-                        return true;
+                    element = new Element(word, new String(p));
+                    elements = element;
                 }
 
-                elements = elements.next;
-            }
-
-            return false;
-        }
-
-        // findString
-        private char findString(String w, String p)[]
-        {
-            char word[] = w.toCharArray();
-            char phrase[] = p.toCharArray();
-
-            // Check each char in the word
-            for (char cw : word)
-            {
-                boolean found = false;
-                int index = 0;
-                for (char cp : phrase)
+                // Build a list
+                else
                 {
-                    // If the char fits
-                    if (cp == cw)
-                    {
-                        // Replace char with blank
-                        found = true;
-                        phrase[index] = ' ';
-                        break;
-                    }
-                    index++;
+                    element.next = new Element(word, new String(p));
+                    element = element.next;
                 }
-
-                if (!found)
-                    return null;
             }
-
-            // Return phrase less letters in this word
-            return phrase;
         }
 
-        // addAnagram
-        private void addAnagram(Element element)
+        return elements;
+    }
+
+    // findAnagrams
+    private void findAnagrams(Element element)
+    {
+        // Find anagrams for each word in the list
+        while (element != null)
         {
-            // Reverse order of words
-            Deque<String> stack = new ArrayDeque<>();
-            while (element != null)
-            {
-                stack.push(element.word);
-                element = element.last;
-            }
-
-            // Add words to anagram
-            float value = 0;
-            StringBuilder buffer = new StringBuilder();
-            while (stack.peek() != null)
-            {
-                String word = stack.pop();
-                buffer.append(word).append(" ");
-                value += getValue(word);
-            }
-            anagramList.add(buffer.toString().trim());
-            valueList.add(value);
-        }
-
-        // getValue
-        protected float getValue(String word)
-        {
-            float value = 1;
-            char chars[] = word.toCharArray();
-
-            // Multiply the scrabble value of the letters in the word
-            for (char c : chars)
-            {
-                int index = lettersList.indexOf(c);
-                value *= valuesList.get(index);
-            }
-
-            return value;
+            anagram(element.next, element);
+            element = element.next;
         }
     }
+
+    // anagram
+    private boolean anagram(Element elements, Element element)
+    {
+        // Stop when limit reached
+        if (anagramList.size() >= Anagram.ANAGRAMS)
+            return true;
+
+        // Found an anagram, don't reuse this word
+        if (element.phrase.trim().length() == 0)
+        {
+            addAnagram(element);
+            return true;
+        }
+
+        // Build a reverse linked list of elements containing each
+        // word and what is left of the phrase after the word is
+        // removed. The last successful element will contain an
+        // all blanks phrase, so trim() will leave an empty string
+
+        // Search forward from this point in the list
+        while (elements != null)
+        {
+            char p[];
+
+            // If this word fits, try forward in the list, don't
+            // reuse a word if successful
+            if ((p = findString(elements.word, element.phrase)) != null)
+            {
+                if (anagram(elements.next,
+                            new Element(elements.word,
+                                        new String(p), element)))
+                    return true;
+            }
+
+            elements = elements.next;
+        }
+
+        return false;
+    }
+
+    // findString
+    private char findString(String w, String p)[]
+    {
+        char word[] = w.toCharArray();
+        char phrase[] = p.toCharArray();
+
+        // Check each char in the word
+        for (char cw : word)
+        {
+            boolean found = false;
+            int index = 0;
+            for (char cp : phrase)
+            {
+                // If the char fits
+                if (cp == cw)
+                {
+                    // Replace char with blank
+                    found = true;
+                    phrase[index] = ' ';
+                    break;
+                }
+                index++;
+            }
+
+            if (!found)
+                return null;
+        }
+
+        // Return phrase less letters in this word
+        return phrase;
+    }
+
+    // addAnagram
+    private void addAnagram(Element element)
+    {
+        // Reverse order of words
+        Deque<String> stack = new ArrayDeque<>();
+        while (element != null)
+        {
+            stack.push(element.word);
+            element = element.last;
+        }
+
+        // Add words to anagram
+        float value = 0;
+        StringBuilder buffer = new StringBuilder();
+        while (stack.peek() != null)
+        {
+            String word = stack.pop();
+            buffer.append(word).append(" ");
+            value += getValue(word);
+        }
+        anagramList.add(buffer.toString().trim());
+        valueList.add(value);
+    }
+
+    // getValue
+    protected float getValue(String word)
+    {
+        float value = 1;
+        char chars[] = word.toCharArray();
+
+        // Multiply the scrabble value of the letters in the word
+        for (char c : chars)
+        {
+            int index = lettersList.indexOf(c);
+            value *= valuesList.get(index);
+        }
+
+        return value;
+    }
+
+    // Start search
+    protected void startSearch(String match, String content,
+                               List<String> wordList)
+    {
+        executor.execute(() -> doSearch(match, content, wordList));
+        // SearchTask searchTask = new SearchTask();
+        // searchTask.wordList = wordList;
+        // searchTask.execute(match, content);
+        searching = true;
+    }
+
+    private doSearch(String match, String content, List<String> wordList)
+    {
+        resultList = new ArrayList<>();
+
+        int length = match.length();
+        for (String word : wordList)
+        {
+            if (word.length() != length)
+                continue;
+
+            boolean contains = true;
+            for (int i = 0; i < content.length(); i++)
+            {
+                if (!word.contains(content.substring(i, i + 1)))
+                {
+                    contains = false;
+                    break;
+                }
+            }
+
+            if (!contains)
+                continue;
+
+            if (word.matches(match))
+                resultList.add(word);
+
+            if (resultList.size() > Main.RESULTS)
+                break;
+        }
+
+        // Handler
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() ->
+        {
+            if (listener != null)
+                listener.onresult(resultList);
+            searching = false;
+        }
+            // Return the result
+        // return resultList;
+    }
+
+    // OnResultListener interface
+    interface OnResultListener
+    {
+        void onResult(List<String> resultList);
+    }
+
+    // LoadTask
+    // protected static class LoadTask
+    //     extends AsyncTask<Integer, Void, Void>
+    // {
+    //     private List<String> wordList;
+    //     private WeakReference<Context> contextWeakReference;
+
+    //     // LoadTask
+    //     public LoadTask(Context context, List<String> wordList)
+    //     {
+    //         contextWeakReference = new WeakReference<>(context);
+    //         this.wordList = wordList;
+    //     }
+
+    //     // The system calls this to perform work in a worker thread
+    //     // and delivers it the parameters given to AsyncTask.execute()
+    //     @Override
+    //     protected Void doInBackground(Integer... ids)
+    //     {
+    //         final Context context = contextWeakReference.get();
+    //         if (context == null)
+    //             return null;
+
+    //         Resources resources = context.getResources();
+
+    //         // Read words from resources
+    //         try (BufferedReader buffer = new BufferedReader
+    //              (new InputStreamReader(resources.openRawResource(ids[0]))))
+    //         {
+    //             String word;
+    //             while ((word = buffer.readLine()) != null)
+    //                 wordList.add(word);
+    //         }
+
+    //         catch (Exception e)
+    //         {
+    //         }
+
+    //         return null;
+    //     }
+    // }
+
+    // AnagramTask
+    // protected static class AnagramTask
+    //     extends AsyncTask<String, Void, List<String>>
+    // {
+    //     protected List<String> wordList;
+    //     private List<String> anagramList;
+    //     private List<Float> valueList;
+    //     private Element elements;
+
+    //     // The system calls this to perform work in a worker thread
+    //     // and delivers it the parameters given to AsyncTask.execute()
+    //     @Override
+    //     protected List<String> doInBackground(String... phrases)
+    //     {
+    //         anagramList = new ArrayList<>();
+    //         valueList = new ArrayList<>();
+
+    //         // Find words that will fit in phrase
+    //         elements = findWords(phrases[0], wordList);
+    //         // Find anagrams from words
+    //         findAnagrams(elements);
+    //         return anagramList;
+    //     }
+
+    //     // The system calls this to perform work in the UI thread and
+    //     // delivers the result from doInBackground()
+    //     @Override
+    //     protected void onPostExecute(List<String> anagramList)
+    //     {
+    //         List<String> resultList = new ArrayList<>();
+    //         List<Float> list = new ArrayList<>(valueList);
+
+    //         // Sort in reverse value order, high value first
+    //         Collections.sort(list);
+    //         Collections.reverse(list);
+    //         for (float value : list)
+    //         {
+    //             int index = valueList.indexOf(value);
+    //             resultList.add(anagramList.get(index));
+    //             anagramList.remove(index);
+    //             valueList.remove(index);
+    //         }
+
+    //         if (listener != null)
+    //             listener.onPostExecute(resultList);
+    //         searching = false;
+    //     }
+
+    //     // findWords
+    //     private Element findWords(String phrase, List<String> wordList)
+    //     {
+    //         Element elements = null;
+    //         Element element = null;
+
+    //         // Build a forward linked list of elements containing each
+    //         // word and what is left of the phrase after the word is
+    //         // removed
+
+    //         // Check each word in list
+    //         for (String word : wordList)
+    //         {
+    //             char p[];
+    //             if (word.length() <= 2)
+    //                 continue;
+
+    //             if ((p = findString(word, phrase)) != null)
+    //             {
+    //                 // First element
+    //                 if (element == null)
+    //                 {
+    //                     element = new Element(word, new String(p));
+    //                     elements = element;
+    //                 }
+
+    //                 // Build a list
+    //                 else
+    //                 {
+    //                     element.next = new Element(word, new String(p));
+    //                     element = element.next;
+    //                 }
+    //             }
+    //         }
+
+    //         return elements;
+    //     }
+
+    //     // findAnagrams
+    //     private void findAnagrams(Element element)
+    //     {
+    //         // Find anagrams for each word in the list
+    //         while (element != null)
+    //         {
+    //             anagram(element.next, element);
+    //             element = element.next;
+    //         }
+    //     }
+
+    //     // anagram
+    //     private boolean anagram(Element elements, Element element)
+    //     {
+    //         // Stop when limit reached
+    //         if (anagramList.size() >= Anagram.ANAGRAMS)
+    //             return true;
+
+    //         // Found an anagram, don't reuse this word
+    //         if (element.phrase.trim().length() == 0)
+    //         {
+    //             addAnagram(element);
+    //             return true;
+    //         }
+
+    //         // Build a reverse linked list of elements containing each
+    //         // word and what is left of the phrase after the word is
+    //         // removed. The last successful element will contain an
+    //         // all blanks phrase, so trim() will leave an empty string
+
+    //         // Search forward from this point in the list
+    //         while (elements != null)
+    //         {
+    //             char p[];
+
+    //             // If this word fits, try forward in the list, don't
+    //             // reuse a word if successful
+    //             if ((p = findString(elements.word, element.phrase)) != null)
+    //             {
+    //                 if (anagram(elements.next,
+    //                             new Element(elements.word,
+    //                                         new String(p), element)))
+    //                     return true;
+    //             }
+
+    //             elements = elements.next;
+    //         }
+
+    //         return false;
+    //     }
+
+    //     // findString
+    //     private char findString(String w, String p)[]
+    //     {
+    //         char word[] = w.toCharArray();
+    //         char phrase[] = p.toCharArray();
+
+    //         // Check each char in the word
+    //         for (char cw : word)
+    //         {
+    //             boolean found = false;
+    //             int index = 0;
+    //             for (char cp : phrase)
+    //             {
+    //                 // If the char fits
+    //                 if (cp == cw)
+    //                 {
+    //                     // Replace char with blank
+    //                     found = true;
+    //                     phrase[index] = ' ';
+    //                     break;
+    //                 }
+    //                 index++;
+    //             }
+
+    //             if (!found)
+    //                 return null;
+    //         }
+
+    //         // Return phrase less letters in this word
+    //         return phrase;
+    //     }
+
+    //     // addAnagram
+    //     private void addAnagram(Element element)
+    //     {
+    //         // Reverse order of words
+    //         Deque<String> stack = new ArrayDeque<>();
+    //         while (element != null)
+    //         {
+    //             stack.push(element.word);
+    //             element = element.last;
+    //         }
+
+    //         // Add words to anagram
+    //         float value = 0;
+    //         StringBuilder buffer = new StringBuilder();
+    //         while (stack.peek() != null)
+    //         {
+    //             String word = stack.pop();
+    //             buffer.append(word).append(" ");
+    //             value += getValue(word);
+    //         }
+    //         anagramList.add(buffer.toString().trim());
+    //         valueList.add(value);
+    //     }
+
+    //     // getValue
+    //     protected float getValue(String word)
+    //     {
+    //         float value = 1;
+    //         char chars[] = word.toCharArray();
+
+    //         // Multiply the scrabble value of the letters in the word
+    //         for (char c : chars)
+    //         {
+    //             int index = lettersList.indexOf(c);
+    //             value *= valuesList.get(index);
+    //         }
+
+    //         return value;
+    //     }
+    // }
 
     // Element
     public static class Element

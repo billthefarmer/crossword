@@ -17,6 +17,9 @@
       @style/textAppearanceLargeBold
     </item>
 
+    <item name="menu_share">@drawable/ic_share_white_24dp</item>
+    <item name="menu_info">@drawable/ic_info_outline_white_24dp</item>
+
   </style>
 
   <style name="AppDarkBaseTheme" parent="android:Theme.Material">
@@ -30,6 +33,25 @@
       @style/textAppearanceLargeBold
     </item>
 
+    <item name="menu_share">@drawable/ic_share_white_24dp</item>
+    <item name="menu_info">@drawable/ic_info_outline_white_24dp</item>
+
+  </style>
+
+  <style name="AppWhiteBaseTheme" parent="android:Theme.Material.Light">
+    <!--
+        Theme customizations available in newer API levels can go in
+        res/values-vXX/styles.xml, while customizations related to
+        backward-compatibility can go here.
+    -->
+
+    <item name="android:textAppearanceLarge">
+      @style/textAppearanceLargeBold
+    </item>
+
+    <item name="menu_share">@drawable/ic_share_black_24dp</item>
+    <item name="menu_info">@drawable/ic_info_outline_black_24dp</item>
+
   </style>
 
   <style name="ActionBarBaseStyle" parent="android:style/Widget.Material.ActionBar">
@@ -41,6 +63,9 @@
         All customizations that are NOT specific to a particular
         API-level can go here.
     -->
+
+    <item name="menu_share">@drawable/ic_share_white_24dp</item>
+    <item name="menu_info">@drawable/ic_info_outline_white_24dp</item>
 
     <item name="dialog_bgcolour">@color/light_background</item>
 
@@ -58,6 +83,9 @@
         API-level can go here.
     -->
 
+    <item name="menu_share">@drawable/ic_share_white_24dp</item>
+    <item name="menu_info">@drawable/ic_info_outline_white_24dp</item>
+
     <item name="dialog_bgcolour">@color/dark_background</item>
 
     <item name="action_clear">@drawable/ic_clear_white_24dp</item>
@@ -68,7 +96,7 @@
   </style>
 
   <!-- Application theme. -->
-  <style name="AppCyanTheme" parent="AppDarkTheme">
+  <style name="AppCyanTheme" parent="AppDarkBaseTheme">
     <!--
         All customizations that are NOT specific to a particular
         API-level can go here.
@@ -83,7 +111,7 @@
   </style>
 
   <!-- Application theme. -->
-  <style name="AppBlueTheme" parent="AppDarkTheme">
+  <style name="AppBlueTheme" parent="AppDarkBaseTheme">
     <!--
         All customizations that are NOT specific to a particular
         API-level can go here.
@@ -98,7 +126,7 @@
   </style>
 
   <!-- Application theme. -->
-  <style name="AppOrangeTheme" parent="AppDarkTheme">
+  <style name="AppOrangeTheme" parent="AppDarkBaseTheme">
     <!--
         All customizations that are NOT specific to a particular
         API-level can go here.
@@ -113,7 +141,7 @@
   </style>
 
   <!-- Application theme. -->
-  <style name="AppPurpleTheme" parent="AppDarkTheme">
+  <style name="AppPurpleTheme" parent="AppDarkBaseTheme">
     <!--
         All customizations that are NOT specific to a particular
         API-level can go here.
@@ -128,7 +156,7 @@
   </style>
 
   <!-- Application theme. -->
-  <style name="AppRedTheme" parent="AppDarkTheme">
+  <style name="AppRedTheme" parent="AppDarkBaseTheme">
     <!--
         All customizations that are NOT specific to a particular
         API-level can go here.
@@ -139,6 +167,40 @@
     <item name="dialog_bgcolour">@color/red_action_bar</item>
     <item name="button_normal">@color/red_button_normal</item>
     <item name="button_pressed">@color/red_button_pressed</item>
+
+  </style>
+
+  <!-- Application theme. -->
+  <style name="AppBlackTheme" parent="AppDarkBaseTheme">
+    <!--
+        All customizations that are NOT specific to a particular
+        API-level can go here.
+    -->
+
+    <item name="android:windowBackground">@color/black_background</item>
+    <item name="dialog_bgcolour">@color/dark_background</item>
+
+    <item name="action_clear">@drawable/ic_clear_white_24dp</item>
+    <item name="action_search">@drawable/ic_search_white_24dp</item>
+    <item name="button_normal">@color/dark_button_normal</item>
+    <item name="button_pressed">@color/dark_button_pressed</item>
+
+  </style>
+
+  <!-- Application theme. -->
+  <style name="AppWhiteTheme" parent="AppWhiteBaseTheme">
+    <!--
+        All customizations that are NOT specific to a particular
+        API-level can go here.
+    -->
+
+    <item name="android:windowBackground">@color/white_background</item>
+    <item name="dialog_bgcolour">@color/light_background</item>
+
+    <item name="action_clear">@drawable/ic_clear_black_24dp</item>
+    <item name="action_search">@drawable/ic_search_black_24dp</item>
+    <item name="button_normal">@color/light_button_normal</item>
+    <item name="button_pressed">@color/light_button_pressed</item>
 
   </style>
 

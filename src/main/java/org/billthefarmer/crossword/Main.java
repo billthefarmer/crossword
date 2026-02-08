@@ -68,7 +68,7 @@ public class Main extends Activity
     PopupMenu.OnMenuItemClickListener,
     AdapterView.OnItemClickListener,
     TextView.OnEditorActionListener,
-    Data.OnPostExecuteListener,
+    Data.OnResultListener,
     View.OnClickListener,
     TextWatcher
 {
@@ -97,6 +97,8 @@ public class Main extends Activity
     public static final int PREF_ORANGE = 5;
     public static final int PREF_PURPLE = 6;
     public static final int PREF_RED    = 7;
+    public static final int PREF_BLACK  = 8;
+    public static final int PREF_WHITE  = 9;
 
     public static final int WIKTIONARY = 0;
     public static final int AARD2      = 1;
@@ -161,6 +163,14 @@ public class Main extends Activity
         case PREF_RED:
             setTheme(R.style.AppRedTheme);
             break;
+
+        case PREF_BLACK:
+            setTheme(R.style.AppBlackTheme);
+            break;
+
+        case PREF_WHITE:
+            setTheme(R.style.AppWhiteTheme);
+            break;
         }
 
         setContentView(R.layout.main);
@@ -177,7 +187,15 @@ public class Main extends Activity
         toolbar = findViewById(getResources().getIdentifier("action_bar",
                                                             "id", "android"));
         // Set up navigation
-        toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
+        switch (theme)
+        {
+        case PREF_WHITE:
+            toolbar.setNavigationIcon(R.drawable.ic_menu_black_24dp);
+            break;
+
+        default:
+            toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
+        }
         toolbar.setNavigationOnClickListener((v) ->
         {
             PopupMenu popup = new PopupMenu(this, v);
@@ -298,6 +316,7 @@ public class Main extends Activity
         SharedPreferences.Editor editor = preferences.edit();
 
         editor.putInt(PREF_THEME, theme);
+        editor.putInt(PREF_DICT, dict);
         editor.apply();
 
         // Disconnect listener
@@ -370,6 +389,14 @@ public class Main extends Activity
         // Red
         case R.id.action_red:
             return onRedClick(item);
+
+        // Black
+        case R.id.action_black:
+            return onBlackClick(item);
+
+        // Red
+        case R.id.action_white:
+            return onWhiteClick(item);
 
         // aard2
         case R.id.aard2:
@@ -599,6 +626,26 @@ public class Main extends Activity
     private boolean onRedClick(MenuItem item)
     {
         theme = PREF_RED;
+        if (Build.VERSION.SDK_INT != Build.VERSION_CODES.M)
+            recreate();
+
+        return true;
+    }
+
+    // On black click
+    private boolean onBlackClick(MenuItem item)
+    {
+        theme = PREF_BLACK;
+        if (Build.VERSION.SDK_INT != Build.VERSION_CODES.M)
+            recreate();
+
+        return true;
+    }
+
+    // On white click
+    private boolean onWhiteClick(MenuItem item)
+    {
+        theme = PREF_WHITE;
         if (Build.VERSION.SDK_INT != Build.VERSION_CODES.M)
             recreate();
 
@@ -969,7 +1016,7 @@ public class Main extends Activity
         // Start search task
         if (data != null)
         {
-            data.startSearchTask(match, content, wordList);
+            data.startSearch(match, content, wordList);
             search.setEnabled(false);
         }
     }
@@ -994,10 +1041,9 @@ public class Main extends Activity
         letters.getChildAt(0).requestFocus();
     }
 
-    // The system calls this to perform work in the UI thread and
-    // delivers the result from doInBackground()
+    // onResult
     @Override
-    public void onPostExecute(List<String> resultList)
+    public void onResult(List<String> resultList)
     {
         if (resultList != null)
         {
