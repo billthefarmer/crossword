@@ -288,7 +288,7 @@ public class Main extends Activity
 
         // Load words from resources
         if (data != null)
-            data.startLoadTask(this, R.raw.words_en, wordList);
+            data.startLoad(this, R.raw.words_en, wordList);
     }
 
     // onResume

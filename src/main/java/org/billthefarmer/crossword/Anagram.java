@@ -191,7 +191,7 @@ public class Anagram extends Activity
 
         // Load words from resources
         if (data != null)
-            data.startLoadTask(this, R.raw.corncob_lowercase, wordList);
+            data.startLoad(this, R.raw.corncob_lowercase, wordList);
     }
 
     // onResume
