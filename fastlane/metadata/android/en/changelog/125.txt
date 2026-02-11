@@ -1,0 +1,2 @@
+ * Add dictionary choice
+ * Add black and white themes
