@@ -85,7 +85,7 @@ public class Main extends Activity
         "com.hughes.action.ACTION_SEARCH_DICT";
 
     public static final int LETTERS = 7;
-    public static final int RESULTS = 256;
+    public static final int RESULTS = 1024;
     public static final int MAX_LENGTH = 28;
 
     public static final int DELAY   = 96;
