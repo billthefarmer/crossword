@@ -30,16 +30,15 @@ android {
         applicationId "org.billthefarmer.crossword"
         minSdkVersion 21
         targetSdkVersion 35
-        versionName "1.25"
-        versionCode 125
+        versionName "1.26"
+        versionCode 126
 
         buildConfigField "long", "BUILT", System.currentTimeMillis() + "L"
     }
 
     lintOptions {
-        disable 'IconDensities', 'SetJavaScriptEnabled', 'OldTargetApi', 'DiscouragedApi',
-	    'NonConstantResourceId', 'ExpiredTargetSdkVersion', 'AndroidGradlePluginVersion',
-	    'GradleDependency'
+        disable 'OldTargetApi', 'NonConstantResourceId', 'AndroidGradlePluginVersion',
+	'GradleDependency', 'DiscouragedApi', 'SetJavaScriptEnabled'
         // abortOnError false
     }
 
